@@ -1,0 +1,67 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= USBX documentation
+
+xref:overview-usbx.adoc[Overview of USBX]
+
+USBX device stack user guide
+
+* xref:usbx-device-stack-about.adoc[About this guide]
+* xref:usbx-device-stack-1.adoc[Ch. 1 - Introduction to USBX]
+* xref:usbx-device-stack-2.adoc[Ch. 2 - USBX installation]
+* xref:usbx-device-stack-3.adoc[Ch. 3 - Functional components of USBX device stack]
+* xref:usbx-device-stack-4.adoc[Ch. 4 - Description of USBX device services]
+* xref:usbx-device-stack-5.adoc[Ch. 5 - USBX device class considerations]
+
+USBX device stack supplemental
+
+* xref:usbx-device-stack-supplemental-1.adoc[Ch. 1 - Introduction to the USBX device stack user guide supplement]
+* xref:usbx-device-stack-supplemental-2.adoc[Ch. 2 - USBX device class considerations]
+* xref:usbx-device-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
+* xref:usbx-device-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
+* xref:usbx-device-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+
+USBX host stack user guide
+
+* xref:usbx-host-stack-about.adoc[About this guide]
+* xref:usbx-host-stack-1.adoc[Ch. 1 - Introduction to USBX]
+* xref:usbx-host-stack-2.adoc[Ch. 2 - USBX installation]
+* xref:usbx-host-stack-3.adoc[Ch. 3 - Functional components of USBX host stack]
+* xref:usbx-host-stack-4.adoc[Ch. 4 - Description of USBX host services]
+* xref:usbx-host-stack-5.adoc[Ch. 5 - USBX host classes API]
+* xref:usbx-host-stack-6.adoc[Ch. 6 - USBX CDC-ECM class usage]
+
+USBX host stack supplemental
+
+* xref:usbx-host-stack-supplemental-1.adoc[Ch. 1 - Introduction to the USBX host stack user guide supplement]
+* xref:usbx-host-stack-supplemental-2.adoc[Ch. 2 - USBX Host Classes API]
+* xref:usbx-host-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
+* xref:usbx-host-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
+* xref:usbx-host-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+
+https://github.com/eclipse-threadx/usbx/[USBX repository]
+
+xref:../../README.adoc[Eclipse ThreadX components]
+
+* xref:../threadx/index.adoc[ThreadX]
+* xref:../threadx-modules/index.adoc[ThreadX Modules]
+* xref:../netx-duo/index.adoc[NetX Duo]
+* xref:../guix/index.adoc[GUIX]
+* xref:../filex/index.adoc[FileX]
+* xref:../levelx/index.adoc[LevelX]
+* xref:../usbx/index.adoc[USBX]
+* xref:../tracex/index.adoc[TraceX]

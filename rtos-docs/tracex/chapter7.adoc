@@ -1,0 +1,1622 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 7 - FileX trace events
+:description: This chapter contains a description of the FileX events.
+
+This chapter contains a description of the FileX events.
+
+== List of Events and Icons
+
+*The following is a list of FileX events displayed by TraceX.*
+
+The following describes each event:
+
+|===
+| *Icon* | *Meaning*
+
+| image:./media/user-guide/fx-events/image1.png[Internal Logical Sector Cache Miss icon]
+| Internal Logical Sector Cache Miss
+
+| image:./media/user-guide/fx-events/image2.png[Internal Directory Cache Miss icon]
+| Internal Directory Cache Miss
+
+| image:./media/user-guide/fx-events/image3.png[Internal Media Flush icon]
+| Internal Media Flush
+
+| image:./media/user-guide/fx-events/image4.png[Internal Directory Entry Read icon]
+| Internal Directory Entry Read
+
+| image:./media/user-guide/fx-events/image5.png[Internal Directory Entry Write icon]
+| Internal Directory Entry Write
+
+| image:./media/user-guide/fx-events/image6.png[Internal I / O Driver Read icon]
+| Internal I/O Driver Read
+
+| image:./media/user-guide/fx-events/image7.png[Internal I / O Driver Write icon]
+| Internal I/O Driver Write
+
+| image:./media/user-guide/fx-events/image8.png[Internal I / O Driver Flush icon]
+| Internal I/O Driver Flush
+
+| image:./media/user-guide/fx-events/image9.png[Internal I / O Driver Abort icon]
+| Internal I/O Driver Abort
+
+| image:./media/user-guide/fx-events/image10.png[Internal I / O Driver Initialize icon]
+| Internal I/O Driver Initialize
+
+| image:./media/user-guide/fx-events/image11.png[Internal I / O Driver Boot Read icon]
+| Internal I/O Driver Boot Read
+
+| image:./media/user-guide/fx-events/image12.png[Internal I / O Driver Release Sectors icon]
+| Internal I/O Driver Release Sectors
+
+| image:./media/user-guide/fx-events/image13.png[Internal I / O Driver Boot Write icon]
+| Internal I/O Driver Boot Write
+
+| image:./media/user-guide/fx-events/image14.png[Internal I / O Driver Driver Un-initialize icon]
+| Internal I / O Driver Driver Un-initialize
+
+| image:./media/user-guide/fx-events/image15.png[Directory Attributes Read icon]
+| *Directory Attributes Read* (_fx_directory_attributes_read_)
+
+| image:./media/user-guide/fx-events/image16.png[Directory Attributes Set icon]
+| *Directory Attributes Set* (_fx_directory_attributes_set_)
+
+| image:./media/user-guide/fx-events/image17.png[Directory Create icon]
+| *Directory Create* (_fx_directory_create_)
+
+| image:./media/user-guide/fx-events/image18.png[Directory Default Get icon]
+| *Directory Default Get* (_fx_directory_default_get_)
+
+| image:./media/user-guide/fx-events/image19.png[Directory Default Set icon]
+| *Directory Default Set* (_fx_directory_default_set_)
+
+| image:./media/user-guide/fx-events/image20.png[Directory Delete icon]
+| *Directory Delete* (_fx_directory_delete_)
+
+| image:./media/user-guide/fx-events/image21.png[Directory First Entry Find icon]
+| *Directory First Entry Find* (_fx_directory_first_entry_find_)
+
+| image:./media/user-guide/fx-events/image22.png[Directory First Full Entry Find icon]
+| *Directory First Full Entry Find* (_fx_directory_first_full_entry_find_)
+
+| image:./media/user-guide/fx-events/image23.png[Directory Information Get icon]
+| *Directory Information Get* (_fx_directory_information_get_)
+
+| image:./media/user-guide/fx-events/image24.png[Directory Local Path Clear icon]
+| *Directory Local Path Clear* (_fx_directory_local_path_clear_)
+
+| image:./media/user-guide/fx-events/image25.png[Directory Local Path Get icon]
+| *Directory Local Path Get* (_fx_directory_local_path_get_)
+
+| image:./media/user-guide/fx-events/image26.png[Directory Local Path Restore icon]
+| *Directory Local Path Restore* (_fx_directory_local_path_restore_)
+
+| image:./media/user-guide/fx-events/image27.png[Directory Local Path Set icon]
+| *Directory Local Path Set* (_fx_directory_local_path_set_)
+
+| image:./media/user-guide/fx-events/image28.png[Directory Long Name Get icon]
+| *Directory Long Name Get* (_fx_directory_long_name_get_)
+
+| image:./media/user-guide/fx-events/image29.png[Directory Name Test icon]
+| *Directory Name Test* (_fx_directory_name_test_)
+
+| image:./media/user-guide/fx-events/image30.png[Directory Next Entry Find icon]
+| *Directory Next Entry Find* (_fx_directory_next_entry_find_)
+
+| image:./media/user-guide/fx-events/image31.png[Directory Next Full Entry Find icon]
+| *Directory Next Full Entry Find* (_fx_directory_next_full_entry_find_)
+
+| image:./media/user-guide/fx-events/image32.png[Directory Rename icon]
+| *Directory Rename* (_fx_directory_rename_)
+
+| image:./media/user-guide/fx-events/image33.png[Directory Short Name Get icon]
+| *Directory Short Name Get* (_fx_directory_short_name_get_)
+
+| image:./media/user-guide/fx-events/image34.png[File Allocate icon]
+| *File Allocate* (_fx_file_allocate_)
+
+| image:./media/user-guide/fx-events/image35.png[File Attributes Read icon]
+| *File Attributes Read* (_fx_file_attributes_read_)
+
+| image:./media/user-guide/fx-events/image36.png[File Attributes Set icon]
+| *File Attributes Set* (_fx_file_attributes_set_)
+
+| image:./media/user-guide/fx-events/image37.png[File Best Effort Allocate icon]
+| *File Best Effort Allocate* (_fx_file_best_effort_allocate_)
+
+| image:./media/user-guide/fx-events/image38.png[File Close icon]
+| *File Close* (_fx_file_close_)
+
+| image:./media/user-guide/fx-events/image39.png[File Create icon]
+| *File Create* (_fx_file_create_)
+
+| image:./media/user-guide/fx-events/image40.png[File Date Time Set icon]
+| *File Date Time Set* (_fx_file_date_time_set_)
+
+| image:./media/user-guide/fx-events/image41.png[File Delete icon]
+| *File Delete* (_fx_file_delete_)
+
+| image:./media/user-guide/fx-events/image42.png[File Open icon]
+| *File Open* (_fx_file_open_)
+
+| image:./media/user-guide/fx-events/image43.png[File Read icon]
+| *File Read* (_fx_file_read_)
+
+| image:./media/user-guide/fx-events/image44.png[File Relative Seek icon]
+| *File Relative Seek* (_fx_file_relative_seek_)
+
+| image:./media/user-guide/fx-events/image45.png[File Rename icon]
+| *File Rename* (_fx_file_rename_)
+
+| image:./media/user-guide/fx-events/image46.png[File Seek icon]
+| *File Seek* (_fx_file_seek_)
+
+| image:./media/user-guide/fx-events/image47.png[File Truncate icon]
+| *File Truncate* (_fx_file_truncate_)
+
+| image:./media/user-guide/fx-events/image48.png[File Truncate Release icon]
+| *File Truncate Release* (_fx_file_truncate_release_)
+
+| image:./media/user-guide/fx-events/image49.png[File Write icon]
+| *File Write* (_fx_file_write_)
+
+| image:./media/user-guide/fx-events/image50.png[Media Abort icon]
+| *Media Abort* (_fx_media_abort_)
+
+| image:./media/user-guide/fx-events/image51.png[Media Cache Invalidate icon]
+| *Media Cache Invalidate* (_fx_media_cache_invalidate_)
+
+| image:./media/user-guide/fx-events/image52.png[Media Check icon]
+| *Media Check* (_fx_media_check_)
+
+| image:./media/user-guide/fx-events/image53.png[*Media Close icon]
+| *Media Close* (_fx_media_close_)
+
+| image:./media/user-guide/fx-events/image54.png[Media Flush icon]
+| *Media Flush* (_fx_media_flush_)
+
+| image:./media/user-guide/fx-events/image55.png[Media Format icon]
+| *Media Format* (_fx_media_format_)
+
+| image:./media/user-guide/fx-events/image56.png[Media Open icon]
+| *Media Open* (_fx_media_open_)
+
+| image:./media/user-guide/fx-events/image57.png[Media Read icon]
+| *Media Read* (_fx_media_read_)
+
+| image:./media/user-guide/fx-events/image58.png[Media Space Available icon]
+| *Media Space Available* (_fx_media_space_available_)
+
+| image:./media/user-guide/fx-events/image59.png[Media Volume Get icon]
+| *Media Volume Get* (_fx_media_volume_get_)
+
+| image:./media/user-guide/fx-events/image60.png[Media Volume Set icon]
+| *Media Volume Set* (_fx_media_volume_set_)
+
+| image:./media/user-guide/fx-events/image61.png[Media Write icon]
+| *Media Write* (_fx_media_write_)
+
+| image:./media/user-guide/fx-events/image62.png[System Date Get icon]
+| *System Date Get* (_fx_system_date_get_)
+
+| image:./media/user-guide/fx-events/image63.png[System Date Set icon]
+| *System Date Set* (_fx_system_date_set_)
+
+| image:./media/user-guide/fx-events/image64.png[System Initialize icon]
+| *System Initialize* (_fx_system_initialize_)
+
+| image:./media/user-guide/fx-events/image65.png[System Time Get icon]
+| *System Time Get* (_fx_system_time_get_)
+
+| image:./media/user-guide/fx-events/image66.png[System Time Set icon]
+| *System Time Set* (_fx_system_time_set_)
+
+| image:./media/user-guide/fx-events/image67.png[Unicode Directory Create icon]
+| *Unicode Directory Create* (_fx_unicode_directory_create_)
+
+| image:./media/user-guide/fx-events/image68.png[Unicode Directory Rename icon]
+| *Unicode Directory Rename* (_fx_unicode_directory_rename_)
+
+| image:./media/user-guide/fx-events/image69.png[Unicode File Create icon]
+| *Unicode File Create* (_fx_unicode_file_create_)
+
+| image:./media/user-guide/fx-events/image70.png[Unicode File Rename icon]
+| *Unicode File Rename* (_fx_unicode_file_rename_)
+
+| image:./media/user-guide/fx-events/image71.png[Unicode Length Get icon]
+| *Unicode Length Get* (_fx_unicode_length_get_)
+
+| image:./media/user-guide/fx-events/image72.png[Unicode Name Get icon]
+| *Unicode Name Get* (_fx_unicode_name_get_)
+
+| image:./media/user-guide/fx-events/image73.png[Unicode Short Name Get icon]
+| *Unicode Short Name Get* (_fx_unicode_short_name_get_)
+|===
+
+== Event Descriptions
+
+The following describes each individual event.
+
+=== Internal Logical Sector Cache Miss
+
+==== Internal logical sector cache miss
+
+*Icon* image:./media/user-guide/fx-events/image1.png[Internal logical sector cache miss icon]
+
+*Description*
+
+This event represents an internal FileX logical sector cache miss.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Sector.
+* Info Field 3: Total misses.
+* Info Field 4: Cache size.
+
+=== Internal Directory Cache Miss
+
+==== Internal directory cache miss
+
+*Icon* image:./media/user-guide/fx-events/image2.png[Internal directory cache miss icon]
+
+*Description*
+
+This event represents an internal FileX directory cache miss.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Total misses.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal Media Flush
+
+==== Internal media flush
+
+*Icon* image:./media/user-guide/fx-events/image3.png[Internal media flush icon]
+
+*Description*
+
+This event represents an internal FileX media flush.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Number of dirty sectors.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal Directory Entry Read
+
+==== Internal directory entry read
+
+*Icon* image:./media/user-guide/fx-events/image4.png[Internal directory entry read icon]
+
+*Description*
+
+This event represents an internal FileX directory entry read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal Directory Entry Write
+
+==== Internal directory entry write
+
+*Icon* image:./media/user-guide/fx-events/image5.png[Internal directory entry write icon]
+
+*Description*
+
+This event represents an internal FileX directory entry write event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Read
+
+==== Internal I/O driver read
+
+*Icon* image:./media/user-guide/fx-events/image6.png[Internal I / O driver read icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Sector.
+* Info Field 3: Number of sectors.
+* Info Field 4: Buffer pointer.
+
+=== Internal I/O Driver Write
+
+==== Internal I/O driver write
+
+*Icon* image:./media/user-guide/fx-events/image7.png[Internal I / O driver write icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver write event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Sector.
+* Info Field 3: Number of sectors.
+* Info Field 4: Buffer pointer.
+
+=== Internal I/O Driver Flush
+
+==== Internal I/O driver flush
+
+*Icon* image:./media/user-guide/fx-events/image8.png[Internal I / O driver flush icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver flush event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Abort
+
+==== Internal I/O driver abort
+
+*Icon* image:./media/user-guide/fx-events/image9.png[Internal I / O driver abort icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver abort event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Initialize
+
+==== Internal I/O driver initialize
+
+*Icon* image:./media/user-guide/fx-events/image10.png[Internal I / O driver initialize icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver initialize event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Boot Sector Read
+
+==== Internal I/O driver boot sector read
+
+*Icon* image:./media/user-guide/fx-events/image11.png[Internal I / O driver boot sector read icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver boot sector read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Buffer pointer.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Release Sectors
+
+==== Internal I/O driver release sectors
+
+*Icon* image:./media/user-guide/fx-events/image12.png[Internal I / O driver release sectors icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver release sectors event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Sector.
+* Info Field 3: Number of sectors.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Boot Sector Write
+
+==== Internal I/O driver boot sector write
+
+*Icon* image:./media/user-guide/fx-events/image13.png[Internal I / O driver boot sector write icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver boot sector write event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Buffer pointer.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Internal I/O Driver Un-initialize
+
+==== Internal I/O driver un-initialize
+
+*Icon* image:./media/user-guide/fx-events/image14.png[Internal I / O driver un-initialize icon]
+
+*Description*
+
+This event represents an internal FileX I/O driver un-initialize event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+</blockquote></td>
+
+=== Directory Attributes Read
+
+==== fx_directory_attributes_read
+
+*Icon* image:./media/user-guide/fx-events/image15.png[Directory attributes read icon]
+
+*Description*
+
+This event represents a directory attributes read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Attributes bit map:
++
+|===
+| Attribute | Value
+
+| Read Only
+| (0x01)
+
+| Hidden
+| (0x02)
+
+| System
+| (0x04)
+
+| Volume
+| (0x08)
+
+| Directory
+| (0x10)
+
+| Archive
+| (0x20)
+|===
+
+* Info Field 4: Not used.
+
+=== Directory Attributes Set
+
+==== fx_directory_attributes_set
+
+*Icon* image:./media/user-guide/fx-events/image16.png[Attributes set icon]
+
+*Description*
+
+This event represents a directory a directory attributes set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Attributes bit map:
++
+|===
+| Attribute | Value
+
+| Read Only
+| (0x01)
+
+| Hidden
+| (0x02)
+
+| System
+| (0x04)
+
+| Archive
+| (0x20)
+|===
+
+* Info Field 4: Not used.
+
+=== Directory Create
+
+==== fx_directory_create
+
+*Icon* image:./media/user-guide/fx-events/image17.png[Directory create icon]
+
+*Description*
+
+This event represents a directory create event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Default Get
+
+==== fx_directory_default_get
+
+*Icon* image:./media/user-guide/fx-events/image18.png[Directory default get icon]
+
+*Description*
+
+This event represents a directory default set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to return path name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Default Set
+
+==== fx_directory_default_set
+
+*Icon* image:./media/user-guide/fx-events/image19.png[Directory default set icon]
+
+*Description*
+
+This event represents a directory default set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to new default path name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Delete
+
+==== fx_directory_delete
+
+*Icon* image:./media/user-guide/fx-events/image20.png[Directory delete icon]
+
+*Description*
+
+This event represents a directory delete event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory First Entry Find
+
+==== fx_directory_first_entry_find
+
+*Icon* image:./media/user-guide/fx-events/image21.png[Directory first entry find icon]
+
+*Description*
+
+This event represents a directory first entry find event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory First Full Entry Find
+
+==== fx_directory_first_full_entry_find
+
+*Icon* image:./media/user-guide/fx-events/image22.png[Directory first full entry find icon]
+
+*Description*
+
+This event represents a directory first full entry find event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Information Get
+
+==== fx_directory_information_get
+
+*Icon* image:./media/user-guide/fx-events/image23.png[Directory information get icon]
+
+*Description*
+
+This event represents a directory information get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Local Path Clear
+
+==== fx_directory_local_path_clear
+
+*Icon* image:./media/user-guide/fx-events/image24.png[Directory local path clear icon]
+
+*Description*
+
+This event represents a directory local path clear event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Local Path Get
+
+==== fx_directory_local_path_get
+
+*Icon* image:./media/user-guide/fx-events/image25.png[Directory local path get icon]
+
+*Description*
+
+This event represents a directory local path get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to return path name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Local Path Restore
+
+==== fx_directory_local_path_restore
+
+*Icon* image:./media/user-guide/fx-events/image26.png[Directory local path restore icon]
+
+*Description*
+
+This event represents a directory local path restore event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to local path structure.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Local Path Set
+
+==== fx_directory_local_path_set
+
+*Icon* image:./media/user-guide/fx-events/image27.png[Directory local path set icon]
+
+*Description*
+
+This event represents a directory local path set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to local path structure.
+* Info Field 3: Pointer to new path name.
+* Info Field 4: Not used.
+
+=== Directory Long Name Get
+
+==== fx_directory_long_name_get
+
+*Icon* image:./media/user-guide/fx-events/image28.png[Directory long name get icon]
+
+*Description*
+
+This event represents a directory long name get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to short file name.
+* Info Field 3: Pointer to long file name.
+* Info Field 4: Not used.
+
+=== Directory Name Test
+
+==== fx_directory_name_test
+
+*Icon* image:./media/user-guide/fx-events/image29.png[Directory name test icon]
+
+*Description*
+
+This event represents a directory name test event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Next Entry Find
+
+==== fx_directory_next_entry_find
+
+*Icon* image:./media/user-guide/fx-events/image30.png[Directory next entry find icon]
+
+*Description*
+
+This event represents a directory next entry find event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Next Full Entry Find
+
+==== fx_directory_next_full_entry_find
+
+*Icon* image:./media/user-guide/fx-events/image31.png[Directory next full entry find icon]
+
+*Description*
+
+This event represents a directory next full entry find event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to directory name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Directory Rename
+
+==== fx_directory_rename event
+
+*Icon* image:./media/user-guide/fx-events/image32.png[Directory rename icon]
+
+*Description*
+
+This event represents a directory rename event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to old directory name.
+* Info Field 3: Pointer to new directory name.
+* Info Field 4: Not used.
+
+=== Directory Short Name Get
+
+==== fx_directory_short_name_get
+
+*Icon* image:./media/user-guide/fx-events/image33.png[Directory short name get icon]
+
+*Description*
+
+This event represents a directory short name get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to long file name.
+* Info Field 3: Pointer to short file name.
+* Info Field 4: Not used.
+
+=== File Allocate
+
+==== fx_file_allocate
+
+*Icon* image:./media/user-guide/fx-events/image34.png[File allocate icon]
+
+*Description*
+
+This event represents a file allocate event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Requested size.
+* Info Field 3: Current size.
+* Info Field 4: New size.
+
+=== File Attributes Read
+
+==== fx_file_attributes_read
+
+*Icon* image:./media/user-guide/fx-events/image35.png[File attributes read icon]
+
+*Description*
+
+This event represents a file attributes read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Attributes bit map:
++
+|===
+| Attribute | Value
+
+| Read Only
+| (0x01)
+
+| Hidden
+| (0x02)
+
+| System
+| (0x04)
+
+| Volume
+| (0x08)
+
+| Directory
+| (0x10)
+
+| Archive
+| (0x20)
+|===
+
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== File Attributes Set
+
+==== fx_file_attributes_set
+
+*Icon* image:./media/user-guide/fx-events/image36.png[File attributes set icon]
+
+*Description*
+
+This event represents a file attributes set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to file name.
+* Info Field 3: Attributes bit map:
++
+|===
+| Attribute | Value
+
+| Read Only
+| (0x01)
+
+| Hidden
+| (0x02)
+
+| System
+| (0x04)
+
+| Archive
+| (0x20)
+|===
+
+* Info Field 4: Not used.
+
+=== File Best Effort Allocate
+
+==== fx_file_best_effort_allocate
+
+*Icon* image:./media/user-guide/fx-events/image37.png[File best effort allocate icon]
+
+*Description*
+
+This event represents a file best effort allocate event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Requested size.
+* Info Field 3: Actual size allocated.
+* Info Field 4: Not used.
+
+=== File Close
+
+==== fx_file_close
+
+*Icon* image:./media/user-guide/fx-events/image38.png[File close icon]
+
+*Description*
+
+This event represents a file close event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: File size.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== File Create
+
+==== fx_file_create
+
+*Icon* image:./media/user-guide/fx-events/image39.png[File create icon]
+
+*Description*
+
+This event represents a file create event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to file name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== File Date Time Set
+
+==== fx_file_date_time_set
+
+*Icon* image:./media/user-guide/fx-events/image40.png[File date time set icon]
+
+*Description*
+
+This event represents a file date/time set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to file name.
+* Info Field 3: Year.
+* Info Field 4: Month.
+
+=== File Delete
+
+==== fx_file_delete
+
+*Icon* image:./media/user-guide/fx-events/image41.png[File delete icon]
+
+*Description*
+
+This event represents a file delete event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to file name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== File Open
+
+==== fx_file_open
+
+*Icon* image:./media/user-guide/fx-events/image42.png[File open icon]
+
+*Description*
+
+This event represents a file open event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to the file control block.
+* Info Field 3: Pointer to file name.
+* Info Field 4: Open type:
++
+|===
+| Open Type | Value
+
+| Open for Read
+| (0x00)
+
+| Open for Write
+| (0x01)
+
+| Fast Open for Read
+| (0x02)
+|===
+
+=== File Read
+
+==== fx_file_read
+
+*Icon* image:./media/user-guide/fx-events/image43.png[File read icon]
+
+*Description*
+
+This event represents a file read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Buffer pointer.
+* Info Field 3: Request size.
+* Info Field 4: Actual size read.
+
+=== File Relative Seek
+
+==== fx_file_relative_seek
+
+*Icon* image:./media/user-guide/fx-events/image44.png[File relative seek icon]
+
+*Description*
+
+This event represents a file relative seek event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Byte offset.
+* Info Field 3: Seek from:
++
+|===
+| Event | Value
+
+| From Beginning
+| (0x00)
+
+| From End
+| (0x01)
+
+| Forward
+| (0x02)
+
+| Backward
+| (0x03)
+|===
+
+* Info Field 4: Previous offset.
+
+=== File Rename
+
+==== fx_file_rename
+
+*Icon* image:./media/user-guide/fx-events/image45.png[File rename icon]
+
+*Description*
+
+This event represents a file rename event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to old file name.
+* Info Field 3: Pointer to new file name.
+* Info Field 4: Not used.
+
+=== File Seek
+
+==== fx_file_seek
+
+*Icon* image:./media/user-guide/fx-events/image46.png[File seek icon]
+
+*Description*
+
+This event represents a file seek event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Byte offset.
+* Info Field 3: Previous offset.
+* Info Field 4: Not used.
+
+=== File Truncate
+
+==== fx_file_truncate
+
+*Icon* image:./media/user-guide/fx-events/image47.png[File truncate icon]
+
+*Description*
+
+This event represents a file truncate event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Requested size.
+* Info Field 3: Previous size.
+* Info Field 4: New size.
+
+=== File Truncate Release
+
+==== fx_file_truncate_release
+
+*Icon* image:./media/user-guide/fx-events/image48.png[File truncate release icon]
+
+*Description*
+
+This event represents a file truncate release event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Requested size.
+* Info Field 3: Previous size.
+* Info Field 4: New size.
+
+=== File Write
+
+==== fx_file_write
+
+*Icon* image:./media/user-guide/fx-events/image49.png[File write icon]
+
+*Description*
+
+This event represents a file write event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the file.
+* Info Field 2: Buffer pointer.
+* Info Field 3: Request size.
+* Info Field 4: Actual size written.
+
+=== Media Abort
+
+==== fx_media_abort
+
+*Icon* image:./media/user-guide/fx-events/image50.png[Media abort icon]
+
+*Description*
+
+This event represents a media abort event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Media Cache Invalidate
+
+==== fx_media_cache_invalidate
+
+*Icon* image:./media/user-guide/fx-events/image51.png[Media cache invalidate icon]
+
+*Description*
+
+This event represents a media cache invalidate event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Media Check
+
+==== fx_media_check
+
+*Icon* image:./media/user-guide/fx-events/image52.png[Media check icon]
+
+*Description*
+
+This event represents a media check event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Scratch memory pointer.
+* Info Field 3: Scratch memory size.
+* Info Field 4: Errors bit map:
++
+|===
+| Error type | Value
+
+| FAT Chain Error
+| (0x01)
+
+| Directory Error
+| (0x02)
+
+| Lost Cluster Error
+| (0x04)
+
+| File Size Error
+| (0x08)
+|===
+
+=== Media Close
+
+==== fx_media_close
+
+*Icon* image:./media/user-guide/fx-events/image53.png[Media Close icon]
+
+*Description*
+
+This event represents a media close event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Media Flush
+
+==== fx_media_flush
+
+*Icon* image:./media/user-guide/fx-events/image54.png[Media flush icon]
+
+*Description*
+
+This event represents a media flush event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Media Format
+
+==== fx_media_format
+
+*Icon* image:./media/user-guide/fx-events/image55.png[Media format icon]
+
+*Description*
+
+This event represents a media format event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Number of root entries.
+* Info Field 3: Sectors.
+* Info Field 4: Sectors per cluster.
+
+=== Media Open
+
+==== fx_media_open
+
+*Icon* image:./media/user-guide/fx-events/image56.png[Media open icon]
+
+*Description*
+
+This event represents a media open event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to media driver entry.
+* Info Field 3: Memory pointer.
+* Info Field 4: Memory size.
+
+=== Media Read Media Read
+
+==== fx_media_read
+
+*Icon* image:./media/user-guide/fx-events/image57.png[Media read icon]
+
+*Description*
+
+This event represents a media read event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Logical sector.
+* Info Field 3: Buffer pointer.
+* Info Field 4: Bytes read.
+
+=== Media Space Available
+
+==== fx_media_space_available
+
+*Icon* image:./media/user-guide/fx-events/image58.png[Media space available icon]
+
+*Description*
+
+This event represents a media space available event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Available bytes pointer.
+* Info Field 3: Number of free clusters.
+* Info Field 4: Not used.
+
+=== Media Volume Get
+
+==== fx_media_volume_get
+
+*Icon* image:./media/user-guide/fx-events/image59.png[Media volume get icon]
+
+*Description*
+
+This event represents a media volume get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to volume name.
+* Info Field 3: Volume source.
+* Info Field 4: Not used.
+
+=== Media Volume Set
+
+==== fx_media_volume_set
+
+*Icon* image:./media/user-guide/fx-events/image60.png[Media volume set icon]
+
+*Description*
+
+This event represents a media volume set event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to volume name.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Media Write
+
+==== fx_media_write
+
+*Icon* image:./media/user-guide/fx-events/image61.png[Media write icon]
+
+*Description*
+
+This event represents a media write event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Logical sector.
+* Info Field 3: Buffer pointer.
+* Info Field 4: Bytes written.
+
+=== System Date Get
+
+==== fx_system_date_get
+
+*Icon* image:./media/user-guide/fx-events/image62.png[System date get icon]
+
+*Description*
+
+This event represents a system date get event.
+
+*Information Fields*
+
+* Info Field 1: Year.
+* Info Field 2: Month.
+* Info Field 3: Day.
+* Info Field 4: Not used.
+
+=== System Date Set
+
+==== fx_system_date_set
+
+*Icon* image:./media/user-guide/fx-events/image63.png[System date set icon]
+
+*Description*
+
+This event represents a system date set event.
+
+*Information Fields*
+
+* Info Field 1: Year.
+* Info Field 2: Month.
+* Info Field 3: Day.
+* Info Field 4: Not used.
+
+=== System Initialize
+
+==== fx_system_initialize
+
+*Icon* image:./media/user-guide/fx-events/image64.png[System initialize icon]
+
+*Description*
+
+This event represents a system initialize event.
+
+*Information Fields*
+
+* Info Field 1: Not used.
+* Info Field 2: Not used.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== System Time Get
+
+==== fx_system_time_get
+
+*Icon* image:./media/user-guide/fx-events/image65.png[System time get icon]
+
+*Description*
+
+This event represents a system time get event.
+
+*Information Fields*
+
+* Info Field 1: Hour.
+* Info Field 2: Minute.
+* Info Field 3: Second.
+* Info Field 4: Not used.
+
+=== System Time Set
+
+==== fx_system_time_set
+
+*Icon* image:./media/user-guide/fx-events/image66.png[System time set icon]
+
+*Description*
+
+This event represents a system time set event.
+
+*Information Fields*
+
+* Info Field 1: Hour.
+* Info Field 2: Minute.
+* Info Field 3: Second.
+* Info Field 4: Not used.
+
+=== Unicode Directory Create
+
+==== fx_unicode_directory_create
+
+*Icon* image:./media/user-guide/fx-events/image67.png[Unicode directory create icon]
+
+*Description*
+
+This event represents a Unicode directory create event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to Unicode name.
+* Info Field 3: Size of Unicode name.
+* Info Field 4: Pointer to short name.
+
+=== Unicode Directory Rename
+
+==== fx_unicode_directory_rename
+
+*Icon* image:./media/user-guide/fx-events/image68.png[Unicode directory rename icon]
+
+*Description*
+
+This event represents a Unicode directory rename event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to Unicode name.
+* Info Field 3: Size of Unicode name.
+* Info Field 4: Pointer to short name.
+
+=== Unicode File Create
+
+==== fx_unicode_file_create
+
+*Icon* image:./media/user-guide/fx-events/image69.png[Unicode file create icon]
+
+*Description*
+
+This event represents a Unicode file create event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to the Unicode name.
+* Info Field 3: Size of Unicode name.
+* Info Field 4: Pointer to short name.
+
+=== Unicode File Rename
+
+==== fx_unicode_file_rename
+
+*Icon* image:./media/user-guide/fx-events/image70.png[Unicode file rename icon]
+
+*Description*
+
+This event represents a Unicode file rename event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to Unicode name.
+* Info Field 3: Size of Unicode name.
+* Info Field 4: Pointer to short name.
+
+=== Unicode Length Get
+
+==== fx_unicode_length_get
+
+*Icon* image:./media/user-guide/fx-events/image71.png[Unicode length get icon]
+
+*Description*
+
+This event represents a Unicode length get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the Unicode name.
+* Info Field 2: Length.
+* Info Field 3: Not used.
+* Info Field 4: Not used.
+
+=== Unicode Name Get
+
+==== fx_unicode_name_get
+
+*Icon* image:./media/user-guide/fx-events/image72.png[Unicode name get icon]
+
+*Description*
+
+This event represents a Unicode name get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Source short name.
+* Info Field 3: Destination Unicode name pointer.
+* Info Field 4: Destination Unicode name length.
+
+=== Unicode Short Name Get
+
+==== fx_unicode_short_name_get
+
+*Icon* image:./media/user-guide/fx-events/image73.png[Unicode short name get icon]
+
+*Description*
+
+This event represents a Unicode short name get event.
+
+*Information Fields*
+
+* Info Field 1: Pointer to the media.
+* Info Field 2: Pointer to source Unicode name.
+* Info Field 3: Length of Unicode name.
+* Info Field 4: Pointer to short name.

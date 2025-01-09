@@ -1,0 +1,35 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 1 - Introduction to NetX Duo BSD
+:description: The BSD Socket API Compliancy Wrapper supports some of the basic BSD Socket API calls, with some limitations and utilizes NetX Duo primitives underneath.
+
+The BSD Socket API Compliancy Wrapper supports some of the basic BSD Socket API calls, with some limitations and utilizes NetX Duo primitives underneath.
+
+== BSD Socket API Compliancy Wrapper Source
+
+The Wrapper source code is designed for simplicity and is comprised of two files, namely _nxd_bsd.h_ and _nxd_bsd.c_. The _nxd_bsd.h_ file defines all the necessary BSD Socket API wrapper constants and subroutine prototypes, while _nxd_bsd.c_ contains the actual BSD Socket API compatibility source code. These Wrapper source files are common to all NetX Duo support packages.
+
+The package consists of:
+
+* *nxd_bsd.c*: Wrapper source code
+* *nxd_bsd.h*: Main header file
+
+Sample demo programs:
+
+* *bsd_demo_udp.c*: _Demo with two UDP peers (IPv4 only)_
+* *bsd_demo_tcp.c*: _Demo with a single TCP server and client_
+* *bsd_demo_raw.c*: _Demo with two RAW peers_

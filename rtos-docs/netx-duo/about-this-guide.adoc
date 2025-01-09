@@ -1,0 +1,84 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= About the NetX Duo User Guide
+:description: This guide contains comprehensive information about NetX Duo, the Eclipse Foundation high-performance IPv4/IPv6 dual network stack.
+
+This guide contains comprehensive information about NetX Duo, the Eclipse Foundation high-performance IPv4/IPv6 dual network stack.
+
+It is intended for embedded real-time software developers familiar with basic networking concepts, ThreadX, and the C programming language.
+
+== Organization
+
+* xref:chapter1.adoc[Chapter 1] - Introduces NetX Duo
+* xref:chapter2.adoc[Chapter 2] - Gives the basic steps to install and use NetX Duo with your ThreadX application
+* xref:chapter3.adoc[Chapter 3] - Provides a functional overview of the NetX Duo system and basic information about the TCP/IP networking standards
+* xref:chapter4.adoc[Chapter 4] - Details the application's interface to NetX Duo
+* xref:chapter5.adoc[Chapter 5] - Describes network drivers for NetX Duo
+* xref:appendix-a.adoc[Appendix A] - NetX Duo Services
+* xref:appendix-b.adoc[Appendix B] - NetX Duo Constants
+* xref:appendix-c.adoc[Appendix C] - NetX Duo Data Types
+* xref:appendix-d.adoc[Appendix D] - BSD-Compatible Socket API
+* xref:appendix-e.adoc[Appendix E] - ASCII Chart
+
+== Guide Conventions
+
+Italics - Typeface denotes book titles, emphasizes important words, and indicates variables.
+
+*Boldface* - Typeface denotes file names, key words, and further emphasizes important words and variables.
+
+IMPORTANT: Information symbols draw attention to important or additional information that could affect performance or function.
+
+WARNING: Warning symbols draw attention to situations that developers should avoid because they could cause fatal errors.
+
+== NetX Duo Data Types
+
+In addition to the custom NetX Duo control structure data types, there are several special data types that are used in NetX Duo service call interfaces. These special data types map directly to data types of the underlying C compiler. This is done to ensure portability between different C compilers. The exact implementation is inherited from ThreadX and can be found in the *_tx_port.h_* file included in the ThreadX distribution.
+
+The following is a list of NetX Duo service call data types and their associated meanings:
+
+*UINT*: Basic unsigned integer. This type must support 32-bit unsigned data; however, it is mapped to the most convenient unsigned data type. +
+*ULONG*: Unsigned long type. This type must support 32-bit unsigned  data.
+*VOID*: Almost always equivalent to the compiler's void type. +
+*CHAR*: Most often a standard 8-bit character type.
+
+Additional data types are used within the NetX Duo source. They are located in either the *_tx_port.h_* or *_nx_port.h_* files.
+
+== Troubleshooting
+
+For troubleshooting, be sure to collect the following information:
+
+. A detailed description of the problem, including frequency of occurrence and whether it can be reliably reproduced.
+. A detailed description of any changes to the application and/or NetX Duo that preceded the problem.
+. The contents of the _tx_version_id and
+_nx_version_id strings found in the tx_port.h and nx_port.h files of your distribution. These strings provide valuable information regarding your run-time environment.
+. The contents in RAM of the following ULONG variables:
++
+*_tx_build_options*
++
+*_nx_system_build_options1*
++
+*_nx_system_build_options2*
++
+*_nx_system_build_options3*
++
+*_nx_system_build_options4*
++
+*_nx_system_build_options5*
++
+These variables give information on how your ThreadX and NetX Duo libraries were built.
+
+. A trace buffer captured immediately after the problem was detected. This is accomplished by building the ThreadX and NetX Duo libraries with TX_ENABLE_EVENT_TRACE and calling tx_trace_enable with the trace buffer information.

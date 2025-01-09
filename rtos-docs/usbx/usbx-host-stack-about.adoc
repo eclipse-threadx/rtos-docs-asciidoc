@@ -1,0 +1,42 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= USBX Host Stack User Guide
+:description: This guide provides comprehensive information about USBX, the high-performance USB foundation software from Eclipse Foundation.
+
+This guide provides comprehensive information about USBX, the high-performance USB foundation software from Eclipse Foundation.
+
+It is intended for the embedded real-time software developer. The developer should be familiar with standard real-time operating system functions, the USB specification, and the C programming language.
+
+For technical information related to USB, see the USB specification and USB Class specifications that can be downloaded at https://www.USB.org/developers
+
+== Organization
+
+* xref:usbx-host-stack-1.adoc[*Chapter 1*] - contains an introduction to USBX
+* xref:usbx-host-stack-2.adoc[*Chapter 2*] - gives the basic steps to install and use USBX with your ThreadX application
+* xref:usbx-host-stack-3.adoc[*Chapter 3*] - provides a functional overview of USBX and basic information about USB
+* xref:usbx-host-stack-4.adoc[*Chapter 4*] - details the application's interface to USBX in host mode
+* xref:usbx-host-stack-5.adoc[*Chapter 5*] - describes the APIs of the USBX Host classes
+* xref:usbx-host-stack-6.adoc[*Chapter 6*] - describes the USBX CDC-ECM class
+
+== Troubleshooting
+
+For troubleshooting, be sure to collect the following information:
+
+. A detailed description of the problem, including frequency of occurrence and whether it can be reliably reproduced.
+. A detailed description of any changes to the application and/or ThreadX that preceded the problem.
+. The contents of the *_tx_version_id* string found in the *_tx_port.h_* file of your distribution. This string provides valuable information regarding your run-time environment.
+. The contents in RAM of the __tx_build_options_ *ULONG* variable. This variable gives information on how your ThreadX library was built.
