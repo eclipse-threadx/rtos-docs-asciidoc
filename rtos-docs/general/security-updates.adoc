@@ -1,0 +1,98 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Security Updates
+:description: Eclipse ThreadX Security Updates.
+
+This table lists all https://cve.mitre.org/[Common Vulnerabilities and Exposures (CVE)] and status for fixes in Eclipse ThreadX components.
+
+For all security vulnerabilities, you can find the published list on the corresponding Eclipse ThreadX component repository.
+
+|===
+| Release Date | CVE | Severity | Eclipse ThreadX Component | Affected Versions | Patched Versions
+
+| 5/19/2022
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-29246[CVE-2022-29246]
+| High
+| USBX
+| < 6.1.11
+| 6.1.11
+
+| 5/17/2022
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-29223[CVE-2022-29223]
+| High
+| USBX
+| < 6.1.10
+| 6.1.10
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42323[CVE-2021-42323]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42304[CVE-2021-42304]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42303[CVE-2021-42303]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42302[CVE-2021-42302]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-42301[CVE-2021-42301]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+
+| 11/9/2021
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-26444[CVE-2021-26444]
+| High
+| USBX
+| < 6.1.9
+| 6.1.9
+|===

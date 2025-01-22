@@ -1,0 +1,63 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 2  Installing ThreadX support for ARMv8-M
+:description: This chapter explains how to install and use the ThreadX source code for the ARMv8-M architecture.
+
+There are additional ThreadX source code files to support the ARMv8-M architecture.
+
+If ThreadX is to be run in _secure mode_, these additional files and APIs are not needed. To run ThreadX in secure mode, define the symbol *TX_SINGLE_MODE_SECURE* at the top of *_tx_port.h_* or on the command line or project settings. Ensure *TX_SINGLE_MODE_SECURE* is defined for all c and assembly files. ThreadX and the user application will execute in secure mode.
+
+If ThreadX and the user application are to run only in _non-secure mode_, define the symbol *TX_SINGLE_MODE_NON_SECURE* at the top of *_tx_port.h_* or on the command line or project settings. Ensure *TX_SINGLE_MODE_NON_SECURE* is defined for all c and assembly files. ThreadX and the user application will execute in non-secure mode with no support for making secure function calls.
+
+By default, ThreadX and the user application are designed to run in non-secure mode with support for non-secure callable secure functions.
+To run ThreadX and the user application in non-secure mode and support non-secure callable secure functions, please do the following:
+
+The file *_tx_thread_secure_stack.c_* must be added to the secure application.
+
+The following files must be added to the ThreadX library:
+
+* *_tx_secure_interface.h_*
+* *_txe_thread_secure_stack_allocate.c_*
+* *_txe_thread_secure_stack_free.c_*
+* *_tx_thread_secure_stack_allocate.s_*
+* *_tx_thread_secure_stack_free.s_*
+
+== Additional ThreadX Sources for ARMv8-M
+
+The additional ThreadX files for the ARMv8-M TrustZone architecture are described below.
+
+|===
+| *File Name* | *Contents*
+
+| *_tx_secure_interface.h_*
+| Include file that defines the ThreadX non-secure callable functions.
+
+| *_txe_thread_secure_stack_allocate.c_*
+| Error-checking file for the secure stack allocate API.
+
+| *_txe_thread_secure_stack_free.c_*
+| Error-checking file for the secure stack free API.
+
+| *_tx_thread_secure_stack_initialize.s_*
+| Initialize the secure stacks.
+
+| *_tx_thread_secure_stack_allocate.s_*
+| Non-secure veneer for the secure stack allocate service.
+
+| *_tx_thread_secure_stack_free.s_*
+| Non-secure veneer for the secure stack free service.
+|===

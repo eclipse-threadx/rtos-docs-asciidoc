@@ -1,0 +1,154 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 3: Description of GUIX Studio
+:description: This chapter contains a description of the GUIX Studio system analysis tool.
+
+This chapter contains a description of the GUIX Studio system analysis tool. A description of the overall functionality of the GUI is found in this chapter.
+
+== GUIX Studio Views
+
+There are five principal areas of the GUIX Studio UI, namely the *_Toolbar_*, *_Project View_*, *_Properties View_*, *_Target View_*, and *_Resource View_*. *_Figure 2_* shows the basic GUIX Studio UI. Each of the views is further discussed in the following sub-sections.
+
+image::./media/guix-studio/image_10.png[Screenshot of the basic GUIX Studio UI.]
+
+*Figure 2*
+
+=== Title
+
+* GUIX Studio 18: The *_Title_* displays the GUIX Studio version as well as the currently open project, as shown at the top of *_Figure 2_* previously.
+
+=== Toolbar
+
+The *_Toolbar_* shows the buttons available to the GUIX Studio developer, as shown in *_Figure 3_*.
+
+image::./media/guix-studio/image11.jpg[Screenshot of the GUIX Studio toolbar.]
+
+*Figure 3*
+
+The toolbar buttons are defined as follows:
+
+image:./media/guix-studio/new-button.png[New button] Creates a new GUIX Studio project
+
+image:./media/guix-studio/open-button.png[Open button] Opens an existing GUIX Studio project
+
+image:./media/guix-studio/save-button.png[Save button] Saves the project
+
+image:./media/guix-studio/cut-button.png[Cut button] Cut widget selected, including children
+
+image:./media/guix-studio/copy-button.png[Copy button] Copy selected widget, including children
+
+image:./media/guix-studio/paste-button.png[Paste button] Paste widget and children
+
+image:./media/guix-studio/left-align-button.png[Left align button] Left-align selected widgets
+
+image:./media/guix-studio/right-align-button.png[Right align button] Right-align selected widgets
+
+image:./media/guix-studio/top-align-button.png[Top align button] Top-align selected widgets
+
+image:./media/guix-studio/bottom-align-button.png[Bottom align button] Bottom-align selected widgets
+
+image:./media/guix-studio/space-vertically-button.png[Space vertically button] Equally space selected widgets vertically
+
+image:./media/guix-studio/space-horizontally-button.png[Space horizontally button] Equally space selected widgets horizontally
+
+image:./media/guix-studio/equal-width-button.png[Equal width button] Make selected widgets equal width
+
+image:./media/guix-studio/equal-height-button.png[Equal height button] Make selected widgets equal height
+
+image:./media/guix-studio/move-front-button.png[Move front button] Move selected widgets to front
+
+image:./media/guix-studio/move-back-button.png[Move back button] Move selected widgets to back
+
+image:./media/guix-studio/size-button.png[Size button] Size selected widget to content Zoom out target screen
+
+image:./media/guix-studio/zoom-out-button.png[Zoom out button] Zoom out target screen
+
+image:./media/guix-studio/zoom-in-button.png[Zoom in button] Zoom in target screen
+
+image:./media/guix-studio/record-button.png[Record button] Record Macro
+
+image:./media/guix-studio/playback-button.png[Playback button] Playback Macro
+
+image:./media/guix-studio/run-button.png[Run button] Run Application
+
+image:./media/guix-studio/about-button.png[About button] About GUIX Studio
+
+=== Project View
+
+The *_Project View_* shows the hierarchical list GUIX objects that comprise the embedded UI. New GUIX objects can be added by clicking on the parent object and then selecting an object from the *_Insert_* menu (or by right-clicking on the object and selecting from the right-click menu). *_Figure 4_* below shows the GUIX Studio *_Project View_*.
+
+image::./media/guix-studio/image_35.png[Screenshot of the GUIX Studio Project View.]
+
+*Figure 4*
+
+=== Properties View
+
+The *_Properties View_* shows detailed property information of the currently selected GUIX object, which can be selected via the *_Project View_* or by clicking directly on the object in the *_Target View_*. *_Figure 5_* below shows the GUIX Studio *_Properties View_*.
+
+image::./media/guix-studio/image36.jpg[Screenshot of the GUIX Studio Properties View.]
+
+*Figure 5*
+
+=== Target View
+
+The *_Target View_* is the WYSIWYG screen design and layout area. This view is meant to represent the physical display or displays available on your target hardware. Objects can be selected, moved, resized, etc. via simple mouse operations. In addition, alignment and Z-order button operations are available on selected objects in the Target View. Selecting an object in the *_Target View_* will also result in the properties for that object to be displayed in the *_Properties View_*. *_Figure 6_* below shows the GUIX Studio *_Target View_*.
+
+image::./media/guix-studio/image_37.png[Screenshot of the GUIX Studio Target View.]
+
+*Figure 6*
+
+=== Resource View
+
+The *_Resource View_* is used to manage the resources (colors, fonts, pixelmaps, and strings) available to applications screens defined for each display. You can click on the resource view group headers to expand each group and examine the group contents. *_Figure 7_* below shows the GUIX Studio *_Resource View_*.
+
+image::./media/guix-studio/image38.jpg[Screenshot of the GUIX Studio Resource View.]
+
+*Figure 7*
+
+The title of the resource groups indicates current theme name. If multi themes available, you are able to switch between themes by clicking on the up and down arrow.
+
+Each resource group in the view above can be expanded or collapsed by clicking on the group header. A more detailed description of each resource groups follows in the next chapter.
+
+== The GUIX Studio Project
+
+A GUIX Studio project maintains information about your UI screen design and UI resources. The project data is saved to an XML format file with the extension ".*_gxp_*". Since the project file is an XML schema file, it can be versioned controlled and shared similar to any other source file.
+
+When you first start using GUIX Studio, you will need to either open one of the example projects provided with the distribution or create a new project. All of your work is saved to the project data file.
+
+GUIX Studio also produces ANSI C source files. These source files contain either your application resources or data structures describing your designed screens. GUIX Studio also writes to these generated source files API functions that know to utilize the generated data structures to dynamically create your application screens. Your application software will simply invoke the provided API functions to create the screens you have designed within GUIX Studio.
+
+As you progress in designing your user interface, you will periodically want to use GUIX Studio to generate the GUIX compatible output files that will allow you to build and run the interface you have designed. You can compile and run the generated source files for either your target hardware or on your Windows desktop that simulates ThreadX and GUIX.
+
+== GUIX Studio Project Organization
+
+It is helpful to have some knowledge of the basic organization of a GUIX Studio project to understand how to use GUIX Studio effectively and to understand the information presented in the Project View of the GUIX Studio IDE. The Project View is a summary visual representation of all of the information contained in your project.
+
+Before describing the project, it is necessary to define few terms. First, we use the term *Display* to mean a physical display device. This is most often an LCD display device but it could be using other technology. The next term is *Screen*, which mean a top-level GUIX object, usually a GUIX Window, and all of its associated child elements. A Screen is a software construct that can be defined and modified at runtime. Finally, a *Theme* is a collection of resources. A theme includes a table of color definitions, font definitions, and pixelmap definitions that are designed to work well together and present your end user with a consistent look and feel.
+
+The project first includes a set of global information such as the project name, number of displays supported, the resolution and color format of each display, the number of languages supported, the name of each supported language. The project name is the first node displayed in the Project View.
+
+The project next organizes all of the information required for up to 4 physical displays and the screens and resources available to each display. The display names are the next level nodes in the Project View tree.
+
+A unique feature of the GUIX Studio application is built-in support for multiple physical displays, each with its own x,y resolution, color format, screens, and resources. While the vast majority of GUIX applications utilize only one physical display, this capability is important for those making a product that must support multiple simultaneous physical displays.
+
+Beneath each display definition are the top-level windows or screens defined for that display. The screen definitions can be nested to any level depending on the number and nesting of child widgets on each screen.
+
+This screen and child widget organization is displayed in a graphical manner in the Project View.
+
+Also associated with each display are the Themes supported by the display and the resource content composing each Theme. If your project includes multiple displays, you will notice that the Resource View changes its content when you select one display and then another. This is because the resource content is linked to each display. Not only the color format may be different, but the pixelmaps, colors, and fonts you choose to use may vary from one physical display to another.
+
+The final component maintained by the project is the string table data associated with each display. Since displays can be of very different x,y resolutions, the string data is maintained independently for each display defined in the project.

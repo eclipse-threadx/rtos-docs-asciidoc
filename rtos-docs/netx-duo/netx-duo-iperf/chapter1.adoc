@@ -1,0 +1,26 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 1 - Introduction to NetX Duo Iperf
+:description: The Iperf sample is a network testing program that tests TCP and UDP network throughput.
+
+Iperf is a standard network testing program that runs on both Windows and Linux hosts. Iperf is designed to test TCP and UDP network throughput. The examples in this document are based on the Java-based Iperf implementation called Jperf. For more information on Iperf, see the Wikipedia link:
+
+____
+http://en.wikipedia.org/wiki/Iperf
+____
+
+The NetX Duo Iperf Demonstration is designed to run a variety of evaluation boards in order to assess NetX Duo performance as well as the performance of the underlying hardware. This demonstration may also be used as a general platform for doing some limited network programming using NetX Duo.

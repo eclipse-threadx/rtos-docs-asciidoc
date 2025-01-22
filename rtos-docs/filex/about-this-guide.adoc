@@ -1,0 +1,98 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= About This FileX User Guide
+:description: This guide contains comprehensive information about FileX, the high-performance real-time file system from Eclipse Foundation.
+
+This guide contains comprehensive information about FileX, the high-performance, real-time embedded file system from Eclipse Foundation. To gain the most from this guide, you should be familiar with standard real-time operating system functions, FAT file system services, and the C programming language.
+
+== Organization
+
+xref:chapter1.adoc[Chapter 1] - Introduces FileX
+
+xref:chapter2.adoc[Chapter 2] - Gives the basic steps to install and use FileX with your ThreadX application
+
+xref:chapter3.adoc[Chapter 3] - Provides a functional overview of the FileX system and basic information about FAT file system formats
+
+xref:chapter4.adoc[Chapter 4] - Details the application's interface to FileX
+
+xref:chapter5.adoc[Chapter 5] - Describes the supplied FileX RAM driver and how to write your own custom FileX drivers
+
+xref:chapter6.adoc[Chapter 6] - Describes the FileX Fault Tolerant Module
+
+xref:appendix-a.adoc[Appendix A] - FileX Services
+
+xref:appendix-b.adoc[Appendix B] - FileX Constants
+
+xref:appendix-c.adoc[Appendix C] - FileX Data Types
+
+xref:appendix-d.adoc[Appendix D] - ASCII Chart
+
+== Guide Conventions
+
+_Italics_ - Typeface denotes book titles, emphasizes important words, and indicates variables.
+
+*Boldface* - Typeface denotes file names,
+key words, and further emphasizes important words and variables.
+
+NOTE: Information symbols draw attention to important or additional information that could affect performance or function.
+
+IMPORTANT: Warning symbols draw attention to situations that developers should avoid because they could cause fatal errors.
+
+== FileX Data Types
+
+In addition to the custom FileX control structure data types, there is a series of special data types that are used in FileX service call interfaces. These special data types map directly to data types of the underlying C compiler. This is done to ensure portability between different C compilers. The exact implementation is inherited from ThreadX and can be found in the tx_port.h file included in the ThreadX distribution.
+
+The following is a list of FileX service call data types and their associated meanings.
+
+|===
+| Type | Description
+
+| *UINT*
+| Basic unsigned integer. This type must support 8-bit unsigned data; however, it is mapped to the most convenient unsigned data type.
+
+| *ULONG*
+| Unsigned long type. This type must support 32-bit unsigned data.
+
+| *VOID*
+| Almost always equivalent to the compiler's void type.
+
+| *CHAR*
+| Most often a standard 8-bit character type.
+
+| *ULONG64*
+| 64-bit unsigned integer data type.
+|===
+
+Additional data types are used within the FileX source. They are located in either the *_tx_port.h_* or *_fx_port.h_* files.
+
+== Troubleshooting
+
+For troubleshooting, be sure to collect the following information.
+
+. A detailed description of the problem, including frequency of occurrence and whether it can be reliably reproduced.
+. A detailed description of any changes to the application and/or FileX that preceded the problem.
+. The contents of the _tx_version_id and
+_fx_version_id strings found in the *_tx_port.h_* and *_fx_port.h_* files of your distribution. These strings will provide valuable information regarding your run-time environment.
+. The contents in RAM of the following *ULONG* variables. These variables will give information on how your ThreadX and FileX libraries were built:
++
+*_tx_build_options*
++
+*_fx_system_build_options1*
++
+*_fx_system_build_options2*
++
+*_fx_system_build_options3*

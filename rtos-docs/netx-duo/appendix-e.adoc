@@ -1,0 +1,22 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Appendix E -  NetX Duo ASCII Character Codes
+:description: Explore the ASCII Character Codes.
+
+== ASCII Character Codes in HEX
+
+image::./media/user-guide/ascii-character-codes-hex.png[Screenshot of the ASCII Character Codes in HEX.]

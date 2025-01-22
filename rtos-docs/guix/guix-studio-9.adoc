@@ -1,0 +1,103 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Chapter 9: GUIX Studio Command Line
+:description: GUIX Studio provides command-line invocation that is useful for build pipelines that are required to update the Studio-generated output files.
+
+GUIX Studio supports command-line invocation,  which is useful for build pipelines that are required to update of the Studio-generated output files.
+
+== Command-Line Usage
+
+*Usage:* guix_studio [OPTION] [ARGUMENT]
+
+Open the _.gxp_ project.
+
+Open the Studio project and generate desired output files.
+
+*Examples:*
+
+`guix_studio.exe demo.gxp` +
+Open "demo.gxp" project
+
+`guix_studio.exe –p demo.gxp` +
+Open "demo.gxp" project
+
+`guix_studio.exe –n –p demo.gxp` +
+Generate all output files of demo.gxp project.
+
+`guix_studio.exe –n –r –p demo.gxp` +
+Generate resource files of demo.gxp project.
+
+`guix_studio.exe -x resource.xml -b`
+Generate binary resource file from a resource project resource.xml.
+
+== Command-Line Options
+
+*_-n --nogui_*
+
+The "nogui" option. Tell GUIX Studio to run without starting the windowing UI interface.
+
+*_-o pathname, --log_*
+
+Log option, specify a log file.
+
+*_-b, --binary_*
+
+Binary resource option. Produces a binary resource file rather than a C file.
+
+*_-d display1, display2, --display_*
+
+Display names option. If this option is used, then only the specified display names are included in any generated resource or specification files. If this option is not used,  all displays are included.
+
+*_-t theme1, theme2, --theme_*
+
+Theme name(s) option. If this option is used, then only the specified theme names are included in any generated resource or specification files. If this option is not used, all themes are included.
+
+*_-l language1, language2, --language_*
+
+Language name(s) option. If this option is used,  the specified language names are included in the generated resource or specification files. Otherwise all language names are included.
+
+*_-r [filename], --resource_*
+
+The resource option, specifies that Studio should produce a resource file for previously designated display(s), theme(s), and language(s).
+
+*_-s [filename], --specification_*
+
+The specification option, specify that studio should produce a specification file for designated display(s), theme(s), and language(s).
+
+*_-p project_pathname, --project_*
+
+Project pathname option, specify the example project to be loaded.
+
+*_-i [pathname], --import_*
+
+Import string from xliff or csv format file.
+
+*_--big_endian_*
+
+Generate resource data in big-endian format.
+
+*_--no_res_header_*
+
+Not generating resource header.
+
+*_-x [pathname], --xml_*
+
+Specify the input resource XML file.
+
+*_--output_path pathname_*
+
+Specify the output directory. If not specified, the project directory will be used for the output files.
