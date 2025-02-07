@@ -10,12 +10,11 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SOURCE_REPO: 'eclipse-threadx/rtos-docs-asciidoc'
   TARGET_REPO: 'eclipse-threadx/rtos-docs-html'
 
 jobs:
   build:
-    if: github.repository == '${{ env.SOURCE_REPO }}'
+    if: github.repository == 'eclipse-threadx/rtos-docs-asciidoc'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
