@@ -1,0 +1,62 @@
+name: Build HTML Pages and publish to rtos-docs-html
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: run-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SOURCE_REPO: 'eclipse-threadx/rtos-docs-asciidoc'
+  TARGET_REPO: 'eclipse-threadx/rtos-docs-html'
+
+jobs:
+  build:
+    if: github.repository == '${{ env.SOURCE_REPO }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          path: 'asciidoc'
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: ${{ env.TARGET_REPO }}
+          ref: 'main'
+          path: 'html'
+          token: ${{ secrets.DOCS_PUBLISH_TOKEN }}
+      - uses: ruby/setup-ruby@d781c1b4ed31764801bfae177617bb0446f5ef8d # v1.218.0
+        with:
+          ruby-version: 3.4.1
+      - uses: reitzig/actions-asciidoctor@c642db5eedd1d729bb8c92034770d0b2f769eda6 # v2.0.2
+        with:
+          version: 2.0.23
+      - name: build html pages
+        run: |
+          DESTINATION="${{ github.workspace }}/html"
+          cd asciidoc/rtos-docs
+          for directory in `ls -d */`; do
+             if [ "${directory}" != "media/" ]; then
+              echo "${directory}"
+              CURRENT_DESTINATION=${DESTINATION}/${directory}
+              mkdir -p ${CURRENT_DESTINATION}
+              (cd "${directory}" && asciidoctor *.adoc --destination-dir=${CURRENT_DESTINATION})
+              if [ -d "${directory}/media" ]; then
+                (cd "${directory}" && cp -R media ${CURRENT_DESTINATION})
+              fi
+             fi
+          done
+      - name: push to rtos-docs-html
+        run: |
+          cd "${{ github.workspace }}/html"
+
+          git config user.name "eclipse-threadx-bot"
+          git config user.email "<threadx-bot@eclipse.org>"
+          
+          COMMIT_MESSAGE="Publish generated html pages from ${{ github.repository }}/${{ github.ref }}@${{ github.sha }}"
+          git add .
+          git commit -m "${COMMIT_MESSAGE}"
+          git push origin
