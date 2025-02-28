@@ -3,7 +3,8 @@ name: Build HTML Pages and publish to rtos-docs-html
 on:
   push:
     branches:
-      - main
+      - '*'
+      - '!main'
 
 concurrency:
   group: run-${{ github.workflow }}-${{ github.ref }}
@@ -58,4 +59,4 @@ jobs:
           COMMIT_MESSAGE="Publish generated html pages from ${{ github.repository }}/${{ github.ref }}@${{ github.sha }}"
           git add .
           git commit -m "${COMMIT_MESSAGE}"
-          git push origin
+          git push origin -u
