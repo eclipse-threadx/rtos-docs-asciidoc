@@ -59,4 +59,4 @@ jobs:
           COMMIT_MESSAGE="Publish generated html pages from ${{ github.repository }}/${{ github.ref }}@${{ github.sha }}"
           git add .
           git commit -m "${COMMIT_MESSAGE}"
-          git push origin -u
+          git push origin
