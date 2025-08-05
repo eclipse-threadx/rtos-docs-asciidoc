@@ -3,7 +3,8 @@ name: Build HTML Pages and publish to rtos-docs-html
 on:
   push:
     branches:
-      - main
+      - '*'
+      - '!main'
 
 concurrency:
   group: run-${{ github.workflow }}-${{ github.ref }}
