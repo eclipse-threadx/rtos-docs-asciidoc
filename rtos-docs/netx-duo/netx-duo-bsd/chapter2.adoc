@@ -44,7 +44,7 @@ In order to use NetX Duo BSD the entire distribution mentioned previously should
 The ThreadX library must define `bsd_errno` in the thread local storage. We recommend the following procedure:
 
 . In _tx_port.h_, set one of the TX_THREAD_EXTENSION macros as follows:
- ** `#define TX_THREAD_EXTENSION_3     int bsd_errno`
+ ** `#define TX_THREAD_EXTENSION_3     int bsd_errno;`
 . Rebuild the ThreadX library.
 
 NOTE: If TX_THREAD_EXTENSION_3 is already used, the user is free to use one of the other TX_THREAD_EXTENSION macros.
