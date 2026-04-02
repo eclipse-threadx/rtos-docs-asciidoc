@@ -1,0 +1,6 @@
+name: guix
+title: GUIX
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

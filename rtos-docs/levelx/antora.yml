@@ -1,0 +1,6 @@
+name: levelx
+title: LevelX
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

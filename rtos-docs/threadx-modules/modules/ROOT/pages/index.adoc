@@ -1,0 +1,39 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= ThreadX Modules documentation
+
+ThreadX Modules user guide
+
+* xref:chapter1.adoc[Ch. 1 - Overview]
+* xref:chapter2.adoc[Ch. 2 - Module requirements]
+* xref:chapter3.adoc[Ch. 3 - Module Manager requirements]
+* xref:chapter4.adoc[Ch. 4 - Module APIs]
+* xref:chapter5.adoc[Ch. 5 - Module Manager APIs]
+* xref:appendix.adoc[Appendix - Port-specific examples]
+* https://github.com/eclipse-threadx/threadx[ThreadX repository]
+
+xref:index.adoc[Eclipse ThreadX components]
+
+* xref:threadx:ROOT:index.adoc[ThreadX]
+* xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
+* xref:netx-duo:ROOT:index.adoc[NetX Duo]
+* xref:guix:ROOT:index.adoc[GUIX]
+* xref:filex:ROOT:index.adoc[FileX]
+* xref:levelx:ROOT:index.adoc[LevelX]
+* xref:usbx:ROOT:index.adoc[USBX]
+* xref:tracex:ROOT:index.adoc[TraceX]
+
