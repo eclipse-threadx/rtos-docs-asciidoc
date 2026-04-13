@@ -72,9 +72,6 @@ Eclipse ThreadX provides the following advantages over other real-time operating
 
 Eclipse ThreadX has over 12 billion deployments worldwide. The popularity of Eclipse ThreadX is a testament to its reliability, quality, size, performance, advanced features, ease-of-use, and overall time-to-market advantages.
 
-[quote, Chris Rommel, Executive Vice President, VDC Research]
-"We have followed the growth trajectory of THREADX in the wireless and IoT markets since the company's founding, and are increasingly impressed by the widespread industry adoption of THREADX."
-
 === Intuitive and consistent API design
 
 - Intuitive and consistent API.
@@ -104,33 +101,15 @@ Eclipse ThreadX is easy to install, learn, use, debug, verify, certify, and main
 
 Throughout the years, Eclipse ThreadX source code has set the bar in quality and ease of understanding. In addition, the convention of having one function per file provides for easy source navigation.
 
-=== Pre-certified by TÜV and UL to many safety standards
+=== Pre-certified by SGS-TÜV Saar
 
 Eclipse ThreadX has been certified by SGS-TÜV Saar for use in safety-critical systems, according to IEC-61508 SIL 4. The certification confirms that Eclipse ThreadX can be used in the development of safety-related software for the highest safety integrity levels of IEC-61508 for the "Functional Safety of electrical, electronic, and programmable electronic safety-related systems." SGS-TUV Saar, formed through a joint venture of Germany's SGS-Group and TUV Saarland, has become the leading accredited, independent company for testing, auditing, verifying, and certifying embedded software for safety-related systems worldwide.
 
 image::partener-logo-sgs-tuv-saar.png[SGS-TUV certification]
 
-Eclipse ThreadX has been recognized by UL for compliance with UL 60730-1 Annex H, CSA E60730-1 Annex H, IEC 60730-1 Annex H, UL 60335-1 Annex R, IEC 60335-1 Annex R, and UL 1998 safety standards for software in programmable components. UL is a global, independent, safety-science company with more than a century of expertise innovating safety solutions, ranging from the public adoption of electricity to breakthroughs in sustainability, renewable energy, and nanotechnology.
-
-image::cru-logo-certification.png[CRU UL certification]
-
-Artifacts (Certificate, Safety Manual, Test Report, etc.) associated with the TUV and UL certifications are available to license.
+Artifacts (Certificate, Safety Manual, Test Report, etc.) associated with the TUV certification are available to license. Please visit link:https://threadxalliance.org[the ThreadX Alliance website] for more details.
 
 In cases where the application needs additional certification, a certification service is available through Eclipse Foundation for providing turn-key certification to various standards using the actual hardware platform and even covering the application code. Contact us for more details on our certification service.
-
-=== EAL4+ Common Criteria security certification
-
-ThreadX has achieved EAL4+ Common Criteria security certification. The Target of Evaluation (TOE) covers ThreadX, NetX Duo, NetX Secure TLS, and NetX MQTT. This represents the most typical IoT protocols required by deeply embedded sensors, devices, edge routers, and gateways.
-
-image::eal-logo-certification.png[EAL certification]
-
-The IT Security Evaluation Facility used for the Eclipse ThreadX SC security certification is Brightsight BV and the Certification Authority is SERTIT.
-
-=== FIPS 140-2 Validated
-
-Eclipse ThreadX Crypto libraries have achieved Federal Information Processing Standardization 140-2 (FIPS 140-2) Certification for software, which specifies requirements for cryptography modules. FIPS 140-2 requires all federal government agencies and departments that use cryptographic-based security to meet specific standards related to encryption strength and capabilities. These cryptographic-based security standards are also recognized in Canada and the European Union.
-
-The Information Security evaluation lab used for Eclipse ThreadX Crypto libraries was atsec and the certification authority is link:https://csrc.nist.gov/projects/cryptographic-module-validation-program/Certificate/3394[The National Institute of Standards and Technology (NIST)].
 
 === Supports most popular architectures
 
