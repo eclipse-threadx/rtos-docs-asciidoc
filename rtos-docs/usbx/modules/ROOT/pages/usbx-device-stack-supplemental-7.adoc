@@ -18,7 +18,7 @@
 
 This guide is about how to implement device class modules for specific device classes/functions in USBX.
 
-= Device Class Layer (ux_device_class)
+== Device Class Layer (ux_device_class)
 
 The device class layer is the class layer above device stack layer.
 It provides a unique way for different classes/functions to communicate with USBX device stack,

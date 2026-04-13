@@ -18,7 +18,7 @@
 
 This guide is about how to implement host class modules for specific host classes/functions in USBX.
 
-= Host Class Layer (ux_host_class)
+== Host Class Layer (ux_host_class)
 
 The host class layer is the class layer above host stack layer.
 It provides a unique way for different classes/functions to communicate with USBX host stack,

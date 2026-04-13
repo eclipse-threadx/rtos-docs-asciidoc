@@ -34,6 +34,8 @@ USBX device stack supplemental
 * xref:usbx-device-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
 * xref:usbx-device-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
 * xref:usbx-device-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+* xref:usbx-device-stack-supplemental-6.adoc[Ch. 6 - USBX device controller driver (DCD) porting considerations]
+* xref:usbx-device-stack-supplemental-7.adoc[Ch. 7 - USBX device class implementation considerations]
 
 USBX host stack user guide
 
@@ -52,6 +54,8 @@ USBX host stack supplemental
 * xref:usbx-host-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
 * xref:usbx-host-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
 * xref:usbx-host-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+* xref:usbx-host-stack-supplemental-6.adoc[Ch. 6 - USBX Host controller driver (HCD) porting considerations]
+* xref:usbx-host-stack-supplemental-7.adoc[Ch. 7 - USBX Host class implementation considerations]
 
 https://github.com/eclipse-threadx/usbx/[USBX repository]
 

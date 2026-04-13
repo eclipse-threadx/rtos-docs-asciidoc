@@ -18,7 +18,7 @@
 
 This guide is about how to implement device controller driver (DCD) of specific hardware for USBX.
 
-= Device Controller Driver (DCD)
+== Device Controller Driver (DCD)
 
 The device controller driver is a driver layer to provide a unique way to access different USB hardware peripherals.
 

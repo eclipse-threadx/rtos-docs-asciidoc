@@ -18,7 +18,7 @@
 
 This guide is about how to implement host controller driver (HCD) of specific hardware for USBX.
 
-= Host Controller Driver (HCD)
+== Host Controller Driver (HCD)
 
 The host controller driver is a driver layer to provide a unique way to access different USB host controllers.
 

@@ -22,6 +22,8 @@
 *** xref:usbx:ROOT:usbx-device-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
 *** xref:usbx:ROOT:usbx-device-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
 *** xref:usbx:ROOT:usbx-device-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+*** xref:usbx:ROOT:usbx-device-stack-supplemental-6.adoc[Ch. 6 - USBX device controller driver (DCD) porting considerations]
+*** xref:usbx:ROOT:usbx-device-stack-supplemental-7.adoc[Ch. 7 - USBX device class implementation considerations]
 ** USBX host stack user guide
 *** xref:usbx:ROOT:usbx-host-stack-about.adoc[About this guide]
 *** xref:usbx:ROOT:usbx-host-stack-1.adoc[Ch. 1 - Introduction to USBX]
@@ -32,7 +34,9 @@
 *** xref:usbx:ROOT:usbx-host-stack-6.adoc[Ch. 6 - USBX CDC-ECM class usage]
 ** USBX host stack supplemental
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-1.adoc[Ch. 1 - Introduction to supplement]
-*** xref:usbx:ROOT:usbx-host-stack-supplemental-2.adoc[Ch. 2 - USBX Host Classes API]
+*** xref:usbx:ROOT:usbx-host-stack-supplemental-2.adoc[Ch. 2 - USBX Host classes API]
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-3.adoc[Ch. 3 - USBX DPUMP class considerations]
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-4.adoc[Ch. 4 - USBX Pictbridge implementation]
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
+*** xref:usbx:ROOT:usbx-host-stack-supplemental-6.adoc[Ch. 6 - USBX Host controller driver (HCD) porting considerations]
+*** xref:usbx:ROOT:usbx-host-stack-supplemental-7.adoc[Ch. 7 - USBX Host class implementation considerations]
