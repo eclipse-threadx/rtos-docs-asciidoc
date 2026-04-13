@@ -97,6 +97,26 @@ IMPORTANT: _The ThreadX entry function **tx_kernel_enter*_ does not return. So b
 . Create the *_tx_application_define_* function. This is where the initial system resources are created. Examples of system resources include threads, queues, memory pools, event flags groups, mutexes, and semaphores.
 . Compile application source and link with the ThreadX run-time library *_tx.lib_*. The resulting image can be downloaded to the target and executed!
 
+=== Win64 Host Regression Build
+
+The ThreadX repository also includes a Win64 host port for the regression harness. This host port is intended for simulator-based regression work on Windows systems that have the Visual Studio 2022 Build Tools and Ninja installed.
+
+From the ThreadX repository root, use the following PowerShell command to configure and build the Win64 regression binaries:
+
+[,powershell]
+----
+pwsh ./scripts/build_tx.ps1 -Arch win64 -Configuration default_build_coverage
+----
+
+To execute the corresponding regression tests, use:
+
+[,powershell]
+----
+pwsh ./scripts/test_tx.ps1 -Arch win64 -Configuration default_build_coverage
+----
+
+The scripts also accept `all` for the configuration parameter, which builds or tests the complete Win64 regression matrix.
+
 == Small Example System
 
 The small example system in Figure 1 shows the creation of a single thread with a priority of 3. The thread executes, increments a counter, then sleeps for one clock tick.
