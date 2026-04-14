@@ -1,0 +1,70 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024 Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Release Model and Support Policy
+:description: Eclipse ThreadX Release Model And Product Support Policy.
+
+This document applies for Eclipse ThreadX components including ThreadX, NetX Duo, FileX, GUIX, USBX and LevelX.
+
+== Version definitions
+
+Eclipse ThreadX releases generally follow the guidelines defined by https://semver.org/[Semantic Versioning]. Given an Eclipse ThreadX version number *X.Y.Z.Bh* (e.g. 6.5.0.202601a):
+
+* *X* increases for a *milestone release*. Currently Eclipse ThreadX components stay at version *6*.
+* *Y* increases for a *feature release* when there is a major feature added (e.g. v6.*5*.0 introduced significant changes in RISC-V support).
+* *Z* increases for a *maintenance release* featuring minor fixes and improvements.
+* *B* is a *build number* indicating the quarter during which the release was published. In our example, this is Q1 of 2026 (202601)
+* *h* denotes a *hotfix release* identified by a letter. See more about those below. 
+
+Please note hotfix releases are component-specific. 
+
+== Release model overview
+
+The Eclipse ThreadX project adopted a predictable quarterly release model in September 2025. Since then, the project team has published a release every quarter. 
+
+To avoid version number discrepancies, those quarterly releases ship new versions of every component, whether there have been actual code changes or not. Releases not shipping code changes mention this fact in their release notes.
+
+If the team must ship an urgent fix between quarterly releases, this will be done as a _hotfix_ release. Hotfix releases will only include security fixes or address serious issues in the codebase preventing the building and testing of applications.
+
+=== Releases and repositories
+
+The ThreadX project uses a time-based release train built on trunk-based development, with quarterly versioned releases and no LTS branches.
+
+The `main` (or `master`) branch of the project repositories always contains the latest quarterly or hotfix release. 
+
+During the quarter, pull requests will be merged into the `dev` branch. Developers can track that branch if they are willing to test new features and fixes ahead of the release.
+
+To perform a quarterly release, the project team simply merges `dev` into `main` (or `master`).
+
+== Roadmap
+
+The Eclipse ThreadX project team relies on a link:https://github.com/orgs/eclipse-threadx/projects/2/views/2[publicly available GitHub project] to plan its work. 
+
+
+== Support policy
+
+Issues in the codebase are fixed on a best-effort basis. Pull requests fixing existing or new issues are gladly accepted.
+
+Security vulnerabilities disclosed confidentially to the project team will be processed in accordance to the link:https://www.eclipse.org/security/policy/[Eclipse Foundation's security policy]. Concretely, this means that, once a candidate vulnerability has been confirmed, the project team will work to deliver a fix as soon as possible. Such fixes will be part of the next quarterly release or made available through a hotfix release depending on timing.
+
+Resolved vulnerabilities are disclosed immediately after a release containing those fixes is available. 
+
+The ThreadX team aims to resolve newly confirmed vulnerabilities in no more than three months; this delay might be extended by the Project Leadership Chain together with the Eclipse Foundation Security team if appropriate.
+
+
+=== Other notes
+* Microsoft contributed only the Azure RTOS codebase v6.x to the Eclipse Foundation. Older ThreadX releases (v5.x and lower) sold by Express Logic were not made open source. Microsoft discontinued sales and support for those older releases. We strongly recommend users of ThreadX 5.x and lower to upgrade to the latest release of Eclipse ThreadX as soon as possible.
+

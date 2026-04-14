@@ -1,5 +1,5 @@
 * xref:home:ROOT:index.adoc[Home]
-** xref:home:ROOT:lts.adoc[LTS]
+** xref:home:ROOT:releases-and-support.adoc[LTS]
 ** xref:home:ROOT:security-updates.adoc[Security Updates]
 * xref:filex:ROOT:index.adoc[FileX]
 * xref:guix:ROOT:index.adoc[GUIX]

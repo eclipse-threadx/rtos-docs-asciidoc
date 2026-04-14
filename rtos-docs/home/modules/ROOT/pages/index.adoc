@@ -28,7 +28,7 @@ Documentation for components:
 
 Other resources:
 
-- xref:home:ROOT:lts.adoc[Product Support Policy]
+- xref:home:ROOT:releases-and-support.adoc[Releases And Product Support Policy]
 - xref:home:ROOT:security-updates.adoc[Security Updates]
 
 
