@@ -1,0 +1,178 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Hardware Support
+:description: List of processor architectures and toolchains supported by the ThreadX source tree.
+
+This page lists the processor architectures for which a port is maintained in the ThreadX source tree, together with the toolchains each port currently supports. The list is derived directly from the contents of the `ports/` and `ports_smp/` directories of the ThreadX repository, and is therefore authoritative for the current release.
+
+Ports are grouped by architecture family. Single-core ports are covered first, followed by the SMP ports. Simulation ports, used for development and testing on a host PC, are listed at the end.
+
+== ARM Cortex-M (single-core)
+
+|===
+| Core | Toolchains
+
+| Cortex-M0 / M0+ | AC5, AC6, GNU, IAR, Keil
+| Cortex-M3       | AC5, AC6, GHS, GNU, IAR, Keil
+| Cortex-M4       | AC5, AC6, GHS, GNU, IAR, Keil
+| Cortex-M7       | AC5, AC6, GHS, GNU, IAR
+| Cortex-M23      | AC6, GNU, IAR
+| Cortex-M33      | AC6, GNU, IAR
+| Cortex-M55      | AC6, GNU, IAR
+| Cortex-M85      | AC6, GNU, IAR
+|===
+
+The Cortex-M23, M33, M55 and M85 ports implement the ARMv8-M architecture, including TrustZone for ARMv8-M.
+
+== ARM Cortex-R (single-core)
+
+|===
+| Core | Toolchains
+
+| Cortex-R4 | AC5, AC6, GHS, GNU, IAR
+| Cortex-R5 | AC5, AC6, GHS, GNU, IAR
+| Cortex-R7 | GHS
+|===
+
+== ARM Cortex-A (single-core)
+
+|===
+| Core | Toolchains
+
+| Cortex-A5   | AC5, AC6, GHS, GNU, IAR
+| Cortex-A7   | AC5, AC6, GHS, GNU, IAR
+| Cortex-A8   | AC5, AC6, GHS, GNU, IAR
+| Cortex-A9   | AC5, AC6, GHS, GNU, IAR
+| Cortex-A12  | AC6, GNU
+| Cortex-A15  | AC6, GNU, IAR
+| Cortex-A17  | AC6, GNU
+| Cortex-A34  | AC6, GNU
+| Cortex-A35  | AC6, GNU
+| Cortex-A53  | AC6, GNU
+| Cortex-A55  | AC6, GNU
+| Cortex-A57  | AC6, GNU
+| Cortex-A5x  | AC6
+| Cortex-A65  | AC6, GNU
+| Cortex-A65AE| AC6, GNU
+| Cortex-A72  | AC6, GNU
+| Cortex-A73  | AC6, GNU
+| Cortex-A75  | AC6, GNU
+| Cortex-A76  | AC6, GNU
+| Cortex-A76AE| AC6, GNU
+| Cortex-A77  | AC6, GNU
+|===
+
+The Cortex-A34 and later cores in the table above target the ARMv8-A 64-bit architecture.
+
+== Classic ARM cores
+
+|===
+| Core | Toolchains
+
+| ARM9  | AC5, GNU, IAR
+| ARM11 | AC5, GNU, IAR
+|===
+
+== RISC-V
+
+|===
+| Variant | Toolchains
+
+| RISC-V RV32 | Clang, GNU, IAR
+| RISC-V RV64 | GNU
+|===
+
+== Synopsys ARC
+
+|===
+| Core | Toolchains
+
+| ARC EM | MetaWare
+| ARC HS | MetaWare
+|===
+
+== Renesas RX
+
+|===
+| Variant | Toolchains
+
+| RXv1 | CC-RX, GNU, IAR
+| RXv2 | CC-RX, GNU, IAR
+| RXv3 | CC-RX, GNU, IAR
+|===
+
+== Texas Instruments
+
+|===
+| Core | Toolchains
+
+| C667x (C66x DSP, Keystone II) | CCS
+|===
+
+== Cadence Xtensa
+
+|===
+| Core | Toolchains
+
+| Xtensa | XCC
+|===
+
+== SMP ports
+
+The following ports target symmetric multiprocessing configurations and are located under `ports_smp/`.
+
+|===
+| Core | Toolchains
+
+| Cortex-A5 SMP   | AC5, GNU
+| Cortex-A7 SMP   | AC5, GNU
+| Cortex-A9 SMP   | AC5, GNU
+| Cortex-A34 SMP  | AC6, GNU
+| Cortex-A35 SMP  | AC6, GNU
+| Cortex-A53 SMP  | AC6, GNU
+| Cortex-A55 SMP  | AC6, GNU
+| Cortex-A57 SMP  | AC6, GNU
+| Cortex-A5x SMP  | AC6, GNU, Green Hills, IAR
+| Cortex-A65 SMP  | AC6, GNU
+| Cortex-A65AE SMP| AC6, GNU
+| Cortex-A72 SMP  | AC6, GNU
+| Cortex-A73 SMP  | AC6, GNU
+| Cortex-A75 SMP  | AC6, GNU
+| Cortex-A76 SMP  | AC6, GNU
+| Cortex-A76AE SMP| AC6, GNU
+| Cortex-A77 SMP  | AC6, GNU
+| Cortex-A78 SMP  | AC6, GNU
+| Cortex-R8 SMP   | AC5
+| ARC HS SMP      | MetaWare
+| MIPS32 interAptiv SMP | GNU, Green Hills
+|===
+
+== Simulation ports
+
+These ports allow developers to run ThreadX on a host PC for development and testing purposes. They are not intended for production use.
+
+|===
+| Host | Toolchains
+
+| Linux  | GNU
+| Win32  | Visual Studio 2019
+|===
+
+== Notes
+
+* The information above reflects the state of the ThreadX repository at the time of writing. The authoritative source is always the set of directories under `ports/` and `ports_smp/` in the ThreadX source tree.
+* Toolchain abbreviations: *AC5* and *AC6* refer to ARM Compiler 5 and 6, *GHS* to Green Hills Software, *GNU* to the GNU toolchain (GCC/Binutils), *IAR* to the IAR C/C++ Compiler, *Keil* to the Keil MDK toolchain, *CCS* to Texas Instruments Code Composer Studio, *CC-RX* to the Renesas CC-RX compiler, *MetaWare* to the Synopsys MetaWare toolchain, *XCC* to the Cadence Xtensa C/C++ Compiler, and *Clang* to the LLVM/Clang toolchain.
+* Historical ports for architectures no longer present in this repository (for example Analog Devices SHARC/Blackfin, Infineon TriCore, Microchip PIC/SAM, Renesas SH/V850, Intel x86/NIOS II, Xilinx MicroBlaze/PowerPC) may be available in archived branches or from the original Express Logic distribution, but are not maintained as part of the current Eclipse ThreadX source tree.

@@ -28,6 +28,7 @@ Documentation for components:
 
 Other resources:
 
+- xref:home:ROOT:hardware-support.adoc[Hardware Support]
 - xref:home:ROOT:releases-and-support.adoc[Releases And Product Support Policy]
 - xref:home:ROOT:security-updates.adoc[Security Updates]
 
@@ -113,27 +114,6 @@ In cases where the application needs additional certification, a certification s
 
 === Supports most popular architectures
 
-Eclipse ThreadX works on most popular 32/64-bit microprocessors, out-of-the-box, fully tested and fully supported, including the following advanced architectures:
-
-- *Analog Devices*: SHARC, Blackfin, CM4xx
-- *Andes Core*: RISC-V
-- *Ambiqmicro*: Apollo MCUs
-- *ARM*: ARM7, ARM9, ARM11, Cortex-M0/M3/M4/M7/A15/A5/A7/A8/A9/A5x 64-bi/A7x 64-bit/R4/R5, TrustZone ARMv8-M
-- *Cadence*: Xtensa, Diamond
-- *CEVA*: PSoC, PSoC 4, PSoC 5, PSoC 6, FM0+, FM3, MF4, WICED WiFi
-- *Cypress*: RISC-V
-- *EnSilica*: eSi-RISC
-- *Infineon*: XMC1000, XMC4000, TriCore
-- *Intel; Intel FPGA*: x36/Pentium, XScale, NIOS II, Cyclone, Arria 10
-- *Microchip*: AVR32, ARM7, ARM9, Cortex-M3/M4/M7, SAM3/4/7/9/A/C/D/E/G/L/SV, PIC24/PIC32
-- *Microsemi*: RISC-V
-- *NXP*: i.MX RT10xx and RT116x/7x series crossover MCUs, LPC5500 series
-- *Renesas*: SH, HS, V850, RA, RX, RZ, Synergy 
-- *Silicon Labs*: EFM32
-- *Synopsys*: ARC 600, 700, ARC EM, ARC HS
-- *ST*: STM32, ARM7, ARM9, Cortex-M3/M4/M7
-- *Tl*: C5xxx, C6xxx, Stellaris, Sitara, Tiva-C
-- *Wave Computing*: MIPS32 4K, 24 K, 34 K, 1004 K, MIPS64 5K, microAptiv, interAptiv, proAptiv, M-Class
-- *Xilinx*: MicroBlaze, PowerPC 405, ZYNQ, ZYNQ UltraSCALE
+Eclipse ThreadX works on most popular 32/64-bit microprocessors, out-of-the-box, fully tested and fully supported. For the complete, up-to-date list of supported cores and toolchains, see the xref:home:ROOT:hardware-support.adoc[Hardware Support] page.
 
 _All timing and size figures listed are estimates and may be different on your development platform._

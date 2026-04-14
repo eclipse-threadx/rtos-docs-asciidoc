@@ -4,6 +4,11 @@
      to match so DataTables distributes the extra space across columns instead
      of leaving a gap on the right for small tables (e.g. FileX). */
   table.datatable { width: 100% !important; }
+
+  /* Hide the component title that Antora's default UI inserts at the top of
+     the left nav. Our nav.adoc files already provide a top-level entry for
+     the component, so the built-in title is redundant. */
+  .nav-menu > h3.title { display: none; }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js" defer></script>
