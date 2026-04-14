@@ -143,6 +143,7 @@
 **** xref:netx-duo:ROOT:netx-duo-secure-tls/chapter3.adoc[Ch. 3 - Functional description of NetX Duo Secure]
 **** xref:netx-duo:ROOT:netx-duo-secure-tls/chapter4.adoc[Ch. 4 - Description of NetX Duo Secure services]
 **** xref:netx-duo:ROOT:netx-duo-secure-tls/appendix-a.adoc[App. A - NetX Duo Secure return/error codes]
+** xref:netx-duo:ROOT:security/index.adoc[Security advisories]
 * xref:threadx:ROOT:index.adoc[ThreadX]
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
 * xref:tracex:ROOT:index.adoc[TraceX]

@@ -40,3 +40,4 @@
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-5.adoc[Ch. 5 - USBX OTG]
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-6.adoc[Ch. 6 - USBX Host controller driver (HCD) porting considerations]
 *** xref:usbx:ROOT:usbx-host-stack-supplemental-7.adoc[Ch. 7 - USBX Host class implementation considerations]
+** xref:usbx:ROOT:security/index.adoc[Security advisories]

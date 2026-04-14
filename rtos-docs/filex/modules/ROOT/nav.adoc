@@ -14,6 +14,7 @@
 *** xref:filex:ROOT:appendix-b.adoc[App. B - FileX constants]
 *** xref:filex:ROOT:appendix-c.adoc[App. C - FileX data types]
 *** xref:filex:ROOT:appendix-d.adoc[App. D - ASCII character codes]
+** xref:filex:ROOT:security/index.adoc[Security advisories]
 * xref:guix:ROOT:index.adoc[GUIX]
 * xref:levelx:ROOT:index.adoc[LevelX]
 * xref:netx-duo:ROOT:index.adoc[NetX Duo]

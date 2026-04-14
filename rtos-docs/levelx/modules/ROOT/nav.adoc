@@ -10,6 +10,7 @@
 *** xref:levelx:ROOT:chapter4.adoc[Ch. 4 - LevelX NAND APIs]
 *** xref:levelx:ROOT:chapter5.adoc[Ch. 5 - LevelX NOR support]
 *** xref:levelx:ROOT:chapter6.adoc[Ch. 6 - LevelX NOR APIs]
+** xref:levelx:ROOT:security/index.adoc[Security advisories]
 * xref:netx-duo:ROOT:index.adoc[NetX Duo]
 * xref:threadx:ROOT:index.adoc[ThreadX]
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]

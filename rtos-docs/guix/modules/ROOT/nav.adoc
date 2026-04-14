@@ -35,6 +35,7 @@
 *** xref:guix:ROOT:guix-studio-9.adoc[Ch. 9 - GUIX Studio Command Line]
 *** xref:guix:ROOT:guix-studio-10.adoc[Ch. 10 - Simple Example Project]
 *** xref:guix:ROOT:guix-studio-11.adoc[Ch. 11 - Resource Project File]
+** xref:guix:ROOT:security/index.adoc[Security advisories]
 * xref:levelx:ROOT:index.adoc[LevelX]
 * xref:netx-duo:ROOT:index.adoc[NetX Duo]
 * xref:threadx:ROOT:index.adoc[ThreadX]

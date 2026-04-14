@@ -35,6 +35,7 @@
 *** xref:threadx:ROOT:threadx-smp/appendix-c.adoc[App. C - ThreadX SMP Data Types]
 *** xref:threadx:ROOT:threadx-smp/appendix-d.adoc[App. D - ASCII Character Codes]
 *** xref:threadx:ROOT:appendix-e.adoc[App. E - ThreadX SMP MISRA C compliance]
+** xref:threadx:ROOT:security/index.adoc[Security advisories]
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
 * xref:tracex:ROOT:index.adoc[TraceX]
 * xref:usbx:ROOT:index.adoc[USBX]
