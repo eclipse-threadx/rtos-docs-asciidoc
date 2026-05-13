@@ -31,6 +31,8 @@ As for resources used on the host, the source code for ThreadX SMP is delivered 
 
 IMPORTANT: Please review the supplied *readme_threadx.txt* file for additional host system considerations and options.
 
+NOTE: A Win64/MSVC ThreadX SMP host simulation port is also available for validation on Windows. This simulator models ThreadX SMP virtual cores on Windows host threads for build and regression testing, and it should be treated as a host-side validation environment rather than a production runtime port.
+
 == Target Considerations
 
 ThreadX SMP requires between 2 KBytes and 20 KBytes of Read Only Memory (ROM) on the target. Another 1 to 2 KBytes of the target's Random Access Memory (RAM) are required for the ThreadX SMP system stack and other global data structures.
