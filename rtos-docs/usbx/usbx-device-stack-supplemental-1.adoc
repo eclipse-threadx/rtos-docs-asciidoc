@@ -2,14 +2,14 @@
 
  Copyright (c) Microsoft
  Copyright (c) 2024-present Eclipse ThreadX contributors
- 
- This program and the accompanying materials are made available 
+
+ This program and the accompanying materials are made available
  under the terms of the MIT license which is available at
  https://opensource.org/license/mit.
- 
+
  SPDX-License-Identifier: MIT
- 
- Contributors: 
+
+ Contributors:
      * Frédéric Desbiens - Initial AsciiDoc version.
 
 ////
@@ -21,8 +21,10 @@ This document is a supplement to the USBX Device Stack User Guide. It contains d
 
 == Organization
 
-* *Chapter 1* contains an introduction to USBX
+* xref:usbx-device-stack-supplemental-1.adoc[*Chapter 1*] contains an introduction to USBX
 * xref:usbx-device-stack-supplemental-2.adoc[*Chapter 2*] USBX Host Classes API
 * xref:usbx-device-stack-supplemental-3.adoc[*Chapter 3*] USBX DPUMP Class Considerations
 * xref:usbx-device-stack-supplemental-4.adoc[*Chapter 4*] USBX Pictbridge implementation
 * xref:usbx-device-stack-supplemental-5.adoc[*Chapter 5*] USBX OTG
+* xref:usbx-device-stack-supplemental-6.adoc[*Chapter 6*] USBX device controller driver (DCD) Porting Considerations
+* xref:usbx-device-stack-supplemental-7.adoc[*Chapter 7*] USBX Device Class Implementation Considerations
