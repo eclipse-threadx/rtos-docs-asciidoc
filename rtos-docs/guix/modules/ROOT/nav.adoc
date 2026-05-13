@@ -22,6 +22,7 @@
 *** xref:guix:ROOT:appendix-h.adoc[App. H - GUIX build-time configuration flags]
 *** xref:guix:ROOT:appendix-i.adoc[App. I - GUIX information structures]
 *** xref:guix:ROOT:appendix-j.adoc[App. J - Canvas Partial Frame Buffer Feature]
+*** xref:guix:ROOT:appendix-k.adoc[App. K - GUIX Widget Status Flags]
 ** GUIX Studio User Guide
 *** xref:guix:ROOT:about-guix-studio.adoc[About GUIX Studio]
 *** xref:guix:ROOT:guix-studio-1.adoc[Ch. 1 - Introduction to GUIX Studio]
