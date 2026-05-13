@@ -26364,6 +26364,7 @@ status = gx_widget_status_add(&my_widget, status_to_add);
 === See Also
 
 * <<Widget_Services,Guix Widget Services>>
+* xref:appendix-k.adoc[Appendix K - GUIX Widget Status Flags]
 
 == gx_widget_status_get
 
@@ -26413,6 +26414,7 @@ saved to "get_status". */
 === See Also
 
 * <<Widget_Services,Guix Widget Services>>
+* xref:appendix-k.adoc[Appendix K - GUIX Widget Status Flags]
 
 == gx_widget_status_remove
 
@@ -26460,6 +26462,7 @@ widget "my_widget". */
 === See Also
 
 * <<Widget_Services,Guix Widget Services>>
+* xref:appendix-k.adoc[Appendix K - GUIX Widget Status Flags]
 
 == gx_widget_status_test
 
@@ -26512,6 +26515,7 @@ and the result in "test_result". */
 === See Also
 
 * <<Widget_Services,Guix Widget Services>>
+* xref:appendix-k.adoc[Appendix K - GUIX Widget Status Flags]
 
 == gx_widget_string_get
 

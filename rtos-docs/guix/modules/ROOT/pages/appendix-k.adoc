@@ -1,0 +1,179 @@
+////
+
+ Copyright (c) 2026 Eclipse ThreadX Contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+
+////
+
+= Appendix K - GUIX Widget Status Flags
+:description: Learn about the GUIX widget status flags.
+
+Widget status flags represent the runtime state of a `GX_WIDGET`. They are stored in the `gx_widget_status` field of the widget control block and can be read or modified using the xref:chapter-4.adoc#gx_widget_status_add[gx_widget_status_add], xref:chapter-4.adoc#gx_widget_status_get[gx_widget_status_get], xref:chapter-4.adoc#gx_widget_status_remove[gx_widget_status_remove], and xref:chapter-4.adoc#gx_widget_status_test[gx_widget_status_test] API functions.
+
+NOTE: Several flags are set and cleared internally by GUIX. Modifying them directly via the status API may produce undefined behavior. Flags documented as "managed internally" are described here for reference purposes only.
+
+***_General Widget Status Flags:_***
+
+*GX_STATUS_VISIBLE*
+
+* Value: 0x00000001
+* Description: Indicates the widget is currently visible. This flag is set when a widget is shown and cleared when it is hidden. A widget is drawn only if this flag is set and all of its ancestors are also visible.
+
+*GX_STATUS_SELECTABLE*
+
+* Value: 0x00000002
+* Description: Indicates the widget can be selected by the user. This flag enables selection highlighting for the widget.
+
+*GX_STATUS_ACCEPTS_INPUT*
+
+* Value: 0x00000004
+* Description: Indicates the widget accepts user input events such as pen or touch events. Widgets that process user interaction should have this flag set.
+
+*GX_STATUS_HIDDEN*
+
+* Value: 0x00000008
+* Description: Indicates the widget is hidden and should not be drawn. This flag is managed internally when `gx_widget_hide` or `gx_widget_show` is called.
+
+***_Focus-Related Status Flags:_***
+
+*GX_STATUS_DEFAULT_FOCUS*
+
+* Value: 0x00000010
+* Description: Identifies the widget as the default focus target within its parent. When focus is assigned to a parent container, GUIX will assign input focus to the child bearing this flag.
+
+*GX_STATUS_ACCEPTS_FOCUS*
+
+* Value: 0x00000020
+* Description: Indicates the widget is capable of accepting keyboard input focus. Widgets that handle keyboard events should have this flag set.
+
+*GX_STATUS_HAS_FOCUS*
+
+* Value: 0x00000040
+* Description: Indicates the widget currently holds input focus. This flag is managed internally by GUIX and should not be set or cleared directly by the application.
+
+*GX_STATUS_NOTIFY_ON_GAIN_FOCUS*
+
+* Value: 0x00000080
+* Description: When set, the widget sends a `GX_EVENT_FOCUS_GAINED` notification to its parent widget when it receives input focus. This allows parent widgets to react when one of their children gains focus.
+
+***_Navigation Status Flags:_***
+
+*GX_STATUS_NAV_STOP*
+
+* Value: 0x00000100
+* Description: Marks the widget as a navigation stop. During keyboard-based focus navigation, GUIX will stop navigation traversal at widgets bearing this flag rather than passing focus to sibling or parent widgets.
+
+*GX_STATUS_NAV_PARENT*
+
+* Value: 0x00000200
+* Description: Indicates the widget acts as a navigation parent — a container whose children participate in focus navigation as a group. For example, horizontal and vertical list widgets set this flag so that focus navigation cycles through list items before leaving the list.
+
+***_Behavior Status Flags:_***
+
+*GX_STATUS_MOVABLE*
+
+* Value: 0x00001000
+* Description: Indicates the widget can be moved by the user by dragging it with a pen or touch input.
+
+*GX_STATUS_BUTTON_DERIVED*
+
+* Value: 0x00002000
+* Description: Managed internally. Indicates the widget is derived from the button base type (`GX_BUTTON`). This flag is set during widget creation by all button-derived widget types.
+
+*GX_STATUS_TOGGLE_UNLOCK*
+
+* Value: 0x00004000
+* Description: Managed internally. Used by toggle-style buttons to track whether the button can transition back to an un-pushed (deselected) state. This flag is set when the button is pushed and cleared when the button is released.
+
+*GX_STATUS_DIRTY*
+
+* Value: 0x00008000
+* Description: Managed internally. Indicates the widget needs to be redrawn. GUIX sets this flag when a widget's appearance changes and clears it after the widget is redrawn. Applications should not set or clear this flag directly; use `gx_system_dirty_mark` instead.
+
+***_Text Input Cursor Status Flags (GX_SINGLE_LINE_TEXT_INPUT and GX_MULTI_LINE_TEXT_INPUT only):_***
+
+*GX_STATUS_CURSOR_SHOW*
+
+* Value: 0x00010000
+* Description: Managed internally. Indicates the text input cursor is currently in its visible phase. The cursor blinks by toggling between visible and invisible states; this flag tracks the current phase.
+
+*GX_STATUS_CURSOR_DRAW*
+
+* Value: 0x00020000
+* Description: Managed internally. Indicates the text input cursor should be rendered on the current drawing pass.
+
+*GX_STATUS_MARK_PREVIOUS*
+
+* Value: 0x00040000
+* Description: Managed internally. Indicates that the active text selection in a text input widget extends toward the beginning of the text buffer (i.e., the cursor moved left to extend the selection).
+
+*GX_STATUS_MARK_NEXT*
+
+* Value: 0x00080000
+* Description: Managed internally. Indicates that the active text selection in a text input widget extends toward the end of the text buffer (i.e., the cursor moved right to extend the selection).
+
+***_Radial Slider Status Flags (GX_RADIAL_SLIDER only):_***
+
+*GX_STATUS_ANIMATION_NONE*
+
+* Value: 0x00010000
+* Description: Managed internally. Indicates no animation is currently in progress for the radial slider widget.
+
+*GX_STATUS_TRACKING_PEN*
+
+* Value: 0x00020000
+* Description: Managed internally. Indicates the radial slider is currently tracking pen or touch input to update the slider value in real time.
+
+***_Window and Container Status Flags:_***
+
+*GX_STATUS_MODAL*
+
+* Value: 0x00100000
+* Description: Indicates the widget is a modal window. While a modal window is displayed, all input is directed exclusively to that window and its children. This flag is typically set on popup or dialog windows created via `gx_window_execute`.
+
+***_Memory and Lifecycle Status Flags:_***
+
+*GX_STATUS_DYNAMIC_BUFFER*
+
+* Value: 0x01000000
+* Description: Managed internally. Indicates the widget uses a dynamically allocated memory buffer (for example, a private text copy). This buffer will be freed when the widget is destroyed.
+
+*GX_STATUS_LINE_BREAK_PROCESSED*
+
+* Value: 0x02000000
+* Description: Managed internally. Used by multi-line text widgets to indicate that line-break positions have been calculated for the current text content and do not need to be recalculated.
+
+*GX_STATUS_RESIZE_NOTIFY*
+
+* Value: 0x04000000
+* Description: Indicates the widget should notify itself (via its event handler) when its bounding rectangle changes. Widgets such as `GX_CIRCULAR_GAUGE`, `GX_MULTI_LINE_TEXT_VIEW`, and `GX_SINGLE_LINE_TEXT_INPUT` set this flag during creation so they can recalculate internal geometry after a resize.
+
+*GX_STATUS_STUDIO_CREATED*
+
+* Value: 0x08000000
+* Description: Managed internally. Indicates the widget was created by GUIX Studio-generated code. This flag allows the GUIX runtime to distinguish between widgets created by application code and those created by the generated initialization code.
+
+*GX_STATUS_TRANSPARENT*
+
+* Value: 0x10000000
+* Description: Indicates the widget background is at least partially transparent. When this flag is set, GUIX redraws the widget's parent region before drawing the widget itself, ensuring the transparent areas are rendered correctly.
+
+*GX_STATUS_NONCLIENT*
+
+* Value: 0x20000000
+* Description: Managed internally. Indicates the widget is a non-client child of its parent, such as a scrollbar attached to a list or window. Non-client widgets are excluded from operations that iterate over a container's content children, such as list item positioning.
+
+*GX_STATUS_OWNS_INPUT*
+
+* Value: 0x40000000
+* Description: Managed internally. Indicates the widget has captured exclusive pen or touch input via `gx_system_input_capture`. While this flag is set, all pen events are routed directly to this widget regardless of where the input occurs on the screen. This flag is cleared when `gx_system_input_release` is called.
+
+*GX_STATUS_DYNAMICALLY_ALLOCATED*
+
+* Value: 0x80000000
+* Description: Indicates the widget control block was dynamically allocated from the heap using the `gx_system_memory_allocator` function. When the widget is deleted, GUIX will automatically free the control block memory using the `gx_system_memory_deallocator` function.
