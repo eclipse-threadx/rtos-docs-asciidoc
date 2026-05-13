@@ -1,2 +1,13 @@
 __pycache__/
 *.pyc
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Ruby / Bundler
+.bundle/
+Gemfile.lock
+
+# Antora build output
+build/
