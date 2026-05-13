@@ -1,0 +1,30 @@
+= Custom Fonts
+
+Place Noto Sans and Noto Mono TrueType font files (`*.ttf`) here to use
+a sans-serif typeface in the PDF manuals.
+
+Download links:
+
+* Noto Sans: https://fonts.google.com/noto/specimen/Noto+Sans
+* Noto Sans Mono: https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+
+After placing the `.ttf` files here, update the `base.font-family` and
+related font entries in `pdf/themes/eclipse-threadx-pdf-theme-a4.yml`
+to activate them:
+
+[source,yaml]
+----
+font:
+  catalog:
+    Noto Sans:
+      normal: ./pdf/fonts/NotoSans-Regular.ttf
+      bold: ./pdf/fonts/NotoSans-Bold.ttf
+      italic: ./pdf/fonts/NotoSans-Italic.ttf
+      bold_italic: ./pdf/fonts/NotoSans-BoldItalic.ttf
+    Noto Sans Mono:
+      normal: ./pdf/fonts/NotoSansMono-Regular.ttf
+      bold: ./pdf/fonts/NotoSansMono-Bold.ttf
+
+base:
+  font-family: Noto Sans
+----

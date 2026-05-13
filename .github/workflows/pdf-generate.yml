@@ -1,0 +1,68 @@
+name: Generate PDF Manuals
+
+on:
+  # Trigger manually only until the eclipse-threadx/rtos-docs-pdf output
+  # repository has been created and PDF_REPO_TOKEN configured as a secret.
+  # Add a 'push' trigger here once the destination repository is ready.
+  workflow_dispatch:
+
+jobs:
+  generate-pdfs:
+    name: Build and publish PDF manuals
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout documentation sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout PDF output repository
+        uses: actions/checkout@v4
+        with:
+          repository: eclipse-threadx/rtos-docs-pdf
+          path: ../rtos-docs-pdf
+          token: ${{ secrets.PDF_REPO_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Install Node.js dependencies
+        # The @antora/pdf-extension requires Antora >= 3.2 (testing channel).
+        run: npm install @antora/cli@testing @antora/site-generator@testing @antora/pdf-extension
+
+      - name: Generate PDF manuals (A4 and US Letter)
+        run: npx antora --fetch antora-pdf-playbook.yml
+
+      - name: Copy PDFs to output repository
+        run: |
+          mkdir -p ../rtos-docs-pdf/a4
+          mkdir -p ../rtos-docs-pdf/letter
+          cp build/assembler/a4/*.pdf ../rtos-docs-pdf/a4/ 2>/dev/null || echo "No A4 PDFs found"
+          cp build/assembler/letter/*.pdf ../rtos-docs-pdf/letter/ 2>/dev/null || echo "No Letter PDFs found"
+
+      - name: Commit and push PDFs
+        working-directory: ../rtos-docs-pdf
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No PDF changes to commit."
+          else
+            git commit -m "chore: regenerate PDF manuals [skip ci]
+
+          Generated from ${{ github.repository }}@${{ github.sha }}"
+            git push
+          fi

@@ -1,0 +1,30 @@
+# Antora Assembler configuration for A4 PDF output.
+# See https://docs.antora.org/assembler/latest/ for full documentation.
+
+component_version_filter:
+  # Include all component versions except the 'home' landing page.
+  names: ['*', '!home']
+
+assembly:
+  insert_start_page: false
+  section_merge_strategy: discrete
+  doctype: book
+  attributes:
+    toc: ''
+    toc-title: Table of Contents
+    toclevels: '3'
+    secnums: ''
+    xrefstyle: full
+    source-highlighter: rouge
+    rouge-style: github
+    pdf-theme: ./pdf/themes/eclipse-threadx-pdf-theme-a4.yml
+    # Uncomment the line below once the Eclipse ThreadX logo PNG has been
+    # placed at rtos-docs/home/modules/ROOT/assets/images/eclipse-threadx-logo.png.
+    # See pdf/assets/README.adoc for download instructions.
+    # title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
+
+build:
+  dir: ./build/assembler/a4
+  publish: false
+  qualify_exports: true
+  command: bundle exec asciidoctor-pdf

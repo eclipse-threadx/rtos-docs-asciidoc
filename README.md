@@ -18,6 +18,35 @@ The documentation website is generated using [Antora](https://antora.org/). To b
    ```
 3. The generated site will be output to the `../rtos-docs-html` directory.
 
+## Generating PDF Manuals
+
+PDF manuals for all Eclipse ThreadX components are generated using the
+[Antora Assembler](https://docs.antora.org/assembler/latest/) (`@antora/pdf-extension`)
+with `asciidoctor-pdf` as the converter. Both A4 and US Letter formats are produced.
+
+Prerequisites:
+
+- Node.js 18+ with `npm`
+- Ruby 3.x with Bundler
+
+Install dependencies:
+
+```
+npm install @antora/cli@testing @antora/site-generator@testing @antora/pdf-extension
+bundle config --local path .bundle/gems && bundle install
+```
+
+Generate PDFs:
+
+```
+npx antora antora-pdf-playbook.yml
+```
+
+Output is written to `build/assembler/a4/` (A4) and `build/assembler/letter/` (US Letter).
+PDF filenames follow the pattern `<component>-main.pdf` (e.g., `threadx-main.pdf`).
+
+See `pdf/assets/README.adoc` for instructions on adding branding assets (logos, custom fonts).
+
 ## What is Eclipse ThreadX?
 
 Eclipse ThreadX is a real-time operating system (RTOS) for Internet of Things (IoT) and edge devices powered by microcontroller units (MCUs). Eclipse ThreadX is designed to support most highly constrained devices (battery powered and having less than 64 KB of flash memory).

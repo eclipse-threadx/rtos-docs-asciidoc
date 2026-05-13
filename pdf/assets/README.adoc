@@ -1,0 +1,34 @@
+= PDF Assets
+
+This directory is a placeholder for branding assets used in the PDF manuals.
+
+== Required logo files
+
+Place the following image files in
+`rtos-docs/home/modules/ROOT/assets/images/` to enable logo display on PDF
+title pages.
+
+`eclipse-threadx-logo.png`::
+The Eclipse ThreadX logo.
+
+`eclipse-foundation-logo.png`::
+The Eclipse Foundation logo.
+
+Both logos are available from the Eclipse Foundation artwork repository:
+https://eclipse.org/artwork
+
+After downloading, place the PNG files at the paths above, then uncomment
+the `title-logo-image` attribute in `antora-assembler-pdf-a4.yml` and
+`antora-assembler-pdf-letter.yml`.
+
+== Custom fonts
+
+Place Noto Sans and Noto Mono font files (`*.ttf`) in `pdf/fonts/` to use
+a sans-serif typeface in the PDFs. Download from https://fonts.google.com.
+Update the `base.font-family` and related keys in
+`pdf/themes/eclipse-threadx-pdf-theme-a4.yml` to activate them.
+
+== References
+
+* Antora Assembler docs: https://docs.antora.org/assembler/latest/
+* Asciidoctor PDF theme reference: https://docs.asciidoctor.org/pdf-converter/latest/theme/

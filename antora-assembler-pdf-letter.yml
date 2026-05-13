@@ -1,0 +1,27 @@
+# Antora Assembler configuration for US Letter PDF output.
+# Inherits all settings from the A4 config; only the theme (page size) differs.
+# See https://docs.antora.org/assembler/latest/ for full documentation.
+
+component_version_filter:
+  names: ['*', '!home']
+
+assembly:
+  insert_start_page: false
+  section_merge_strategy: discrete
+  doctype: book
+  attributes:
+    toc: ''
+    toc-title: Table of Contents
+    toclevels: '3'
+    secnums: ''
+    xrefstyle: full
+    source-highlighter: rouge
+    rouge-style: github
+    pdf-theme: ./pdf/themes/eclipse-threadx-pdf-theme-letter.yml
+    # title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
+
+build:
+  dir: ./build/assembler/letter
+  publish: false
+  qualify_exports: true
+  command: bundle exec asciidoctor-pdf
