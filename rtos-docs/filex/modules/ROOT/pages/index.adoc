@@ -1,0 +1,47 @@
+////
+
+ Copyright (c) Microsoft
+ Copyright (c) 2024-present Eclipse ThreadX contributors
+ 
+ This program and the accompanying materials are made available 
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+ 
+ SPDX-License-Identifier: MIT
+ 
+ Contributors: 
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= FileX documentation
+
+xref:overview-filex.adoc[Overview of FileX]
+
+FileX user guide
+
+* xref:about-this-guide.adoc[About this guide]
+* xref:chapter1.adoc[Ch. 1 - Introduction to FileX]
+* xref:chapter2.adoc[Ch. 2 - Installation and use of FileX]
+* xref:chapter3.adoc[Ch. 3 - Functional components of FileX]
+* xref:chapter4.adoc[Ch. 4 - Description of FileX services]
+* xref:chapter5.adoc[Ch. 5 - I/O drivers for FileX]
+* xref:chapter6.adoc[Ch. 6 - FileX fault tolerant module]
+* xref:appendix-a.adoc[App. A - FileX services]
+* xref:appendix-b.adoc[App. B - FileX constants]
+* xref:appendix-c.adoc[App. C - FileX data types]
+* xref:appendix-d.adoc[App. D - ASCII character codes]
+
+https://github.com/eclipse-threadx/filex[FileX repository]
+
+xref:index.adoc[Eclipse ThreadX components]
+
+* xref:threadx:ROOT:index.adoc[ThreadX]
+* xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
+* xref:netx-duo:ROOT:index.adoc[NetX Duo]
+* xref:guix:ROOT:index.adoc[GUIX]
+* xref:filex:ROOT:index.adoc[FileX]
+* xref:levelx:ROOT:index.adoc[LevelX]
+* xref:usbx:ROOT:index.adoc[USBX]
+* xref:tracex:ROOT:index.adoc[TraceX]
+

@@ -1,0 +1,6 @@
+name: netx-duo
+title: NetX Duo
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

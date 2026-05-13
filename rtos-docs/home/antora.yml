@@ -1,0 +1,6 @@
+name: home
+title: Home
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

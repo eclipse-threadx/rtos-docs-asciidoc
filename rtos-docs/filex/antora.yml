@@ -1,0 +1,6 @@
+name: filex
+title: FileX
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc

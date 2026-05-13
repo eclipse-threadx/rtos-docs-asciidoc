@@ -1,0 +1,28 @@
+site:
+  title: Eclipse ThreadX Documentation
+  url: https://threadx.io
+  start_page: home::index.adoc
+
+content:
+  sources:
+    - url: .
+      branches: HEAD
+      start_paths:
+        - rtos-docs/filex
+        - rtos-docs/home
+        - rtos-docs/guix
+        - rtos-docs/levelx
+        - rtos-docs/netx-duo
+        - rtos-docs/threadx
+        - rtos-docs/threadx-modules
+        - rtos-docs/tracex
+        - rtos-docs/usbx
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./supplemental-ui
+
+output:
+  dir: ../rtos-docs-html

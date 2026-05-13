@@ -1,0 +1,6 @@
+name: threadx-modules
+title: ThreadX Modules
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc
