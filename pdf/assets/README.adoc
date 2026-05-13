@@ -1,34 +1,29 @@
 = PDF Assets
 
-This directory is a placeholder for branding assets used in the PDF manuals.
+This directory is a placeholder for additional PDF branding assets that are
+not yet committed (e.g., custom cover page designs).
 
-== Required logo files
+== Logo files
 
-Place the following image files in
-`rtos-docs/home/modules/ROOT/assets/images/` to enable logo display on PDF
-title pages.
+The Eclipse ThreadX and Eclipse Foundation logo PNG files have been placed in
+`rtos-docs/home/modules/ROOT/assets/images/`. See the `NOTICE.adoc` file in
+that directory for trademark attribution and the source ZIP files.
 
-`eclipse-threadx-logo.png`::
-The Eclipse ThreadX logo.
+== Custom cover pages
 
-`eclipse-foundation-logo.png`::
-The Eclipse Foundation logo.
+For custom front/back PDF covers, place image or PDF files in this directory
+and reference them in the assembler configs:
 
-Both logos are available from the Eclipse Foundation artwork repository:
-https://eclipse.org/artwork
-
-After downloading, place the PNG files at the paths above, then uncomment
-the `title-logo-image` attribute in `antora-assembler-pdf-a4.yml` and
-`antora-assembler-pdf-letter.yml`.
-
-== Custom fonts
-
-Place Noto Sans and Noto Mono font files (`*.ttf`) in `pdf/fonts/` to use
-a sans-serif typeface in the PDFs. Download from https://fonts.google.com.
-Update the `base.font-family` and related keys in
-`pdf/themes/eclipse-threadx-pdf-theme-a4.yml` to activate them.
+[source,yaml]
+----
+assembly:
+  attributes:
+    front-cover-image: 'image:home::pdf/front-cover.png[]'
+    back-cover-image:  'image:home::pdf/back-cover.png[]'
+----
 
 == References
 
 * Antora Assembler docs: https://docs.antora.org/assembler/latest/
 * Asciidoctor PDF theme reference: https://docs.asciidoctor.org/pdf-converter/latest/theme/
+* Eclipse Foundation artwork: https://www.eclipse.org/artwork/

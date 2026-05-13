@@ -18,7 +18,8 @@ assembly:
     source-highlighter: rouge
     rouge-style: github
     pdf-theme: ./pdf/themes/eclipse-threadx-pdf-theme-letter.yml
-    # title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
+    # Eclipse ThreadX logo — placed in rtos-docs/home/modules/ROOT/assets/images/
+    title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
 
 build:
   dir: ./build/assembler/letter

@@ -1,0 +1,27 @@
+= Logo Attribution and Trademark Notice
+
+See `pdf/NOTICE.adoc` in the repository root for consolidated third-party
+copyright notices and license information covering these logo files and the
+Noto fonts used in PDF generation.
+
+== Eclipse ThreadX Logo
+
+The Eclipse ThreadX logo is the intellectual property of the Eclipse Foundation,
+provided under the
+https://www.eclipse.org/legal/logo_guidelines.php[Eclipse Foundation Trademark
+Usage Policy]. It may not be altered without the Eclipse Foundation's permission.
+
+Copyright (c) Eclipse Foundation. All Rights Reserved.
+
+Source: https://www.eclipse.org/org/artwork/zip-files/threadx-logo.zip
+
+== Eclipse Foundation Logo
+
+The Eclipse Foundation logo is the intellectual property of the Eclipse Foundation,
+provided under the
+https://www.eclipse.org/legal/logo_guidelines.php[Eclipse Foundation Trademark
+Usage Policy]. It may not be altered without the Eclipse Foundation's permission.
+
+Copyright (c) Eclipse Foundation. All Rights Reserved.
+
+Source: https://www.eclipse.org/org/artwork/zip-files/eclipse-foundation-logo.zip

@@ -18,10 +18,8 @@ assembly:
     source-highlighter: rouge
     rouge-style: github
     pdf-theme: ./pdf/themes/eclipse-threadx-pdf-theme-a4.yml
-    # Uncomment the line below once the Eclipse ThreadX logo PNG has been
-    # placed at rtos-docs/home/modules/ROOT/assets/images/eclipse-threadx-logo.png.
-    # See pdf/assets/README.adoc for download instructions.
-    # title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
+    # Eclipse ThreadX logo — placed in rtos-docs/home/modules/ROOT/assets/images/
+    title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
 
 build:
   dir: ./build/assembler/a4

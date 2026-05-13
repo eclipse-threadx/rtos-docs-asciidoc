@@ -1,30 +1,24 @@
-= Custom Fonts
+= Fonts
 
-Place Noto Sans and Noto Mono TrueType font files (`*.ttf`) here to use
-a sans-serif typeface in the PDF manuals.
+This directory contains the Noto Sans and Noto Sans Mono TrueType font files
+used when generating PDF manuals.
 
-Download links:
+== Files
 
-* Noto Sans: https://fonts.google.com/noto/specimen/Noto+Sans
-* Noto Sans Mono: https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+`NotoSans-Regular.ttf`, `NotoSans-Bold.ttf`, `NotoSans-Italic.ttf`, `NotoSans-BoldItalic.ttf`::
+Noto Sans — body text and headings.
 
-After placing the `.ttf` files here, update the `base.font-family` and
-related font entries in `pdf/themes/eclipse-threadx-pdf-theme-a4.yml`
-to activate them:
+`NotoSansMono-Regular.ttf`, `NotoSansMono-Bold.ttf`::
+Noto Sans Mono — code blocks and inline code.
 
-[source,yaml]
-----
-font:
-  catalog:
-    Noto Sans:
-      normal: ./pdf/fonts/NotoSans-Regular.ttf
-      bold: ./pdf/fonts/NotoSans-Bold.ttf
-      italic: ./pdf/fonts/NotoSans-Italic.ttf
-      bold_italic: ./pdf/fonts/NotoSans-BoldItalic.ttf
-    Noto Sans Mono:
-      normal: ./pdf/fonts/NotoSansMono-Regular.ttf
-      bold: ./pdf/fonts/NotoSansMono-Bold.ttf
+== License
 
-base:
-  font-family: Noto Sans
-----
+The Noto fonts are licensed under the
+https://scripts.sil.org/OFL[SIL Open Font License, Version 1.1].
+The full license text is in `OFL.txt` in this directory.
+
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
+
+Source: https://github.com/notofonts/notofonts.github.io
+
+See also `pdf/NOTICE.adoc` for the consolidated third-party notices file.
