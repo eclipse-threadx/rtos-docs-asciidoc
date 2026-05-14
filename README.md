@@ -28,6 +28,7 @@ with `asciidoctor-pdf` as the converter. Both A4 and US Letter formats are produ
 
 - Node.js 18+ with `npm`
 - Ruby 3.x with Bundler (`gem install bundler`), and Ruby must be on your `PATH`
+- [GraphicsMagick](http://www.graphicsmagick.org/) (required by `prawn-gmagick` for full image format support)
 
 ### Install dependencies
 
