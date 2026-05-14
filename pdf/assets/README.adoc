@@ -1,0 +1,29 @@
+= PDF Assets
+
+This directory is a placeholder for additional PDF branding assets that are
+not yet committed (e.g., custom cover page designs).
+
+== Logo files
+
+The Eclipse ThreadX and Eclipse Foundation logo PNG files have been placed in
+`rtos-docs/home/modules/ROOT/assets/images/`. See the `NOTICE.adoc` file in
+that directory for trademark attribution and the source ZIP files.
+
+== Custom cover pages
+
+For custom front/back PDF covers, place image or PDF files in this directory
+and reference them in the assembler configs:
+
+[source,yaml]
+----
+assembly:
+  attributes:
+    front-cover-image: 'image:home::pdf/front-cover.png[]'
+    back-cover-image:  'image:home::pdf/back-cover.png[]'
+----
+
+== References
+
+* Antora Assembler docs: https://docs.antora.org/assembler/latest/
+* Asciidoctor PDF theme reference: https://docs.asciidoctor.org/pdf-converter/latest/theme/
+* Eclipse Foundation artwork: https://www.eclipse.org/artwork/

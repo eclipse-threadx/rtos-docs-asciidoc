@@ -1,0 +1,160 @@
+# Eclipse ThreadX PDF Theme — A4
+#
+# This theme is used by asciidoctor-pdf when generating A4-format PDFs
+# via the @antora/pdf-extension. It uses Noto Sans (body) and
+# Noto Sans Mono (code) fonts bundled in pdf/fonts/.
+#
+# Color palette:
+#   Eclipse navy   #2C2255
+#   Eclipse blue   #4DA8DA
+#   Body text      #333333
+#   Light gray     #F5F5F5 / #EEEEEE
+#
+# References:
+#   https://docs.asciidoctor.org/pdf-converter/latest/theme/
+#   https://docs.antora.org/assembler/latest/configure-asciidoc/#activate-a-custom-pdf-theme
+
+extends: default
+
+font:
+  catalog:
+    Noto Sans:
+      normal: ../fonts/NotoSans-Regular.ttf
+      bold: ../fonts/NotoSans-Bold.ttf
+      italic: ../fonts/NotoSans-Italic.ttf
+      bold_italic: ../fonts/NotoSans-BoldItalic.ttf
+    Noto Sans Mono:
+      normal: ../fonts/NotoSansMono-Regular.ttf
+      bold: ../fonts/NotoSansMono-Bold.ttf
+
+page:
+  size: A4
+  margin: [20mm, 20mm, 25mm, 20mm]
+  margin-inner: 25mm
+  margin-outer: 20mm
+
+base:
+  font-color: '#333333'
+  font-size: 10.5
+  line-height: 1.5
+  font-family: Noto Sans
+
+heading:
+  font-color: '#2C2255'
+  font-family: Noto Sans
+  font-style: bold
+  line-height: 1.2
+  margin-top: $base_font_size * 0.85
+  margin-bottom: $base_font_size * 0.35
+
+heading_h2:
+  border-bottom-width: 0.5
+  border-bottom-color: '#4DA8DA'
+  border-bottom-style: solid
+  padding-bottom: 3
+
+link:
+  font-color: '#0066CC'
+
+codespan:
+  font-color: '#2C2255'
+  font-size: $base_font_size * 0.9
+  font-family: Noto Sans Mono
+  background-color: '#F5F5F5'
+  padding: [1, 3, 1, 3]
+
+code:
+  font-size: $base_font_size * 0.85
+  font-family: Noto Sans Mono
+  background-color: '#F5F5F5'
+
+admonition:
+  label:
+    font-style: bold
+
+note:
+  border-color: '#4DA8DA'
+  background-color: '#EEF5FB'
+
+tip:
+  border-color: '#27AE60'
+  background-color: '#EAFAF1'
+
+warning:
+  border-color: '#E67E22'
+  background-color: '#FEF9E7'
+
+caution:
+  border-color: '#E74C3C'
+  background-color: '#FDEDEC'
+
+important:
+  border-color: '#8E44AD'
+  background-color: '#F5EEF8'
+
+table:
+  font-size: 9.5
+  head:
+    background-color: '#2C2255'
+    font-color: '#FFFFFF'
+    font-style: bold
+  even-row:
+    background-color: '#F8F8F8'
+
+header:
+  height: 15mm
+  line-height: 1
+  font-size: 8
+  font-color: '#999999'
+  border-bottom-width: 0.5
+  border-bottom-color: '#CCCCCC'
+  border-bottom-style: solid
+  recto:
+    right:
+      content: '{doctitle}'
+  verso:
+    left:
+      content: '{doctitle}'
+
+footer:
+  height: 15mm
+  line-height: 1
+  font-size: 8
+  font-color: '#999999'
+  border-top-width: 0.5
+  border-top-color: '#CCCCCC'
+  border-top-style: solid
+  recto:
+    left:
+      content: "\u00A9 Eclipse ThreadX Contributors | CC BY-SA 4.0"
+    right:
+      content: '{page-number}'
+  verso:
+    left:
+      content: '{page-number}'
+    right:
+      content: "\u00A9 Eclipse ThreadX Contributors | CC BY-SA 4.0"
+
+title_page:
+  align: center
+  logo:
+    top: 10%
+  title:
+    top: 35%
+    font-size: 28
+    font-color: '#2C2255'
+    font-style: bold
+    line-height: 1.2
+  subtitle:
+    font-size: 14
+    font-color: '#4DA8DA'
+    font-style: italic
+    margin-top: 8
+  authors:
+    font-size: 10
+    font-color: '#666666'
+    margin-top: 32
+  revision:
+    font-size: 9
+    font-color: '#999999'
+    margin-top: 4

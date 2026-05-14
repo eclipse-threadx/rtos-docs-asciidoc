@@ -1,0 +1,12 @@
+# Eclipse ThreadX PDF Theme — US Letter
+#
+# Extends the A4 theme; only the page size and margins differ.
+# All other styling is inherited from eclipse-threadx-pdf-theme-a4.yml.
+
+extends: ./eclipse-threadx-pdf-theme-a4.yml
+
+page:
+  size: LETTER
+  margin: [20mm, 20mm, 25mm, 20mm]
+  margin-inner: 25mm
+  margin-outer: 20mm

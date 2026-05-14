@@ -1,0 +1,41 @@
+= Third-Party Notices — PDF Generation Assets
+
+This file provides copyright notices and license information for all
+third-party assets used when generating the Eclipse ThreadX PDF manuals.
+
+== Eclipse ThreadX Logo
+
+The Eclipse ThreadX logo is the intellectual property of the Eclipse Foundation
+and is provided under the
+https://www.eclipse.org/legal/logo_guidelines.php[Eclipse Foundation Trademark
+Usage Policy]. These logos may not be altered without the Eclipse Foundation's
+permission.
+
+Copyright (c) Eclipse Foundation. All Rights Reserved.
+
+Source: https://www.eclipse.org/org/artwork/zip-files/threadx-logo.zip
+
+== Eclipse Foundation Logo
+
+The Eclipse Foundation logo is the intellectual property of the Eclipse
+Foundation and is provided under the
+https://www.eclipse.org/legal/logo_guidelines.php[Eclipse Foundation Trademark
+Usage Policy]. These logos may not be altered without the Eclipse Foundation's
+permission.
+
+Copyright (c) Eclipse Foundation. All Rights Reserved.
+
+Source: https://www.eclipse.org/org/artwork/zip-files/eclipse-foundation-logo.zip
+
+== Noto Sans and Noto Sans Mono Fonts
+
+The Noto Sans and Noto Sans Mono fonts are used as the body, heading, and code
+typefaces in the generated PDF manuals.
+
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
+
+These fonts are licensed under the
+https://scripts.sil.org/OFL[SIL Open Font License, Version 1.1].
+The full license text is provided in `pdf/fonts/OFL.txt`.
+
+Source: https://github.com/notofonts/notofonts.github.io

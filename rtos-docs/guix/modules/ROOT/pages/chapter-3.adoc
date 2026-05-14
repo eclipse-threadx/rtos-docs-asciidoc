@@ -1290,7 +1290,7 @@ table IDs include the following values.
 |===
 
 The font ID used by any text type widget can be re-assigned by using the
-**gx_+++<widget_type>+++_font_set** API provided for each text-related widget type. The entire font table can be re-assigned by calling the **gx_display_font_table_set** API function.+++</widget_type>+++
+**gx_<widget_type>_font_set** API provided for each text-related widget type. The entire font table can be re-assigned by calling the **gx_display_font_table_set** API function.
 
 === Scrollbar Appearance
 

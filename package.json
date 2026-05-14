@@ -1,0 +1,15 @@
+{
+  "name": "eclipse-threadx-docs",
+  "private": true,
+  "description": "Eclipse ThreadX AsciiDoc documentation sources",
+  "scripts": {
+    "build:html": "antora --fetch antora-playbook.yml",
+    "build:pdf": "antora --fetch antora-pdf-playbook.yml",
+    "copy:pdf": "node scripts/copy-pdfs.js"
+  },
+  "dependencies": {
+    "@antora/cli": "^3.2.0-alpha.12",
+    "@antora/pdf-extension": "^1.0.0-beta.20",
+    "@antora/site-generator": "^3.2.0-alpha.12"
+  }
+}

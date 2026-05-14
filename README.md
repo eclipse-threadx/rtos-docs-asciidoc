@@ -4,19 +4,62 @@ This repository contains the AsciiDoc source for the [Eclipse ThreadX](https://t
 
 If you want to propose changes or additions to the documentation, this is the right place!
 
+## Setup
+
+The project uses specific pre-release versions of Antora. Always use the locally
+installed toolchain rather than any globally installed `antora`.
+
+### Prerequisites
+
+- Node.js 18+ with `npm`
+- Ruby 3.x with Bundler (`gem install bundler`), with Ruby on your `PATH`
+- [GraphicsMagick](http://www.graphicsmagick.org/) (required by `prawn-gmagick` for full image format support — needed for PDF generation only)
+
+### Install dependencies
+
+From the repository root:
+
+```
+npm install
+bundle config --local path .bundle/gems && bundle install
+```
+
 ## Generating the Website
 
-The documentation website is generated using [Antora](https://antora.org/). To build it locally:
+The documentation website is generated using [Antora](https://antora.org/).
 
-1. Install Antora:
-   ```
-   npm install -g @antora/cli @antora/site-generator
-   ```
-2. From the repository root, run:
-   ```
-   antora antora-playbook.yml
-   ```
-3. The generated site will be output to the `../rtos-docs-html` directory.
+```
+npm run build:html
+```
+
+The generated site is written to `../rtos-docs-html`.
+
+## Generating PDF Manuals
+
+PDF manuals for all Eclipse ThreadX components are generated using the
+[Antora Assembler](https://docs.antora.org/assembler/latest/) (`@antora/pdf-extension`)
+with `asciidoctor-pdf` as the converter. Both A4 and US Letter formats are produced.
+
+> **Note:** Ruby must be on your `PATH` before running the build command, as
+> Antora invokes `bundle exec asciidoctor-pdf` internally.
+
+### Generate PDFs
+
+```
+npm run build:pdf
+```
+
+PDFs are written to `build/assembler/a4/` (A4) and `build/assembler/letter/` (US Letter),
+under `<component>/main/_exports/index.pdf`.
+
+### Copy PDFs to a directory
+
+To collect all PDFs into a single directory with descriptive filenames
+(e.g. `eclipse-threadx-threadx-a4.pdf`):
+
+```
+node scripts/copy-pdfs.js --output /path/to/output/dir
+```
 
 ## What is Eclipse ThreadX?
 
