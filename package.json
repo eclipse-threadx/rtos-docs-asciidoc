@@ -4,7 +4,8 @@
   "description": "Eclipse ThreadX AsciiDoc documentation sources",
   "scripts": {
     "build:html": "antora --fetch antora-playbook.yml",
-    "build:pdf": "antora --fetch antora-pdf-playbook.yml"
+    "build:pdf": "antora --fetch antora-pdf-playbook.yml",
+    "copy:pdf": "node scripts/copy-pdfs.js"
   },
   "dependencies": {
     "@antora/cli": "^3.2.0-alpha.12",
