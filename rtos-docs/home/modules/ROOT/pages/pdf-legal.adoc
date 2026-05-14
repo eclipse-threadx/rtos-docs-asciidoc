@@ -11,6 +11,8 @@
 ////
 = Legal Notice
 
+Copyright (c) {localyear} Eclipse ThreadX Contributors
+
 This documentation is made available under the terms of the
 https://creativecommons.org/licenses/by-sa/4.0/[Creative Commons
 Attribution-ShareAlike 4.0 International License] (CC BY-SA 4.0).
