@@ -11,6 +11,7 @@ assembly:
   doctype: book
   attributes:
     toc: ''
+    toc-placement: macro
     toc-title: Table of Contents
     toclevels: '3'
     secnums: ''

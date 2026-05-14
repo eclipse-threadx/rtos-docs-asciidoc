@@ -1,0 +1,37 @@
+////
+
+ Copyright (c) 2026 Eclipse ThreadX Contributors
+
+ This documentation is licensed under the Creative Commons Attribution-ShareAlike
+ 4.0 International License. To view a copy of this license, visit
+ https://creativecommons.org/licenses/by-sa/4.0/.
+
+ SPDX-License-Identifier: CC-BY-SA-4.0
+
+////
+= Legal Notice
+
+This documentation is made available under the terms of the
+https://creativecommons.org/licenses/by-sa/4.0/[Creative Commons
+Attribution-ShareAlike 4.0 International License] (CC BY-SA 4.0).
+
+You are free to share and adapt this material for any purpose, provided you
+give appropriate credit and distribute your contributions under the same
+license.
+
+== Trademarks
+
+Eclipse ThreadX and the Eclipse ThreadX logo are trademarks of the Eclipse
+Foundation. Eclipse and the Eclipse logo are registered trademarks of the
+Eclipse Foundation.
+
+Other names and brands may be claimed as the property of their respective
+owners.
+
+== Contributing
+
+Contributions to Eclipse ThreadX documentation are welcome. See the project
+repository for contribution guidelines:
+https://github.com/eclipse-threadx/rtos-docs-asciidoc
+
+toc::[]
