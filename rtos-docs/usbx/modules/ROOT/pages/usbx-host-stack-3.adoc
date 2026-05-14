@@ -612,6 +612,7 @@ When the host software requests a change of the alternate setting for an interfa
 
 Except for the default control endpoints, endpoints cannot be share between interfaces.
 
+[cols="1,2,1,1,6"]
 |===
 | Offset | Field | Size | Value | Description
 
