@@ -24,28 +24,37 @@ PDF manuals for all Eclipse ThreadX components are generated using the
 [Antora Assembler](https://docs.antora.org/assembler/latest/) (`@antora/pdf-extension`)
 with `asciidoctor-pdf` as the converter. Both A4 and US Letter formats are produced.
 
-Prerequisites:
+### Prerequisites
 
 - Node.js 18+ with `npm`
-- Ruby 3.x with Bundler
+- Ruby 3.x with Bundler (`gem install bundler`), and Ruby must be on your `PATH`
 
-Install dependencies:
+### Install dependencies
+
+From the repository root:
 
 ```
-npm install @antora/cli@testing @antora/site-generator@testing @antora/pdf-extension
+npm install
 bundle config --local path .bundle/gems && bundle install
 ```
 
-Generate PDFs:
+### Generate PDFs
 
 ```
-npx antora antora-pdf-playbook.yml
+antora antora-pdf-playbook.yml
 ```
 
-Output is written to `build/assembler/a4/` (A4) and `build/assembler/letter/` (US Letter).
-PDF filenames follow the pattern `<component>-main.pdf` (e.g., `threadx-main.pdf`).
+PDFs are written to `build/assembler/a4/` (A4) and `build/assembler/letter/` (US Letter),
+under `<component>/main/_exports/index.pdf`.
 
-See `pdf/assets/README.adoc` for instructions on adding branding assets (logos, custom fonts).
+### Copy PDFs to a directory
+
+To collect all PDFs into a single directory with descriptive filenames
+(e.g. `eclipse-threadx-threadx-a4.pdf`):
+
+```
+node scripts/copy-pdfs.js --output /path/to/output/dir
+```
 
 ## What is Eclipse ThreadX?
 
