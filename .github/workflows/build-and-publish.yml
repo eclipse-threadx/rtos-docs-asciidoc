@@ -36,11 +36,15 @@ jobs:
           node-version: '18'
       - name: Install Antora
         run: npm i antora
+        working-directory: ./asciidoc
       - name: Generate Site
         run: npx antora antora-playbook.yml
+        working-directory: ./asciidoc
       - name: push to rtos-docs-html
         run: |
           cd "${{ github.workspace }}/rtos-docs-html"
+
+          git checkout -B ${{ github.ref_name }}
 
           git config user.name "eclipse-threadx-bot"
           git config user.email "<threadx-bot@eclipse.org>"
