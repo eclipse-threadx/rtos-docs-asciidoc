@@ -40,7 +40,7 @@ jobs:
         run: npx antora antora-playbook.yml
       - name: push to rtos-docs-html
         run: |
-          cd "${{ github.workspace }}/html"
+          cd "${{ github.workspace }}/rtos-docs-html"
 
           git config user.name "eclipse-threadx-bot"
           git config user.email "<threadx-bot@eclipse.org>"
