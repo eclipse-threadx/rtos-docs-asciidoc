@@ -230,6 +230,12 @@ On success, the return value is the number of bytes received. On error, the retu
 
 The internal _nx_bsd_inet_aton_ parsing routine now strictly accepts only dotted-quad IPv4 strings made of four decimal numbers separated by dots. Non-standard formats that were previously accepted, including octal, hexadecimal, or shortened forms with fewer groups, are now rejected and return 0.
 
+=== select and accept behavior
+
+The _select()_ service now reports sockets that have encountered errors in the _exceptfds_ set, in addition to the normal read and write readiness tracking performed through _readfds_ and _writefds_.
+
+When _nx_bsd_accept_ completes successfully, the BSD _accept()_ service now returns the newly created socket descriptor for the accepted connection.
+
 == General Configuration Options
 
 User configurable options in _nxd_bsd.h_ allow the application to fine tune NetX Duo BSD sockets for its particular application requirements.
