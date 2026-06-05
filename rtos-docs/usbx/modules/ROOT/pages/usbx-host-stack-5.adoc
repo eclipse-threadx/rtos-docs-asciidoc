@@ -18,6 +18,8 @@
 = Chapter 5 - USBX Host Classes API
 :description: Learn about the USBX Host Classes API.
 
+NOTE: The following API prototypes were removed in version 6.5.1 as they had no corresponding implementation: `ux_hcd_isp1161_initialize`, `ux_dcd_at91_initialize`, `ux_dcd_isp1181_initialize`, `ux_dcd_ml6965_initialize`, `ux_device_stack_transfer_request_abort`.
+
 This chapter covers all the exposed APIs of the USBX host classes. The
 following APIs for each class are described in detail.
 
