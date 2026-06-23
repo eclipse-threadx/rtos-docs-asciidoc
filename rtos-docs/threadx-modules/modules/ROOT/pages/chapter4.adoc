@@ -141,6 +141,31 @@ status = txm_module_object_allocate(&queue_pointer, sizeof(TX_QUEUE));
 
 Deallocate previously allocated object memory
 
+WARNING: *_This service is deprecated. Do not use it in new code, and remove any existing calls from your modules._*
+
+=== Reason for deprecation
+
+When a module calls a standard kernel delete service such as *_tx_timer_delete_*, *_tx_semaphore_delete_*, *_tx_queue_delete_*, or any other *_tx_*_delete_* service, the Module Manager dispatch layer automatically releases the associated object pool memory after the kernel cleanup completes. No separate deallocation call is required.
+
+Calling *_txm_module_object_deallocate_* on a live kernel object — one whose *_tx_*_delete_* service has not yet been called — frees the backing pool memory while the kernel still holds a reference to it. This is a use-after-free defect.
+
+=== What to do instead
+
+Remove any call to *_txm_module_object_deallocate_* from your module. Calling the appropriate *_tx_*_delete_* service is sufficient; pool memory deallocation is handled automatically by the Module Manager dispatch layer.
+
+[,c]
+----
+TX_TIMER my_timer;
+
+/* Allocate and create the timer. */
+txm_module_object_allocate(&my_timer, sizeof(TX_TIMER));
+tx_timer_create(&my_timer, "my timer", my_callback, 0, 10, 10, TX_AUTO_ACTIVATE);
+
+/* When done: delete the timer. The dispatch layer releases pool memory
+   automatically. Do NOT call txm_module_object_deallocate. */
+tx_timer_delete(&my_timer);
+----
+
 === Prototype
 
 [,c]
@@ -148,36 +173,17 @@ Deallocate previously allocated object memory
 UINT txm_module_object_deallocate(VOID *object_ptr);
 ----
 
-=== Description
-
-*_This service has been deprecated because it is no longer needed_*.
-
-The memory that was previously allocated via *_txm_module_object_allocate_* is deallocated in the *_tx_*_delete_* service.
-
 === Input parameters
 
 * *object_ptr* Object pointer to deallocate.
 
 === Return values
 
-* *TX_SUCCESS* (0x00) Successful object allocate.
+* *TX_SUCCESS* (0x00) Successful object deallocation.
 
 === Allowed from
 
 Module threads
-
-=== Example
-
-[,c]
-----
-TX_QUEUE *queue_pointer;
-
-/* Deallocate control block for a module message queue. */
-status = txm_module_object_deallocate(queue_pointer);
-
-/* If status is TX_SUCCESS the object memory associated
-   with queue_pointer is deallocated. */
-----
 
 === See also
 
