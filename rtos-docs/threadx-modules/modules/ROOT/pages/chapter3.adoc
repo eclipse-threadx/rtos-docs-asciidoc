@@ -11,6 +11,7 @@
  
  Contributors: 
      * Frédéric Desbiens - Initial AsciiDoc version.
+     * Frédéric Desbiens - Added Module Manager configuration options section.
 
 ////
 
@@ -355,6 +356,14 @@ void module_manager_entry(ULONG thread_input)
     }
 }
 ----
+
+== Module Manager configuration options
+
+The following options can be defined in *_txm_module_user.h_* (selected via *TXM_MODULE_INCLUDE_USER_DEFINE_FILE*) or on the compiler command line to customize Module Manager behavior.
+
+*TXM_MODULE_OBJECT_DEALLOC_STRICT*
+
+When defined, *_txm_module_object_deallocate_* returns *TX_DELETE_ERROR* whenever it detects that the object being deallocated is still live (i.e., the appropriate *_tx_*_delete_* service was not called before deallocation was requested). The automatic cleanup is still performed in either case; this option only affects the return value. Use this option during development to locate code that deallocates live kernel objects without first deleting them explicitly. By default, this option is not defined, and *TX_SUCCESS* is returned even when automatic cleanup was required.
 
 == Module Manager building
 

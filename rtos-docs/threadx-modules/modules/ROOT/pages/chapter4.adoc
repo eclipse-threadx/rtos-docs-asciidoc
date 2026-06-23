@@ -11,6 +11,7 @@
  
  Contributors: 
      * Frédéric Desbiens - Initial AsciiDoc version.
+     * Frédéric Desbiens - Updated txm_module_object_deallocate to reflect auto-cleanup behavior.
 
 ////
 
@@ -150,9 +151,11 @@ UINT txm_module_object_deallocate(VOID *object_ptr);
 
 === Description
 
-*_This service has been deprecated because it is no longer needed_*.
+This service deallocates memory that was previously allocated via *_txm_module_object_allocate_*.
 
-The memory that was previously allocated via *_txm_module_object_allocate_* is deallocated in the *_tx_*_delete_* service.
+Before releasing the memory back to the module object pool, the Module Manager inspects the object type stored in the control block. If the control block still belongs to a live kernel object (a timer, semaphore, mutex, queue, event flags group, block pool, byte pool, or thread that has not yet been deleted), the Module Manager automatically calls the appropriate *_tx_*_delete_* service to perform the required cleanup. For threads, *_tx_thread_terminate_* is called first. Already-deleted objects (those whose control block ID has been cleared to zero by a prior *_tx_*_delete_* call) are released without any additional action.
+
+NOTE: Although this service performs automatic cleanup when required, modules should delete kernel objects explicitly via the appropriate *_tx_*_delete_* service before calling this function. Relying on automatic cleanup is not recommended in new code. Define *TXM_MODULE_OBJECT_DEALLOC_STRICT* in *_txm_module_user.h_* to have the Module Manager return *TX_DELETE_ERROR* whenever automatic cleanup is performed, which can be used to detect and correct such API misuse during development.
 
 === Input parameters
 
@@ -160,7 +163,8 @@ The memory that was previously allocated via *_txm_module_object_allocate_* is d
 
 === Return values
 
-* *TX_SUCCESS* (0x00) Successful object allocate.
+* *TX_SUCCESS* (0x00) Object memory successfully deallocated (object was already deleted, or cleanup was silently performed).
+* *TX_DELETE_ERROR* (0x11) Object was still live when deallocation was requested, and automatic cleanup was performed. Returned only when *TXM_MODULE_OBJECT_DEALLOC_STRICT* is defined.
 
 === Allowed from
 
@@ -172,7 +176,8 @@ Module threads
 ----
 TX_QUEUE *queue_pointer;
 
-/* Deallocate control block for a module message queue. */
+/* Deallocate control block for a module message queue.
+   Best practice: call tx_queue_delete(queue_pointer) first. */
 status = txm_module_object_deallocate(queue_pointer);
 
 /* If status is TX_SUCCESS the object memory associated
