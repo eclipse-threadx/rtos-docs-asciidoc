@@ -712,6 +712,8 @@ This function is called when the host queries the current interface. The device 
 
 NOTE: This function is deprecated. It is available for legacy software, but new software should use the *_ux_device_stack_alternate_setting_get_* function instead.
 
+WARNING: *_Do not use this function in new code._* It was renamed to *_ux_device_stack_alternate_setting_get_* to better reflect its semantics. The two functions are otherwise identical.
+
 [discrete]
 === Input Parameter
 
