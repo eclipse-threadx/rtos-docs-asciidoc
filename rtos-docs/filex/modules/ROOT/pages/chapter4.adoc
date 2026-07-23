@@ -896,6 +896,8 @@ character "\", use the construct "\\".*/
 
 Gets the long name of a directory from its short name.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_directory_long_name_get_extended,fx_directory_long_name_get_extended>> instead, passing the actual size of the `long_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
+
 === Prototype
 
 [,c]
@@ -1289,6 +1291,8 @@ status = fx_directory_rename(&my_media, "abc", "def");
 == fx_directory_short_name_get
 
 Gets the specified directory's short name from its long name.
+
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_directory_short_name_get_extended,fx_directory_short_name_get_extended>> instead, passing the actual size of the `short_name` buffer. This function writes up to `FX_MAX_SHORT_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -3661,6 +3665,8 @@ status = fx_media_space_available(&my_media, &available_bytes);
 
 Gets the media's volume name.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_media_volume_get_extended,fx_media_volume_get_extended>> instead, passing the actual size of the `volume_name` buffer. This function writes up to 12 characters regardless of the caller's buffer size, which can cause a buffer overrun.
+
 === Prototype
 
 [,c]
@@ -4440,6 +4446,8 @@ status = fx_unicode_file_rename(&my_media, my_old_unicode_name,
 
 Gets the length of a Unicode name.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_length_get_extended,fx_unicode_length_get_extended>> instead, passing the actual buffer size. This function scans up to 256 bytes regardless of the actual buffer size, which can cause an overread.
+
 === Prototype
 
 [,c]
@@ -4544,6 +4552,8 @@ length = fx_unicode_length_get_extended(my_unicode_name, sizeof(my_unicode_name)
 == fx_unicode_name_get
 
 Gets the Unicode name from a short name.
+
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_name_get_extended,fx_unicode_name_get_extended>> instead, passing the actual size of the `destination_unicode_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN*2` bytes regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -4678,6 +4688,8 @@ length = fx_unicode_name_get_extended(&ram_disk, "ABC0~111.TXT",
 == fx_unicode_short_name_get
 
 Gets the short name from a Unicode name.
+
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_short_name_get_extended,fx_unicode_short_name_get_extended>> instead, passing the actual size of the `destination_short_name` buffer. This function writes up to 13 bytes regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
