@@ -31,6 +31,8 @@ As for resources used on the host, the source code for ThreadX SMP is delivered 
 
 IMPORTANT: Please review the supplied *readme_threadx.txt* file for additional host system considerations and options.
 
+NOTE: A Win64/MSVC ThreadX SMP host simulation port is also available for validation on Windows. This simulator models ThreadX SMP virtual cores on Windows host threads for build and regression testing, and it should be treated as a host-side validation environment rather than a production runtime port.
+
 == Target Considerations
 
 ThreadX SMP requires between 2 KBytes and 20 KBytes of Read Only Memory (ROM) on the target. Another 1 to 2 KBytes of the target's Random Access Memory (RAM) are required for the ThreadX SMP system stack and other global data structures.
@@ -92,6 +94,26 @@ IMPORTANT: The ThreadX SMP entry function *tx_kernel_enter* does not return. So 
 Create the *_tx_application_define_* function. This is where the initial system resources are created. Examples of system resources include threads, queues, memory pools, event flags groups, mutexes, and semaphores.
 
 Compile application source and link with the ThreadX SMP run-time library *_tx.lib_*. The resulting image can be downloaded to the target and executed!
+
+=== Win64 Host Regression Build
+
+The ThreadX repository also includes a Win64 host port for the SMP regression harness. This host port is intended for simulator-based regression work on Windows systems that have the Visual Studio 2022 Build Tools and Ninja installed.
+
+From the ThreadX repository root, use the following PowerShell command to configure and build the Win64 SMP regression binaries:
+
+[,powershell]
+----
+pwsh ./scripts/build_smp.ps1 -Arch win64 -Configuration default_build_coverage
+----
+
+To execute the corresponding regression tests, use:
+
+[,powershell]
+----
+pwsh ./scripts/test_smp.ps1 -Arch win64 -Configuration default_build_coverage
+----
+
+The scripts also accept `all` for the configuration parameter, which builds or tests the complete Win64 SMP regression matrix.
 
 == Small Example System
 
