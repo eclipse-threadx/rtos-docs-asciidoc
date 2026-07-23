@@ -11,6 +11,7 @@
  
  Contributors: 
      * Frédéric Desbiens - Initial AsciiDoc version.
+     * Frédéric Desbiens - Added deprecation notices for txm_module_object_deallocate and txm_module_object_pointer_get.
 
 ////
 
@@ -193,6 +194,10 @@ Module threads
 
 Find system object and retrieve object pointer
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>> instead, passing the actual length of the name buffer.
+
+This function passes `UINT_MAX` as the name-buffer length to the underlying search. If the `name` pointer addresses a buffer shorter than the object name being compared, the comparison loop reads past the end of the buffer, which is undefined behaviour.
+
 === Prototype
 
 [,c]
@@ -204,7 +209,7 @@ UINT txm_module_object_pointer_get(
 
 === Description
 
-This service retrieves the object pointer of a particular type with a particular name. If the object is not found, an error is returned. Otherwise, if the object is found, the address of that object is placed in "object_ptr." This pointer can then be used to make system service calls, to interact with the resident code, and/or other loaded modules in the system.
+*_Deprecated — see above._* This service retrieves the object pointer of a particular type with a particular name. If the object is not found, an error is returned. Otherwise, if the object is found, the address of that object is placed in "object_ptr."
 
 === Input parameters
 
