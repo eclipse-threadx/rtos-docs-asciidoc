@@ -5,6 +5,7 @@ on:
     branches:
       - '*'
       - '!main'
+  workflow_dispatch:
 
 concurrency:
   group: run-${{ github.workflow }}-${{ github.ref }}
@@ -15,7 +16,9 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'eclipse-threadx/rtos-docs-asciidoc'
+    if: >
+      github.repository == 'eclipse-threadx/rtos-docs-asciidoc' &&
+      github.ref_name != 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
