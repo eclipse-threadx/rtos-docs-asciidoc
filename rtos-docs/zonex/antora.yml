@@ -1,0 +1,11 @@
+name: zonex
+title: ZoneX
+version: main
+start_page: index.adoc
+nav:
+  - modules/ROOT/nav.adoc
+ext:
+  assembler:
+    - profile: pdf
+      nav:
+        - modules/ROOT/nav-pdf.adoc

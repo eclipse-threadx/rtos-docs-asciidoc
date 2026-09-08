@@ -16,3 +16,4 @@
 *** xref:threadx-modules:ROOT:appendix.adoc[Appendix - Port-specific examples]
 * xref:tracex:ROOT:index.adoc[TraceX]
 * xref:usbx:ROOT:index.adoc[USBX]
+* xref:zonex:ROOT:index.adoc[ZoneX]

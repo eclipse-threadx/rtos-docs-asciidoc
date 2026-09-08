@@ -1,0 +1,6 @@
+* xref:home:ROOT:pdf-legal.adoc[Legal Notice]
+* xref:zonex:ROOT:overview.adoc[Overview of ZoneX]
+* xref:zonex:ROOT:what-phase-0-demonstrates.adoc[What Phase 0 demonstrates]
+* xref:zonex:ROOT:platform-requirements.adoc[Platform requirements and the region budget]
+* xref:zonex:ROOT:writing-a-manifest.adoc[Writing a partition manifest]
+* xref:zonex:ROOT:roadmap.adoc[Later phases]

@@ -18,6 +18,7 @@ content:
         - rtos-docs/threadx-modules
         - rtos-docs/tracex
         - rtos-docs/usbx
+        - rtos-docs/zonex
 
 ui:
   bundle:

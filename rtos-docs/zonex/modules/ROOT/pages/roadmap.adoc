@@ -1,0 +1,66 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Later phases
+:description: What ZoneX does not yet do, in the order it would be built, and what Phase 0 established about each.
+
+[IMPORTANT]
+====
+*Nothing on this page is shipped.* Every item below is future work. Phase 0, described in xref:what-phase-0-demonstrates.adoc[What Phase 0 demonstrates], is the only part of ZoneX that exists, and it is a demonstrator rather than a product. Do not plan against a date for anything here; there is none.
+====
+
+Phase 0 was built to de-risk the work below by establishing that the hard mechanisms are real on silicon and by measuring what they cost. This page says what it established about each, so that the list reads as an engineering sequence rather than a wish.
+
+== What Phase 0 already settled
+
+These are done and measured, and the phases below inherit them rather than repeating them.
+
+* *Stage-2 region programming*, including that region limits are exact to the granule, with a build that proves the adjacent-granule check can fail.
+* *EL2 residency* -- the vector table, the exception syndrome decode for every class the hypervisor sees, and the fault report.
+* *The guest launch path*, including what the hypervisor must take over from a guest's boot sequence.
+* *The partition switch and its cost*, broken down by group, with the largest term identified as a fixed cost rather than a data-dependent one.
+* *Temporal isolation against a hostile neighbour*, with one exception the repository names and bounds.
+
+== The next change, and it is not one of the phases
+
+*Take the console off the hypercall path.* This is not a feature and it is not a phase; it is the defect that xref:what-phase-0-demonstrates.adoc[the claim page] carves a clause out of, and it is *the only thing standing between a temporal claim that needs a qualification and one that does not*.
+
+It is scoped: an interrupt-driven console driver, plus a polled fallback that the fault path can force -- because the fault reporter prints at the moment the hypervisor has already failed once, which is exactly when an interrupt-driven driver cannot be trusted. Two code paths, and a test that proves the fallback actually works.
+
+*It is tracked as its own change, ahead of everything below and dependent on none of it.* That is deliberate rather than tidy: it is far smaller than any phase on this page, it is the highest-value change available at its size, and grouping it with work of a different order of magnitude would be the surest way to leave the qualification standing indefinitely.
+
+== The phases
+
+*Interrupt worst-case execution time.* Phase 0 does not measure interrupt latency at all: guest interrupts go straight to EL1 and cost what they always did. Bounding them needs the interrupt controller's list registers, which this core has and Phase 0 does not use. The reason for deferring injection is the shared distributor and the worst-case-execution-time argument, not missing hardware.
+
+*Inter-partition communication.* A declared, bounded channel between partitions, replacing the single shared granule the manifest allows today.
+
+*The full time-partition scheduler.* Phase 0 runs one static major frame. A product needs mode changes, partition criticality levels, and a defined behaviour when a partition overruns.
+
+*Supervised partition restart.* Phase 0's policy on a violation is to report and halt, and that is deliberate -- continuing would assert a recovery story it does not have. Restarting a failed partition without disturbing its neighbours is its own phase.
+
+*Unified TraceX integration.* One trace view across partitions and the hypervisor.
+
+*The safety-artifact package.* The certification evidence: structural and modified condition/decision coverage of the port, which needs its own tooling; a full worst-case-execution-time analysis, for which the repository already carries the data-dependence survey as input; the deviation record; and the tool qualification.
+
+== Beyond Armv8-R
+
+ZoneX is meant to be cross-silicon, and the manifest was written with a width-correct address type from the first commit so that a 64-bit platform does not require a redesign of the configuration format. Additional architectures and parts are long-term intent rather than planned work, and none is committed.
+
+== Spatial partitioning across cores
+
+Worth separating from the list above because it is the item most often assumed to be present.
+
+Phase 0 runs on a Cortex-R52 in lockstep, which presents as *one logical core*. Partitioning across multiple physical cores needs split-mode symmetric multiprocessing, and it is deferred rather than scheduled -- it will follow demand, not sequence.

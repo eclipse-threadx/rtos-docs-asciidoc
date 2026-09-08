@@ -1,0 +1,181 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Writing a partition manifest
+:description: How a ZoneX system is declared, what the validator checks before anything is programmed, and the rules that decide whether a manifest is accepted.
+
+A ZoneX system is declared entirely in a *manifest*: the partitions, the memory regions each one owns, the window each one holds in the major frame, and any granule shared between them. There is no allocator, no filesystem and no partition creation at run time, so the manifest is the whole configuration.
+
+The manifest is validated before any hardware is programmed. A configuration that cannot fit the part is refused at boot with a specific diagnosis, rather than programmed partially and discovered later.
+
+== Where it lives, and why a guest cannot read it
+
+The manifest sits in the hypervisor's own read-only data, covered by no enabled stage-2 region. That is not a separate protection mechanism: ZoneX's own memory is protected precisely by *not* being covered by any enabled region, so a guest cannot read the manifest for exactly the same reason it cannot read the hypervisor's code.
+
+This is stated outright because "the manifest is unreachable from a guest" is a property a reviewer should not have to derive.
+
+== The four objects
+
+*A region* is a base address, a limit and a set of attributes. The limit is the *last byte, inclusive*, not one past the end -- this matches how the hardware describes a region, and mixing the two conventions is the mistake the validator's alignment rules exist to catch. Base and limit must both be granule-aligned.
+
+*A partition* carries an identifier, a name, the range of the guest image embedded in the hypervisor's own image, the address it starts executing at, its list of regions, and its window in the major frame expressed in ticks.
+
+*A shared range* is one granule with a single nominated publisher. The publisher may write it; every other partition may only read it.
+
+*The manifest* is the list of partitions, the list of shared ranges, and the major frame length in ticks.
+
+== The major frame is carried, not computed
+
+The manifest states the major frame length explicitly, even though it is the sum of the partition windows.
+
+That is deliberate. A computed field could never disagree with its parts, and therefore could never be wrong -- so a frame length that does not match the sum of its windows would be undetectable. Carrying it explicitly lets the validator disagree with it, which turns a class of configuration error into a boot-time diagnosis.
+
+== What a partition may not be granted
+
+*No partition in the Phase-0 demonstrator is granted a device region of any kind.* There is one console, and a guest reaches it by asking the hypervisor rather than by being given the peripheral. That is why the temporal figures on xref:what-phase-0-demonstrates.adoc[the claim page] describe two partitions that share nothing but a core.
+
+Granting a partition a device is a later phase, and on this part it carries a constraint worth knowing in advance: peripheral privilege for accesses from this core cannot rest on the memory-domain access controllers, so partition-level device isolation has to be carried by the stage-2 memory protection unit and its region attributes.
+
+== Isolation comes from which regions are enabled
+
+A partition is isolated from another by *which regions are enabled while it runs*, never by permission bits.
+
+This matters when reading the attribute encodings: at stage 2 there is no encoding that grants a guest access while denying EL2. So a region that grants a partition access must be *disabled* while any other partition runs, and a partition switch is one write that changes the whole enabled set. See xref:platform-requirements.adoc#a-region-must-also-be-reachable-by-the-partition-switch[the switch-mask budget] for the constraint that follows.
+
+== The validator
+
+*One error code per rule, and no code shared between two rules.* That is what makes a failure a diagnosis rather than a hint: "the manifest is invalid" sends a reader back to the whole manifest, while an unaligned-limit code carrying a partition index and a region index sends them to the line.
+
+The rules fall into groups.
+
+*Shape.* A non-null manifest with at least one partition and no more than the build-time maximum; no duplicate partition identifiers; at least one region per partition and no more than the maximum; a non-empty image range that fits the region it is loaded into.
+
+*Geometry.* Every base and every limit granule-aligned; no limit below its base; no partition's regions overlapping each other; *no partition's region overlapping another partition's*; no region overlapping the hypervisor's own device memory.
+
+*Attributes.* Every access-permission, execute-never and shareability field a legal encoding; every attribute index in range; and every attribute field actually written, so that a partly initialised descriptor is refused rather than programmed.
+
+*Executability.* Every partition must have at least one executable region and at least one writable region, and *its entry point must lie inside one of its own executable regions*. A four-byte error in an entry point cost a silicon run during earlier port work, which is why this is a rule rather than an assumption.
+
+*Time.* No zero-length window, and the major frame must equal the sum of the windows.
+
+*Sharing.* No more shared ranges than the maximum; each exactly one granule; each with a valid publisher; and access permissions consistent with one writer and any number of readers.
+
+*Budget.* The planned layout must fit the part's region count *and* its switch mask, and every region assigned must have a switch-mask enable bit.
+
+The overlap rule is unconditional and is the one the memory claim rests on: every byte outside a declared shared range is governed by it, with no exceptions.
+
+== A worked example
+
+A real system's manifest is a constant. The demonstrator images in the repository build theirs at run time from linker symbols instead, because a harness must not restate addresses the linker chose -- but that is the harness's shape, not the product's, so what follows is the constant form.
+
+Two partitions, a code and a data region each, seven ticks of every ten against three, and no shared range:
+
+[source,c]
+----
+#include "zx_api.h"
+#include "zx_manifest.h"
+
+#define P_A_ID  1U
+#define P_B_ID  2U
+
+static const ZX_REGION regions_a[] = {
+    { .zx_region_base  = 0x31780000U, .zx_region_limit = 0x3179FFFFU,
+      .zx_region_ap    = ZX_AP_EL2_RW_GUEST_RW,
+      .zx_region_xn    = ZX_XN_EXECUTABLE,
+      .zx_region_sh    = ZX_SH_NON_SHAREABLE,
+      .zx_region_attr_index = (UCHAR)ZX_ATTR_NORMAL_WB },
+    { .zx_region_base  = 0x317A0000U, .zx_region_limit = 0x317BFFFFU,
+      .zx_region_ap    = ZX_AP_EL2_RW_GUEST_RW,
+      .zx_region_xn    = ZX_XN_NEVER,
+      .zx_region_sh    = ZX_SH_NON_SHAREABLE,
+      .zx_region_attr_index = (UCHAR)ZX_ATTR_NORMAL_WB },
+};
+
+static const ZX_REGION regions_b[] = {
+    { .zx_region_base  = 0x317C0000U, .zx_region_limit = 0x317DFFFFU,
+      .zx_region_ap    = ZX_AP_EL2_RW_GUEST_RW,
+      .zx_region_xn    = ZX_XN_EXECUTABLE,
+      .zx_region_sh    = ZX_SH_NON_SHAREABLE,
+      .zx_region_attr_index = (UCHAR)ZX_ATTR_NORMAL_WB },
+    { .zx_region_base  = 0x317E0000U, .zx_region_limit = 0x317FFFFFU,
+      .zx_region_ap    = ZX_AP_EL2_RW_GUEST_RW,
+      .zx_region_xn    = ZX_XN_NEVER,
+      .zx_region_sh    = ZX_SH_NON_SHAREABLE,
+      .zx_region_attr_index = (UCHAR)ZX_ATTR_NORMAL_WB },
+};
+
+static const ZX_PARTITION partitions[] = {
+    { .zx_partition_id           = P_A_ID,
+      .zx_partition_name         = "critical",
+      .zx_partition_image_start  = 0x79910000U,
+      .zx_partition_image_end    = 0x7991FFFFU,
+      .zx_partition_entry        = 0x31780000U,
+      .zx_partition_regions      = regions_a,
+      .zx_partition_region_count = 2U,
+      .zx_partition_window_ticks = 7U },
+    { .zx_partition_id           = P_B_ID,
+      .zx_partition_name         = "untrusted",
+      .zx_partition_image_start  = 0x79910000U,
+      .zx_partition_image_end    = 0x7991FFFFU,
+      .zx_partition_entry        = 0x317C0000U,
+      .zx_partition_regions      = regions_b,
+      .zx_partition_region_count = 2U,
+      .zx_partition_window_ticks = 3U },
+};
+
+static const ZX_MANIFEST manifest = {
+    .zx_manifest_partitions        = partitions,
+    .zx_manifest_partition_count   = 2U,
+    .zx_manifest_shared            = NULL,
+    .zx_manifest_shared_count      = 0U,
+    .zx_manifest_major_frame_ticks = 10U
+};
+----
+
+Three things about it are worth more than the syntax.
+
+*Every field is named.* Positional initialisers compile and a dropped field then reads as zero -- which for an attribute index means index 0, a memory type that happens to be correct here and would not be in general. Naming the fields makes a missing one a compiler diagnostic.
+
+*Both regions are granule-aligned at both ends*, and the limit is the LAST byte: `0x3179FFFF`, not `0x317A0000`. `ZX_MPU_GRANULE` is the alignment every base and limit is checked against.
+
+*The manifest needs no port header.* `zx_api.h` and `zx_manifest.h` are enough to declare a whole system, which is what lets the host-side validator check the same objects with no target header in reach.
+
+== The validator, run against the example above
+
+....
+zx_manifest_verify = 0x00
+....
+
+Moving partition B's code region -- and its entry point with it, so that the entry rule does not fire first -- onto partition A's data:
+
+....
+zx_manifest_verify      = 0x10
+  partition 0, region 1
+  other:  partition 1, region 0
+....
+
+which is `ZX_MANIFEST_PARTITION_OVERLAP`, and it names *both* offenders: A's data region and B's code region, each by partition and index. An overlap has two parties and a diagnosis that named only one would send a reader to look at the innocent half.
+
+Setting the major frame to eleven ticks while the windows still sum to ten gives `0x18`, `ZX_MANIFEST_FRAME_MISMATCH`, and that one carries no indices at all -- the fault belongs to the frame rather than to any partition, and reporting a partition would be inventing a culprit.
+
+For the run-time form built from linker symbols, and for the negative builds that prove each rule can reject, see `examples/common/` in the repository.
+
+== What a shared granule costs, stated plainly
+
+A shared range is a deliberate hole in total disjointness, and it is worth being honest about its consequence.
+
+It does not weaken the claim that a partition cannot reach another partition's private memory: every byte outside a declared range is still governed by the unconditional overlap rule. It does mean the two partitions are not information-theoretically isolated -- the publisher can signal the reader at one granule's bandwidth, and a reader cannot be prevented from timing those writes.
+
+A system that needs no covert channel at all declares no shared ranges, and the validator then enforces total disjointness with no exceptions.
