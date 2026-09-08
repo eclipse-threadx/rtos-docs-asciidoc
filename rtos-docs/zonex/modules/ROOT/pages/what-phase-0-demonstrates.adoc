@@ -49,16 +49,18 @@ A regression sweeps fourteen isolation cases in one run and measures the critica
 |===
 | While the untrusted partition is… | min | mean | max | spread
 
-| idle | 799,989 | 800,000 | 800,010 | 21
-| in a tight compute loop | 799,989 | 800,000 | 800,010 | 21
-| computing with its own interrupts masked | 799,990 | 800,000 | 800,012 | 22
-| storming the console | 791,076 | 800,083 | 808,906 | 17,830
-| violating its boundary on every iteration | 799,848 | 799,998 | 800,152 | 304
+| idle | 799,989 | 799,999 | 800,011 | 22
+| in a tight compute loop | 799,990 | 799,999 | 800,010 | 20
+| computing with its own interrupts masked | 799,989 | 799,999 | 800,013 | 24
+| storming the console | 791,111 | 800,085 | 809,062 | 17,951
+| violating its boundary on every iteration | 799,922 | 800,000 | 800,107 | 185
 |===
 
-The last row is the comparison that carries the claim: the untrusted partition committed a hundred and three thousand boundary violations in that phase, and its neighbour's period moved by three hundred counts out of eight hundred thousand.
+The last row is the comparison that carries the claim: the untrusted partition committed a hundred and three thousand boundary violations in that phase, and its neighbour's period moved by under two hundred counts out of eight hundred thousand.
 
-The console row is the hypervisor's defect. A guest's console is one hypercall per character, answered at EL2 with fast interrupts masked, so the interrupt that ends a window waits for it. Nearly every one of those hypercalls writes the single byte the guest asked for. The one that opens a line writes twenty-two -- a deferred newline, the tag naming the partition, and the guest's own character -- and that is about 106,000 core cycles, 2.2 ms, with the boundary interrupt held off throughout.
+An independent run six days earlier, on an earlier revision of the same code, produced 21, 21, 22 and 304 counts for those rows and 17,830 for the console -- agreeing with the table to within the run-to-run scatter, and showing the same 22-byte console hypercall. The figures above are therefore a reproduced measurement rather than one run's luck, which is the only basis on which a single bench is worth quoting at all.
+
+The console row is the hypervisor's defect. A guest's console is one hypercall per character, answered at EL2 with fast interrupts masked, so the interrupt that ends a window waits for it. Nearly every one of those hypercalls writes the single byte the guest asked for. The one that opens a line writes twenty-two -- a deferred newline, the tag naming the partition, and the guest's own character -- and that is 106,116 core cycles, 2.2 ms, with the boundary interrupt held off throughout.
 
 The bound is one line tag, and it is derived rather than observed. A period is a difference between two window entries, so a constant deferral cancels in it and only a change reaches the number: one long period and one short correction, 35,280 counts against a half-window bound of 40,000. Every other phase is held to one eighth of a window.
 
