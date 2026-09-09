@@ -250,6 +250,8 @@ If the request is not implemented by the Module Manager, a value of *TX_NOT_AVAI
 
 Every pointer a module passes to a ThreadX service is validated by the Module Manager before privileged code reads or writes through it. The dispatch code hands the port three things: the module instance making the request, the first address of the range, and the range's full size in bytes. A port must answer for the whole range, not merely for its first address.
 
+The size the dispatch code passes is the number of bytes the service will touch, which is not always the number the module passed in. A queue's message size is a count of *ULONG* words rather than of bytes, so *_tx_queue_send_*, *_tx_queue_front_send_* and *_tx_queue_receive_* each validate `+message_size * sizeof(ULONG)+` bytes of the caller's buffer. A module's message source, and its receive destination, must have that many bytes reachable from the address it passes.
+
 The rules a port applies are the same everywhere:
 
 * A range is accepted only if *every* byte of it is reachable by the requesting module. A range that starts inside the module's memory and continues past the end of it is rejected.
