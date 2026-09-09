@@ -19,6 +19,8 @@
 
 This chapter contains a description of all ThreadX services in alphabetic order. Their names are designed so all similar services are grouped together. In the *Return Values* section in the following descriptions, values in *BOLD* are not affected by the *TX_DISABLE_ERROR_CHECKING* define used to disable API error checking; while values shown in nonbold are completely disabled. In addition, a "*Yes*" listed under the "*Preemption Possible*" heading indicates that calling the service may resume a higher-priority thread, thus preempting the calling thread.
 
+Under the *Allowed From* heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as C++ static constructors or preliminary processing in _main_, because the kernel structures these services operate on are set up by *_tx_kernel_enter_* itself. See "Calling ThreadX Services During Initialization" in xref:chapter3.adoc[Chapter 3 - Functional Components of ThreadX].
+
 The Threadx API functions available to the application are as follows.
 
 == Block_Pool_Services
@@ -4937,6 +4939,8 @@ This service activates the specified application timer. The expiration routines 
 
 NOTE: _An expired one-shot timer must be reset via_ *_tx_timer_change_* _before it can be activated again._
 
+IMPORTANT: _This service places the timer on the list of active timers, which_ *_tx_kernel_enter_* _sets up. Calling it before_ *_tx_kernel_enter_* _faults rather than returning an error._
+
 === Parameters
 
 * _timer_ptr_: Pointer to a previously created application timer.
@@ -5077,6 +5081,8 @@ periodic.
 NOTE: _After a one-shot timer expires, it must be reset via   tx_timer_change before it can be activated again._
 
 * _auto_activate_: Determines if the timer is automatically activated during creation. If this value is *TX_AUTO_ACTIVATE* (0x01) the timer is made active. Otherwise, if the value *TX_NO_ACTIVATE* (0x00) is selected, the timer is created in a non-active state. In this case, a subsequent *_tx_timer_activate_* service call is necessary to get the timer actually started.
++
+IMPORTANT: _*TX_AUTO_ACTIVATE* places the timer on the list of active timers, which_ *_tx_kernel_enter_* _sets up. Calling this service with *TX_AUTO_ACTIVATE* before_ *_tx_kernel_enter_* _faults rather than returning an error._
 
 === Return Values
 
