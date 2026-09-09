@@ -559,6 +559,15 @@ UINT txm_module_manager_object_pool_create(
 
 This service creates a Module Manager object memory pool that the modules can allocate ThreadX/NetX Duo objects from, thereby keeping the system object out of the module's memory area.
 
+The pool also carries allocations the Module Manager makes on a module's behalf, which the module neither requests nor sees. Each thread of a module loaded with *TXM_MODULE_USER_MODE* costs the pool two allocations rather than one:
+
+* the control block the module requests through *_txm_module_object_allocate_*, and
+* a separate *TXM_MODULE_KERNEL_STACK_SIZE* block that the Module Manager takes for the privileged kernel stack that thread's system calls run on, described in Chapter 2.
+
+Memory protection requires user mode, so this applies to every thread of every module loaded with *TXM_MODULE_MEMORY_PROTECTION*. Size the pool for both allocations of every module thread that may exist at once, plus the per-allocation overhead of the underlying byte pool, and not for the control blocks alone.
+
+Both allocations are released when the module deletes the thread, so a module that creates and deletes threads over its lifetime does not consume the pool as it goes. Any allocation still outstanding is released when the module is stopped.
+
 === Input parameters
 
 * *pool_memory_start* Pointer to the start of object memory.
