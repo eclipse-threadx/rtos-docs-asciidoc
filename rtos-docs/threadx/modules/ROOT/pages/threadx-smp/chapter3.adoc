@@ -31,6 +31,8 @@ As the name implies, this is the first type of program execution in a ThreadX SM
 
 IMPORTANT: Initialization is performed by or initiated by core 0, which is the default running core after reset.
 
+NOTE: This describes the span of execution named Initialization, not the span in which ThreadX SMP services may be called. A service listed as allowed from Initialization in xref:threadx:ROOT:threadx-smp/chapter4.adoc[Chapter 4 - Description of ThreadX SMP Services] may be called from _tx_application_define_ onward. See "Calling ThreadX SMP Services During Initialization" later in this chapter.
+
 === Thread Execution
 
 After initialization is complete, each core running ThreadX SMP enters its thread scheduling loop. The scheduling loop looks for an application thread ready for execution on that core. When a ready thread is found, ThreadX SMP transfers control to it. After the thread is finished (or another higher-priority thread becomes ready), execution transfers back to the thread scheduling loop to find the next highest priority ready thread on each core.
@@ -107,6 +109,8 @@ When the development tool initialization is complete, control transfers to the u
 
 IMPORTANT: The call to tx_kernel_enter does not return, so do not place any processing after it!
 
+Preliminary processing performed in _main_ runs before the kernel exists, so it may set up hardware but it may not call ThreadX SMP services. The same holds for the C++ global and static constructors that the development tool runs before _main_. See "Calling ThreadX SMP Services During Initialization" below.
+
 === tx_kernel_enter
 
 The entry function coordinates initialization of various internal ThreadX SMP data structures and then calls the application's definition function _tx_application_define_.
@@ -120,6 +124,19 @@ The _tx_application_define_ function defines all of the initial application thre
 The _tx_application_define_ function has a single input parameter and it is certainly worth mentioning. The _first-available_ RAM address is the sole input parameter to this function. It is typically used as a starting point for initial run-time memory allocations of thread stacks, queues, and memory pools.
 
 IMPORTANT: After initialization is complete, only an executing thread can create and delete system resources--including other threads. Therefore, at least one thread must be created during initialization.
+
+=== Calling ThreadX SMP Services During Initialization
+
+Initialization spans everything between reset and the scheduler, but ThreadX SMP services are not available across all of it. _tx_kernel_enter_ sets up the kernel's internal data structures--among them the created lists for threads, timers, queues, semaphores, mutexes and memory pools, and the list of active timers--and only then calls _tx_application_define_. This is why a service listed as allowed from Initialization in xref:threadx:ROOT:threadx-smp/chapter4.adoc[Chapter 4 - Description of ThreadX SMP Services] means allowed from _tx_application_define_ onward.
+
+Code that runs earlier is still within Initialization as defined at the start of this chapter, but the kernel structures it needs do not exist yet. Calling a ThreadX SMP service from there has one of two outcomes, neither of them useful:
+
+* *The application faults.* The service reaches a pointer into a kernel structure that has not been set up, and dereferences it. _tx_timer_activate_ behaves this way, as does _tx_timer_create_ when *TX_AUTO_ACTIVATE* is specified, because both place the timer on the list of active timers.
+* *The call appears to succeed and is then silently undone.* Creation services are the common case. The object is linked onto the created list for its type, and _tx_kernel_enter_ subsequently resets that list, so ThreadX SMP no longer knows about the object even though the application still holds a control block that looks valid.
+
+IMPORTANT: Do not call a ThreadX SMP service before _tx_kernel_enter_. Neither outcome above is reported to the application: the first is a crash rather than an error code, and the second returns *TX_SUCCESS*.
+
+Some ports do initialize the kernel before _main_ is reached, because the development tool needs ThreadX SMP services that early. The Green Hills ports are the example in the distribution: the tool's library-locking hook runs before the static constructors do, and it initializes the kernel so that it can create the mutex that guards those locks. Where a port does this, _tx_kernel_enter_ detects that the work is already done and does not repeat it, and the two outcomes above do not arise. Whether a port pre-initializes the kernel is a property of that port rather than of the API, so portable application code must not depend on it.
 
 === Interrupts
 
