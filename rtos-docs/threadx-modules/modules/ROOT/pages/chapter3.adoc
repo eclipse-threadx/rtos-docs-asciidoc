@@ -281,7 +281,7 @@ Authenticating an object costs a walk of the created list for its type, bounded 
 Two services behave differently as a consequence:
 
 * *_tx_thread_reset_* returns *TX_NOT_DONE* for a thread that is not a module thread. Resetting a thread rebuilds its stack around the shell entry function of the module that created it, and a thread the application created has no such module.
-* *_txm_module_object_deallocate_* clears the control block ID of the memory it gives back. An object whose memory is released without first being deleted therefore stops being recognised as an object at the moment the manager stops owning its memory, rather than returning to the pool still carrying an ID for whatever is allocated there next.
+* *_txm_module_object_deallocate_* clears the control block ID of the memory it gives back, so that memory returning to the pool carries no ID for whatever is allocated there next. Memory that still holds a live object is not released at all.
 
 === Object memory
 
