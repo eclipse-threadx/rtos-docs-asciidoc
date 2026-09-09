@@ -35,6 +35,7 @@ Additional error codes are returned for some ThreadX APIs. These additional erro
 * *TXM_MODULE_INVALID_PROPERTIES* (0xF3): Indicates the module does not have the correct properties to make an API call. For example, calling trace APIs in user mode.
 * *TXM_MODULE_INVALID_MEMORY* (0xF4): Indicates the memory supplied by the module is invalid or is in an invalid location. For example, in memory protected modules, object control blocks are not allowed to be located in memory the module can access.
 * *TXM_MODULE_INVALID_CALLBACK* (0xF5): Callback specified in the API is outside the range of the module's code and is therefore invalid.
+* *TXM_MODULE_MATH_OVERFLOW* (0xF8): A size supplied by the module is too large for the module manager to work with. The manager adds its own bookkeeping to the sizes it is given, and refuses a size for which that addition would not be representable rather than proceeding on a value that has wrapped.
 
 '''
 
@@ -105,6 +106,8 @@ UINT txm_module_object_allocate(
 
 This service allocates memory for a module object from memory outside of the module, which helps prevent corruption of the object control block by the module's code. In memory protected systems, all object control blocks must be allocated with this API before they can be created.
 
+The module manager allocates more than *object_size* bytes: it keeps a header of its own in front of the memory the module receives, recording the owning module, the size and the links that let the allocation be reclaimed when the module is unloaded. *object_size* is therefore bounded above by what the object pool holds, less that header, and a size too large to add the header to at all is refused with *TXM_MODULE_MATH_OVERFLOW*. Pass *sizeof* the control block being allocated, as in the example below.
+
 === Input parameters
 
 * *object_ptr* Destination of object pointer on successful allocation.
@@ -113,8 +116,11 @@ This service allocates memory for a module object from memory outside of the mod
 === Return values
 
 * *TX_SUCCESS* (0x00) Successful object allocate.
+* *TX_SIZE_ERROR* (0x05) *object_size*, together with the manager's own object header, is larger than the whole object pool.
 * *TX_NO_MEMORY* (0x10) Not enough memory.
 * *TX_NOT_AVAILABLE* (0x1D) Module manager has not created an object pool to allocate from
+* *TXM_MODULE_INVALID_MEMORY* (0xF4) *object_ptr* is NULL, so there is nowhere to return the allocation.
+* *TXM_MODULE_MATH_OVERFLOW* (0xF8) *object_size* is so large that adding the manager's own object header to it would not be representable. Nothing is allocated and the object pool is left untouched.
 
 === Allowed from
 
