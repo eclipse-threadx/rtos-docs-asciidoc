@@ -3730,6 +3730,8 @@ This service deletes the specified application thread. Since the specified threa
 
 NOTE: _It is the application's responsibility to manage the memory area associated with the thread's stack, which is available after this service completes. In addition, the application must prevent use of a deleted thread._
 
+NOTE: _A thread that has reached a terminated or completed state may still be finishing that transition. The state is published before the thread has been detached from the scheduler, and the thread's exit notification callback, if one is registered, runs inside that window. This service returns *TX_DELETE_ERROR* while the transition is in progress. The condition is transient: the same call succeeds once the transition has completed. In practice this means a thread cannot be deleted from inside its own exit notification callback, nor from the callback of a thread that another thread is terminating; the delete must be issued after the callback has returned._
+
 === Parameters
 
 * _thread_ptr_: Pointer to a previously created application thread.
@@ -3738,7 +3740,7 @@ NOTE: _It is the application's responsibility to manage the memory area associat
 
 * *TX_SUCCESS* (0x00) Successful thread deletion.
 * *TX_THREAD_ERROR* (0x0E) Invalid application thread pointer.
-* *TX_DELETE_ERROR* (0x11) Specified thread is not in a terminated or completed state.
+* *TX_DELETE_ERROR* (0x11) Specified thread is not in a terminated or completed state, or its transition into that state is still in progress.
 * *TX_CALLER_ERROR* (0x13) Invalid caller of this service.
 
 === Allowed From
@@ -3787,6 +3789,8 @@ UINT tx_thread_entry_exit_notify(
 This service registers a notification callback function that is called whenever the specified thread is entered or exits. The processing of the notification callback is defined by the application.
 
 NOTE: The application's thread entry/exit notification callback is not allowed to call any ThreadX API with a suspension option.
+
+NOTE: The exit notification runs while the thread's transition into its terminal state is still in progress. *TX_COMPLETED* or *TX_TERMINATED* has been published, but the thread has not yet been detached from the scheduler. `tx_thread_delete` and `tx_thread_reset` therefore return *TX_DELETE_ERROR* and *TX_NOT_DONE* for the notifying thread when they are called from the callback, and have to be issued after the callback has returned. The other thread services remain available, and a callback that does not manage the notifying thread's own lifecycle is unaffected.
 
 === Parameters
 
@@ -4392,6 +4396,8 @@ This service resets the specified thread to execute at the entry point defined a
 
 IMPORTANT: _The thread must be resumed for it to execute again._
 
+NOTE: _A thread that has reached a *TX_COMPLETED* or *TX_TERMINATED* state may still be finishing that transition. The state is published before the thread has been detached from the scheduler, and the thread's exit notification callback, if one is registered, runs inside that window. This service returns *TX_NOT_DONE* while the transition is in progress. The condition is transient: the same call succeeds once the transition has completed. In practice this means a thread cannot be reset from inside an exit notification callback; the reset must be issued after the callback has returned._
+
 === Parameters
 
 * _thread_ptr_: Pointer to a previously created thread.
@@ -4399,7 +4405,7 @@ IMPORTANT: _The thread must be resumed for it to execute again._
 === Return Values
 
 * *TX_SUCCESS* (0x00) Successful thread reset.
-* *TX_NOT_DONE* (0x20) Specified thread is not in a *TX_COMPLETED* or *TX_TERMINATED* state.
+* *TX_NOT_DONE* (0x20) Specified thread is not in a *TX_COMPLETED* or *TX_TERMINATED* state, its transition into that state is still in progress, or the calling thread is the thread named.
 * *TX_THREAD_ERROR* (0x0E) Invalid thread pointer.
 * *TX_CALLER_ERROR* (0x13) Invalid caller of this service.
 
