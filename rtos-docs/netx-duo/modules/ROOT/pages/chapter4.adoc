@@ -27,7 +27,7 @@ NOTE: _Note that a BSD-Compatible Socket API is available for legacy application
 
 In the *Return Values* section of each description, values in *BOLD* are not affected by the *NX_DISABLE_ERROR_CHECKING* option used to disable the API error checking, while values in non-bold are completely disabled. The "Allowed From" sections indicate from which each NetX Duo service can be called.
 
-Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Application Interface Calls" in xref:chapter3.adoc[Chapter 3 - Functional Description of NetX Duo].
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Application Interface Calls" in xref:chapter3.adoc[Chapter 3 - Functional Components of NetX Duo].
 
 == nx_arp_dynamic_entries_invalidate
 
