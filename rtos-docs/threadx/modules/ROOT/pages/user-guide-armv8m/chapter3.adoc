@@ -19,6 +19,8 @@
 
 This chapter contains a description of the ARMv8-M-specific ThreadX services in alphabetic order. Their names are designed so all similar services are grouped together. In the "Return Values" section in the following descriptions, values in *BOLD* are not affected by the *TX_DISABLE_ERROR_CHECKING* define used to disable API error checking; while values shown in non-bold are completely disabled.
 
+Under the *Allowed From* heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as C++ static constructors or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 - Functional Components of ThreadX].
+
 * <<tx_thread_secure_stack_allocate,tx_thread_secure_stack_allocate>> Allocate a thread stack in secure memory.
 * <<tx_thread_secure_stack_free,tx_thread_secure_stack_free>> Free thread stack in secure memory
 

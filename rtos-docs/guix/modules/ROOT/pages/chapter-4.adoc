@@ -21,6 +21,8 @@ This chapter contains a description of all GUIX services (listed below) in alpha
 
 In the "Return Values" section in the following API descriptions, values in *BOLD* are not affected by the *GX_DISABLE_ERROR_CHECKING* define that is used to disable API error checking, while non-bold values are completely disabled.
 
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Application Interface Calls" in xref:chapter-3.adoc[Chapter 3 - Functional Overview of GUIX].
+
 The GUIX API functions available to the application are as follows.
 
 == Accordion_Menu_Services
@@ -19037,6 +19039,8 @@ UINT gx_system_initialize(VOID);
 === Description
 
 This service initializes GUIX. This service must be invoked before any other GUIX API service, and should only be invoked once at system startup.
+
+IMPORTANT: _This service creates the GUIX event queue, system thread, timer and protection mutex, all of which are ThreadX objects, so the earliest point it may be called from is_ *_tx_application_define_*. _Calling it before_ *_tx_kernel_enter_* _returns_ *GX_SUCCESS* _and leaves GUIX unusable, because_ *_tx_kernel_enter_* _resets the kernel lists those objects were linked onto._
 
 === Parameters
 

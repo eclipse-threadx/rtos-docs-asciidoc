@@ -87,6 +87,20 @@ application threads. Please see the "Allowed From" section of each GUIX
 API described in Chapter 4 to determine what context it may be called
 from.
 
+Where an "Allowed From" section lists Initialization, it means the
+initialization context described above -- from *_tx_application_define_*
+onward -- and not earlier. Initialization in ThreadX names the whole span
+between processor reset and the thread scheduling loop, but the kernel's
+internal data structures are set up by *_tx_kernel_enter_*, which calls
+*_tx_application_define_* once that work is done. GUIX creates ThreadX
+objects on the application's behalf, so a GUIX service called before
+*_tx_kernel_enter_* -- from a C++ static constructor, say, or from _main_
+before the call -- has its work silently undone: the objects are linked
+onto kernel lists that *_tx_kernel_enter_* subsequently resets, and the
+service still returns *GX_SUCCESS*. See "Calling ThreadX Services During
+Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the
+ThreadX User Guide].
+
 For the most part, processing intensive activities are deferred to the
 internal GUIX thread, including all event processing and widget/window
 drawing.
