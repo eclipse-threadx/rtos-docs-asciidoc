@@ -26,6 +26,7 @@ Documentation for components:
 - xref:usbx:ROOT:index.adoc[USBX]
 - xref:tracex:ROOT:index.adoc[TraceX]
 - xref:samplex:ROOT:index.adoc[SampleX]
+- xref:zonex:ROOT:index.adoc[ZoneX]
 
 Other resources:
 

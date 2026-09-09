@@ -27,3 +27,4 @@
 *** xref:tracex:ROOT:appendix-c.adoc[App. C - DOS command-line utilities]
 *** xref:tracex:ROOT:appendix-d.adoc[App. D - Dumping and trace buffer]
 * xref:usbx:ROOT:index.adoc[USBX]
+* xref:zonex:ROOT:index.adoc[ZoneX]

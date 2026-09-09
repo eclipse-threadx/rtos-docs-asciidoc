@@ -1,0 +1,88 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Platform requirements and the region budget
+:description: What a part must provide to run ZoneX, and the region budget that decides whether a given Cortex-R52 will fit.
+
+Read this page before choosing a board. ZoneX's isolation is region descriptors in the EL2 memory protection unit, and on a Cortex-R52 those are a small, fixed resource whose size is chosen when the silicon is designed. A part can be a perfectly good Cortex-R52 and still not run ZoneX.
+
+== What a part must provide
+
+* *Armv8-R AArch32 with EL2 implemented*, and an EL2 memory protection unit with a non-zero region count.
+* *A generic timer reachable from EL2*, and an interrupt controller that can route its interrupt to EL2 as a fast interrupt. This is what ends a window against a partition's wishes.
+* *A console the hypervisor can drive*, if you want any output. ZoneX drives one directly; partitions reach it by asking the hypervisor rather than by being granted the device.
+* *Hypervisor code below `0x80000000`.* The Cortex-R52 background memory map marks the upper half of the address space execute-never for instruction fetch, so this holds for any Cortex-R52 rather than for one board.
+
+ZoneX is Linux-only as a build and test host, deliberately. There is no Windows build.
+
+== The region budget
+
+`HMPUIR` bits 7 to 0 give the EL2 region count. On a Cortex-R52 the architecturally permitted values are *0, 16, 20 or 24*.
+
+[cols="2,1,1,1",options="header"]
+|===
+| | EL2 regions | Spent on hypervisor MMIO | Used by the two-partition demonstrator
+
+| NXP S32Z280-594EVB | 20 | 2 | 4 of 20
+| Armv8-R AEM fixed virtual platform | 32 | 0 | 2 of 32
+|===
+
+Three consequences, and the first decides a board.
+
+=== A part with no EL2 memory protection unit cannot run ZoneX at all
+
+Zero is a legal `HMPUIR` value. There is no software fallback, and this is worth being explicit about because it is where intuition from other architectures misleads: *on Armv8-R there are no page tables at either stage of translation*. Both stages of address control are region-based memory protection units. If the hardware has no EL2 regions, there is no second mechanism to fall back on.
+
+A part configured with 16 rather than 20 will run ZoneX, with less headroom than the bench this was measured on.
+
+=== The hypervisor's own device memory is not free, and its cost is a property of the board
+
+On the S32Z280 the console and the interrupt controller both fall in the background map's Normal write-through band rather than the Device band. A memory-mapped peripheral reached with cacheable attributes is not a working peripheral -- gathering and reordering are permitted even with caches disabled, which breaks a polled register protocol. Each therefore costs a Device-attributed EL2 region, and ZoneX spends two of this part's twenty before any partition exists.
+
+[WARNING]
+====
+*The fixed virtual platform cannot show you this constraint.* On the model, both peripherals happen to sit in the Device band and cost no regions at all. The model also reports 32 EL2 regions, which is not an architecturally legal Cortex-R52 value at either stage of translation. A green model run is not evidence about any real part's region budget -- verify on silicon.
+====
+
+=== A region must also be reachable by the partition switch
+
+A partition switch enables and disables whole region sets with one write to `HPRENR`, and that register's implemented width is a property of the part -- all twenty bits on this board. A region seated past the implemented mask would be programmed with its own enable bit set and left that way, so the outgoing partition's window would stay live underneath the incoming one, with nothing to fault on.
+
+That is an isolation failure no permission check would catch, so ZoneX treats the count and the mask as *two separate budgets*. It reads both at boot, checks the planned layout against each, and refuses to start if the layout does not fit both -- reporting which check failed rather than starting in a state it cannot enforce.
+
+== Verified region counts
+
+Both measured rows below come from the probe image, which prints them on every run and asserts the EL2 count against the set of architecturally permitted values. A board with a different configuration reports itself rather than inheriting this table's conclusion.
+
+[cols="2,1,1",options="header"]
+|===
+| Target | EL1 regions | EL2 regions
+
+| Architectural (Cortex-R52) | 16, 20 or 24 | 0, 16, 20 or 24
+| NXP S32Z280-594EVB | 20 | 20
+| Armv8-R AEM fixed virtual platform | 32 | 32
+|===
+
+== Manifest capacity
+
+The manifest allows four partitions of six regions each, and that ceiling is asserted at compile time against 24 -- the largest EL2 region count any Armv8-R part can have -- so that no manifest can be written which no part could program.
+
+The compile-time check is the weaker half. No header knows which part it is being built for, so the check that matters runs at boot against the real `HMPUIR` and the real `HPRENR` mask. Raising the per-partition ceiling is a one-line change, and the boot-time check is what holds it to account.
+
+== Guest kernels
+
+A partition runs an ordinary ThreadX kernel, built for the memory window the manifest gives it. Partitions do not need to be aware they are partitioned: a guest uses its own EL1 memory protection unit exactly as it would on bare metal, and the two stages are checked independently.
+
+ZoneX does not link ThreadX. Guest images are built separately and embedded in the hypervisor's image, so the hypervisor has no dependency on a kernel source tree at link time.

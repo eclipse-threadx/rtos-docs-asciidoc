@@ -1,0 +1,83 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= What Phase 0 demonstrates, and what it does not
+:description: The evidenced claim for ZoneX Phase 0, the measurements behind it, and the boundary of what it establishes.
+
+ZoneX is at Phase 0. This page is the claim and the non-claim, and it is written to be quoted: if you are deciding whether ZoneX can carry a function you care about, this is the page that answers it.
+
+[IMPORTANT]
+====
+*Phase 0 is a demonstrator, not production software.* It was built to establish that a small set of mechanisms work on real Armv8-R silicon and to measure what they cost. Every timing figure below comes from one part on one bench, with the EL2 caches off, built for debuggability rather than speed, and with no clock tree configured -- the core runs on the part's power-up oscillator. Read them as a first measurement with its conditions stated, not as characterisation across a population.
+====
+
+== What it demonstrates
+
+Two ThreadX kernels run at EL1 on one logical Cortex-R52 core, each confined to its own stage-2 window, time-sharing the core under a static major frame taken from a manifest -- on the Armv8-R AEM fixed virtual platform and on the NXP S32Z280-594EVB.
+
+*Neither partition can reach the other's memory, or the hypervisor's.* Not by convention: a partition that grants itself its neighbour's memory in its own EL1 memory protection unit is still refused by stage 2, stopped, and reported with the partition, the faulting address and the guest program counter. The other partition runs to the end of the frame with its schedule untouched, so being attacked costs the neighbour nothing.
+
+*A window ends whether the partition agrees or not.* The hypervisor's timer is routed as a fast interrupt to EL2, which the architecture does not let a guest mask. A partition that masks everything it can and spins for ever is preempted exactly on schedule.
+
+*Each partition's clock is its own*, and advances in its own windows and in nobody else's.
+
+== The temporal claim, stated exactly
+
+This is the sentence that matters, and it has two halves because the causes are different.
+
+*Nothing a partition does through the schedule reaches its neighbour.* Computing, masking its own interrupts and violating its boundary without pause each move the critical partition's period by tens of counts.
+
+*What reaches it is the hypervisor's own console driver.* A guest that prints moves that period by up to one line tag -- 22 bytes at 115,200 8N1, 17,640 counts of the board's 8 MHz counter -- every run. That is a defect in ZoneX, not a limit of the partitioning, and it is bounded, derived and reproducible.
+
+=== The measurement behind it
+
+A regression sweeps fourteen isolation cases in one run and measures the critical partition's window period continuously while the untrusted partition is steered through five behaviours. Measured on the S32Z280-594EVB over six hundred major frames, with a window of 80,000 counts of an 8 MHz counter and a major frame of 800,000:
+
+[cols="3,1,1,1,1",options="header"]
+|===
+| While the untrusted partition is… | min | mean | max | spread
+
+| idle | 799,989 | 799,999 | 800,011 | 22
+| in a tight compute loop | 799,990 | 799,999 | 800,010 | 20
+| computing with its own interrupts masked | 799,989 | 799,999 | 800,013 | 24
+| storming the console | 791,111 | 800,085 | 809,062 | 17,951
+| violating its boundary on every iteration | 799,922 | 800,000 | 800,107 | 185
+|===
+
+The last row is the comparison that carries the claim: the untrusted partition committed a hundred and three thousand boundary violations in that phase, and its neighbour's period moved by under two hundred counts out of eight hundred thousand.
+
+An independent run six days earlier, on an earlier revision of the same code, produced 21, 21, 22 and 304 counts for those rows and 17,830 for the console -- agreeing with the table to within the run-to-run scatter, and showing the same 22-byte console hypercall. The figures above are therefore a reproduced measurement rather than one run's luck, which is the only basis on which a single bench is worth quoting at all.
+
+The console row is the hypervisor's defect. A guest's console is one hypercall per character, answered at EL2 with fast interrupts masked, so the interrupt that ends a window waits for it. Nearly every one of those hypercalls writes the single byte the guest asked for. The one that opens a line writes twenty-two -- a deferred newline, the tag naming the partition, and the guest's own character -- and that is 106,116 core cycles, 2.2 ms, with the boundary interrupt held off throughout.
+
+The bound is one line tag, and it is derived rather than observed. A period is a difference between two window entries, so a constant deferral cancels in it and only a change reaches the number: one long period and one short correction, 35,280 counts against a half-window bound of 40,000. Every other phase is held to one eighth of a window.
+
+*What removes it is a console the hypervisor can hand a byte to without waiting for the wire*, which is an interrupt-driven driver plus a polled fallback the fault path can force -- because the fault reporter prints at the moment ZoneX has already failed once. That work is named and costed in the repository and is not done.
+
+== What it does not demonstrate
+
+*It is not spatial partitioning across cores.* Dual-core lockstep presents as one logical core, so Phase 0 is temporal and memory partitioning on a single core. Spatial partitioning across multiple cores needs split-mode symmetric multiprocessing and is deferred.
+
+*Interrupt latency is not measured at all.* Guest interrupts go straight to EL1 and cost what they always did. Bounding them needs the interrupt controller's list registers, which this core has and this phase does not use.
+
+*There is no structural coverage of the port.* The architecture-independent core is held to a full line and branch coverage floor enforced by the build. The port -- the coprocessor assembly, the EL2 vectors, memory protection unit programming and the context switch -- cannot be measured that way from a workstation, and instrumenting it on the target would change the code generation of the thing being measured. Its evidence is a set of builds that must fail, each on the check it was built to violate. Structural and modified condition/decision coverage of the port need their own tooling and are a later concern; no number published for ZoneX today stands in for them.
+
+*And these are not in Phase 0 at all:* interrupt virtualisation with a bounded worst-case latency, inter-partition communication, the full time-partition scheduler, supervised partition restart, TraceX integration, and the safety-artifact package. See xref:roadmap.adoc[Later phases].
+
+== Why the claim is written this way
+
+The unqualified sentence was available. Stating that a partition's period is unaffected by anything its neighbour does, and leaving the console out of it, would have read better and would have been an overclaim that a customer's own bench would find.
+
+A qualified claim with a number attached is the stronger artifact, and it is the one a safety-savvy reader can act on: the mechanism is named, the cost is measured, the bound is derived from the mechanism rather than fitted to a run, and the cure is scoped.

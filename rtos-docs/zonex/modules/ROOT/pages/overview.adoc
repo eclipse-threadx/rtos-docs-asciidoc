@@ -1,0 +1,61 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Overview of ZoneX
+:description: What ZoneX is, the problem it solves, and how a partitioned system is put together.
+
+ZoneX is a deterministic partitioning hypervisor for Armv8-R. It exists to let software of different criticality share one core without sharing a fate: a partition that computes without pause, disables its own interrupts, faults repeatedly or crashes outright must not change when its neighbour runs or how fast its neighbour's clock advances.
+
+== The problem it solves
+
+A mixed-criticality system puts a safety function and a convenience function on the same part because a second part costs money, board area and power. The difficulty is that the two then share a core, a memory system and an interrupt controller, and every one of those is a path by which the convenience function can delay the safety one.
+
+Partitioning is the answer, and it has two halves that are usually confused. *Memory partitioning* stops one partition reading or writing another's state. *Temporal partitioning* stops one partition consuming time the other was promised. A system with only the first is not safe: an isolated partition that never gets the core is as dead as one whose memory was corrupted.
+
+ZoneX provides both, statically. There is no allocator, no filesystem and no partition creation at run time. The whole system is declared in a manifest that is validated before anything is programmed, so a configuration that cannot fit the hardware is refused at boot with a diagnosis rather than discovered in the field.
+
+== How it is put together
+
+A ZoneX system has three parts.
+
+*The hypervisor* runs at EL2. It owns the EL2 memory protection unit, the generic timer it uses to end a window, and the interrupt controller's routing of that timer. Its own memory is protected by not being covered by any enabled region, so no region set a manifest can produce can grant a guest access to it.
+
+*The partitions* run at EL1. Each is an ordinary ThreadX kernel and application, built for the memory window it was given, and each runs with its own EL1 memory protection unit exactly as it would on bare metal. A partition needs no awareness that it is partitioned; what it cannot do is escape the window ZoneX programmed for it, because the two stages are checked independently and stage 2 has no encoding that grants a guest access while denying EL2.
+
+*The manifest* declares the partitions, their memory regions, their windows in the major frame, and any shared granule between them. It lives in the hypervisor's own read-only data and is unreachable from a guest for the same reason the hypervisor's code is. See xref:writing-a-manifest.adoc[Writing a partition manifest].
+
+== The major frame
+
+Time is divided into a repeating *major frame* built from a fixed number of ticks. Each partition owns a *window* of the frame, declared in ticks, and the frame length is the sum of its windows -- carried explicitly in the manifest rather than computed, so that a frame which does not match its parts is a manifest error rather than an arithmetic result that can never be wrong.
+
+A window ends whether the partition running in it agrees or not. The hypervisor's timer is routed as a fast interrupt to EL2, and the architecture ignores a guest's attempt to mask it at EL0 and EL1. A partition that masks every interrupt it can and spins for ever is preempted exactly on schedule; all its masking costs it is its own kernel's tick.
+
+Each partition's virtual counter is frozen while it is not running, so its clock advances by the time it spent on the core and by none of the time it did not. This is the property that makes a guest's own timing reasoning sound: a partition given seven ticks in ten sees a clock that advanced by seven ticks, not by ten.
+
+== What happens on a violation
+
+A partition that touches memory outside its window takes a stage-2 fault to EL2. ZoneX decodes the syndrome, reports the partition, the faulting address and the guest program counter, and halts. Halting is the shipping policy, and it is deliberate: a demonstrator that continued past a violation would be asserting a recovery story it does not have. Supervised restart is a later phase.
+
+The reporting path is defended on the assumption that it runs only after something has already gone wrong. The vectors that cannot resume reset the EL2 stack before calling C, because the fault they exist to report may be the reason the stack is unusable, and the reporting code counts its own depth and refuses to report a second time -- storing a verdict and parking instead, so that a fault taken inside a fault report ends in a diagnosis rather than a silent hang.
+
+== Where the engineering records are
+
+ZoneX keeps its design rationale in the repository rather than on this site, because those documents are written for someone changing the code.
+
+* `docs/decisions.md` -- every design decision, why it was taken, and the ones that measurement later corrected.
+* `docs/armv8r-el2-reference.md` -- the verified EL2 register sheet, recording measured values where the Cortex-R52 technical reference manual is ambiguous or contradicts itself.
+* `docs/coverage.md` -- which files are held to a full coverage floor, which are not, and what stands in for the ones that are not.
+* `docs/errata.md` -- the silicon errata sweep, at stated notice revisions.
+* `docs/wcet-inputs.md` -- every data-dependent path on the switch and trap paths, as input to worst-case-execution-time work.

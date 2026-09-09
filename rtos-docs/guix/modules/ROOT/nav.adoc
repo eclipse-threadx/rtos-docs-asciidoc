@@ -44,3 +44,4 @@
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
 * xref:tracex:ROOT:index.adoc[TraceX]
 * xref:usbx:ROOT:index.adoc[USBX]
+* xref:zonex:ROOT:index.adoc[ZoneX]
