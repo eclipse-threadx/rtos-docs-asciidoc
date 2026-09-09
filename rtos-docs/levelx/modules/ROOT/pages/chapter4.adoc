@@ -19,6 +19,8 @@
 
 The LevelX NAND API functions available to the application are as follows.
 
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the ThreadX User Guide].
+
 == NAND_Services
 
 * <<lx_nand_flash_close,lx_nand_flash_close>>
@@ -225,6 +227,8 @@ UINT lx_nand_flash_initialize(void);
 === Description
 
 This service initializes LevelX NAND flash support. It must be called before any other LevelX NAND APIs.
+
+NOTE: _This service assigns only LevelX's own global state and has no ThreadX dependency, so unlike most services listed as allowed from Initialization it may also be called before_ *_tx_kernel_enter_*. _In a standalone build --_ *LX_STANDALONE_ENABLE* _defined -- there is no ThreadX at all. The LevelX service that does create a ThreadX object is_ *_lx_nand_flash_open_*, _which is not allowed from Initialization._
 
 === Input Parameters
 

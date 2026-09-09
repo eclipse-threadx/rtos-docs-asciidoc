@@ -19,6 +19,8 @@
 
 This chapter contains a description of all FileX services in alphabetic order. Service names are designed so all similar services are grouped together.
 
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the ThreadX User Guide].
+
 The FileX API functions available to the application are as follows.
 
 == Directory_Services
@@ -4022,6 +4024,8 @@ VOID fx_system_initialize(void);
 === Description
 
 This service initializes all the major FileX data structures. It should be called either in *_tx_application_define_* or possibly from an initialization thread and must be called prior to using any other FileX service.
+
+IMPORTANT: _*_tx_application_define_* is the earliest point from which this service may be called. Unless the FileX library is built with_ *FX_NO_TIMER* _defined, it creates the FileX system timer in the active state, which places the timer on a kernel list that does not exist until_ *_tx_kernel_enter_* _sets it up. Calling this service before then faults rather than returning an error._
 
 WARNING: _Once initialized by this call, the application should call **fx_system_date_set*_ and *fx_system_time_set* to start with an accurate system date and time.*
 

@@ -29,6 +29,8 @@ TraceX graphically displays the event trace buffer built by ThreadX. The followi
 
 To enable event trace, define the time-stamp constants, build the ThreadX library with *TX_ENABLE_EVENT_TRACE* defined, and enable tracing by calling the *tx_trace_enable* function.
 
+Under the "Allowed From" heading in the service descriptions below, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the ThreadX User Guide].
+
 == Defining Time-Stamp Constants
 
 The time-stamp constants are designed to provide the developer control over the time-stamp used in the event trace entries. The two time-stamp constants and their default values are as follows:
@@ -96,6 +98,8 @@ This service enables event tracing inside ThreadX. The trace buffer and the maxi
 application.
 
 IMPORTANT: The ThreadX library and application must be built with *TX_ENABLE_EVENT_TRACE* defined in order to use event tracing.
+
+IMPORTANT: *_tx_application_define_* is the earliest point from which this service may usefully be called. It registers the ThreadX objects that exist at the time of the call, and before *_tx_kernel_enter_* there are none. Depending on how the library is built, *_tx_kernel_enter_* also clears the trace buffer pointers this service sets up, in which case the earlier call returns *TX_SUCCESS* and leaves tracing disabled.
 
 ==== Input Parameters
 
