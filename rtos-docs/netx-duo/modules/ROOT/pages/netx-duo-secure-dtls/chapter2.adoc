@@ -536,6 +536,12 @@ Following is a list of all options, where each is described in detail:
 | *NX_CRYPTO_MAX_RSA_MODULUS_SIZE*
 | Defined, this option gives the maximum RSA modulus expected, in bits. The default value is 4096 for a 4096-bit modulus. Other values can be 3072, 2048, or 1024 (not recommended).
 
+| *NX_SECURE_TLS_CERTIFICATE_VERIFY_SIGNATURE_SIZE*
+| Defined, this option gives the size in bytes of the per-session buffer used to build and check the PKCS#1 encoded CertificateVerify signature. It must be at least as large as the largest RSA modulus in use, so the default of 600 covers the 4096-bit default of NX_CRYPTO_MAX_RSA_MODULUS_SIZE. Lower it to reduce the cryptographic metadata each TLS session needs when the largest certificate key in use is known to be smaller.
+
+| *NX_SECURE_TLS_CERTIFICATE_VERIFY_PSS_SCRATCH_SIZE*
+| Defined, this option gives the size in bytes of the per-session EMSA-PSS working area used when checking an RSA-PSS CertificateVerify signature in TLS 1.3. The default of 600 covers a 4096-bit modulus with SHA-512. It has no effect unless TLS 1.3 is enabled.
+
 | *NX_SECURE_DTLS_COOKIE_LENGTH*
 | Defined, this option gives the maximum length of DTLS cookie.
 
