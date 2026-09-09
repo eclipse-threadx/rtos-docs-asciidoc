@@ -1497,6 +1497,8 @@ Before the TLS session is created, the metadata buffer must be allocated. The bu
 
 In order to make calculating the metadata buffer size easy, the service _nx_secure_metadata_size_calculate_ performs the same calculations as nx_secure_tls_session_create but simply returns the total required metadata buffer size in bytes.
 
+The metadata buffer also holds the working buffers used to build and check the CertificateVerify signature. Those buffers hold one session's handshake hash and signature block, so they are reserved per session: two TLS sessions authenticating with a certificate at the same time would otherwise overwrite each other's data and produce or reject an incorrect signature. Their size is governed by NX_SECURE_TLS_CERTIFICATE_VERIFY_SIGNATURE_SIZE and, for TLS 1.3, NX_SECURE_TLS_CERTIFICATE_VERIFY_PSS_SCRATCH_SIZE. Because the required buffer size therefore depends on the configuration, always size the metadata buffer with nx_secure_tls_metadata_size_calculate rather than with a hard-coded value; a buffer that is too small makes nx_secure_tls_session_create return NX_INVALID_PARAMETERS. The buffers are not reserved when NX_SECURE_DISABLE_X509 is defined.
+
 === Initializing the TLS session
 
 Once the NX_CRYPTO_METHOD and NX_SECURE_TLS_CRYPTO objects are created and the metadata area reserved, we can initialize a TLS session as follows (values taken from the above examples):
