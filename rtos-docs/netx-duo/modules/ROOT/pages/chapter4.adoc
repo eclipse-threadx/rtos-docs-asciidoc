@@ -27,6 +27,8 @@ NOTE: _Note that a BSD-Compatible Socket API is available for legacy application
 
 In the *Return Values* section of each description, values in *BOLD* are not affected by the *NX_DISABLE_ERROR_CHECKING* option used to disable the API error checking, while values in non-bold are completely disabled. The "Allowed From" sections indicate from which each NetX Duo service can be called.
 
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Application Interface Calls" in xref:chapter3.adoc[Chapter 3 - Functional Description of NetX Duo].
+
 == nx_arp_dynamic_entries_invalidate
 
 Invalidate all dynamic entries in the ARP cache
@@ -1895,6 +1897,8 @@ UINT nx_ip_create(
 === Description
 
 This service creates an IP instance with the user supplied IP address and network driver. In addition, the application must supply a previously created packet pool for the IP instance to use for internal packet allocation. Note that the supplied application network driver is not called until this IP's thread executes.
+
+IMPORTANT: _This service creates the IP instance's periodic timer in the active state, so it must not be called before_ *_tx_kernel_enter_*. _Doing so faults rather than returning an error, because the list of active timers does not exist yet._
 
 === Parameters
 

@@ -21,6 +21,8 @@ This chapter contains a description of all NetX Duo SNMP agent services (listed 
 
 In the *Return Values* section in the following API descriptions, values in *BOLD* are not affected by the *NX_DISABLE_ERROR_CHECKING* define that is used to disable API error checking, while non-bold values are completely disabled.
 
+Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the ThreadX User Guide].
+
 == nx_snmp_agent_auth_trap_key_use
 
 Specify authentication key for trap messages
