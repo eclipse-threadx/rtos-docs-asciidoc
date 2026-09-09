@@ -19,6 +19,8 @@
 
 This chapter contains a description of all ThreadX SMP services in alphabetic order. Their names are designed so all similar services are grouped together. In the "Return Values" section in the following descriptions, values in *BOLD* are not affected by the *TX_DISABLE_ERROR_CHECKING* define used to disable API error checking; while values shown in nonbold are completely disabled. In addition, a "*Yes*" listed under the "*Preemption Possible*" heading indicates that calling the service may resume a higher-priority thread, thus preempting the calling thread.
 
+Under the *Allowed From* heading, "Initialization" means from _tx_application_define_ onward. It does not extend to code that runs before _tx_kernel_enter_, such as C++ static constructors or preliminary processing in _main_, because the kernel structures these services operate on are set up by _tx_kernel_enter_ itself. See "Calling ThreadX SMP Services During Initialization" in xref:threadx:ROOT:threadx-smp/chapter3.adoc[Chapter 3 - Functional Components of ThreadX SMP].
+
 The Threadx SMP API functions available to the application are as follows.
 
 == Thread_SMP_Services
