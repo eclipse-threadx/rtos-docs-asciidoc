@@ -12,6 +12,7 @@
  Contributors: 
      * Frédéric Desbiens - Initial AsciiDoc version.
      * Frédéric Desbiens - Added deprecation notices for txm_module_object_deallocate and txm_module_object_pointer_get.
+     * Frédéric Desbiens - Documented that txm_module_object_deallocate refuses the memory of a live kernel object, and its full set of return values.
      * Frédéric Desbiens - Documented that an object pointer obtained by name grants use of the object and not authority to delete it.
 
 ////
@@ -37,6 +38,7 @@ Additional error codes are returned for some ThreadX APIs. These additional erro
 * *TXM_MODULE_INVALID_PROPERTIES* (0xF3): Indicates the module does not have the correct properties to make an API call. For example, calling trace APIs in user mode.
 * *TXM_MODULE_INVALID_MEMORY* (0xF4): Indicates the memory supplied by the module is invalid or is in an invalid location. For example, in memory protected modules, object control blocks are not allowed to be located in memory the module can access.
 * *TXM_MODULE_INVALID_CALLBACK* (0xF5): Callback specified in the API is outside the range of the module's code and is therefore invalid.
+* *TXM_MODULE_MATH_OVERFLOW* (0xF8): A size supplied by the module is too large for the module manager to work with. The manager adds its own bookkeeping to the sizes it is given, and refuses a size for which that addition would not be representable rather than proceeding on a value that has wrapped.
 
 '''
 
@@ -107,6 +109,8 @@ UINT txm_module_object_allocate(
 
 This service allocates memory for a module object from memory outside of the module, which helps prevent corruption of the object control block by the module's code. In memory protected systems, all object control blocks must be allocated with this API before they can be created.
 
+The module manager allocates more than *object_size* bytes: it keeps a header of its own in front of the memory the module receives, recording the owning module, the size and the links that let the allocation be reclaimed when the module is unloaded. *object_size* is therefore bounded above by what the object pool holds, less that header, and a size too large to add the header to at all is refused with *TXM_MODULE_MATH_OVERFLOW*. Pass *sizeof* the control block being allocated, as in the example below.
+
 === Input parameters
 
 * *object_ptr* Destination of object pointer on successful allocation.
@@ -115,8 +119,11 @@ This service allocates memory for a module object from memory outside of the mod
 === Return values
 
 * *TX_SUCCESS* (0x00) Successful object allocate.
+* *TX_SIZE_ERROR* (0x05) *object_size*, together with the manager's own object header, is larger than the whole object pool.
 * *TX_NO_MEMORY* (0x10) Not enough memory.
 * *TX_NOT_AVAILABLE* (0x1D) Module manager has not created an object pool to allocate from
+* *TXM_MODULE_INVALID_MEMORY* (0xF4) *object_ptr* is NULL, so there is nowhere to return the allocation.
+* *TXM_MODULE_MATH_OVERFLOW* (0xF8) *object_size* is so large that adding the manager's own object header to it would not be representable. Nothing is allocated and the object pool is left untouched.
 
 === Allowed from
 
@@ -150,7 +157,9 @@ WARNING: *_This service is deprecated. Do not use it in new code, and remove any
 
 When a module calls a standard kernel delete service such as *_tx_timer_delete_*, *_tx_semaphore_delete_*, *_tx_queue_delete_*, or any other *_tx_*_delete_* service, the Module Manager dispatch layer automatically releases the associated object pool memory after the kernel cleanup completes. No separate deallocation call is required.
 
-Calling *_txm_module_object_deallocate_* on a live kernel object — one whose *_tx_*_delete_* service has not yet been called — frees the backing pool memory while the kernel still holds a reference to it. This is a use-after-free defect.
+Deallocation is not deletion. Calling *_txm_module_object_deallocate_* on a live kernel object — one whose *_tx_*_delete_* service has not yet been called — asks the Module Manager to release memory the kernel is still using as a control block: the object remains on the created list for its type, a thread remains schedulable, and an active timer remains on the timer list, none of which look at whether the memory has been given back. The Module Manager therefore refuses such a request and returns *TX_DELETE_ERROR*, leaving the object, the allocation and the memory exactly as they were. Delete the object first.
+
+Memory that holds no live object is still released, so a module can still give back storage it allocated for an object it never created, or for one it has since deleted.
 
 === What to do instead
 
@@ -183,6 +192,10 @@ UINT txm_module_object_deallocate(VOID *object_ptr);
 === Return values
 
 * *TX_SUCCESS* (0x00) Successful object deallocation.
+* *TX_DELETE_ERROR* (0x11) The memory holds a live kernel object. Nothing was released. Call the object's *_tx_*_delete_* service, which releases the memory itself.
+* *TX_PTR_ERROR* (0x03) The address is not one the Module Manager handed this module, or the module has no allocations.
+* *TX_NOT_AVAILABLE* (0x1D) No Module Manager object pool has been created.
+* *TXM_MODULE_INVALID_MEMORY* (0xF4) The address does not lie inside the object pool with room for the manager's private header in front of it and for the allocation the header describes.
 
 === Allowed from
 
