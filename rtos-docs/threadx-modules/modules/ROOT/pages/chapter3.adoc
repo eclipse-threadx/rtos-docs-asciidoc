@@ -257,6 +257,31 @@ The rules a port applies are the same everywhere:
 
 A rejected pointer causes the service to return *TXM_MODULE_INVALID_MEMORY* rather than being carried into the kernel.
 
+=== Kernel object validation
+
+A range check answers whether privileged code may touch some memory. It cannot answer whether the memory *is* the object a service was asked to operate on, and for a kernel object that is the question that matters. The Module Manager's object pool lies outside every module, so an address pointing into the middle of one of a module's own privileged allocations is outside the module and would pass a range check while denoting no object at all. The bytes at such an address are bytes the module placed there through ordinary create and set services, including the control block ID at the front of them, so the ID alone establishes nothing.
+
+Every service that takes a kernel object therefore authenticates it separately, and the rule is exact:
+
+* The address must be the *exact* address of a live kernel object of the type the service expects. An address inside an object is not that object, and neither is the address one past its end.
+* Authentication is answered from the kernel's created list for the type. That list is maintained by the create and delete services, so membership establishes at one stroke that the address is an object start, that the object is of the expected type, and that it has not been deleted.
+* Memory obtained from *_txm_module_object_allocate_* is not an object until a create service has made it one. A raw allocation of exactly the right size is refused.
+* A type is never taken from the object itself. Distinct object types of equal size exist, so an object created as one type is refused when presented as another even where the two control blocks are the same size.
+* An address a module names is not read at all until a kernel record says there is an object there.
+
+A rejected object causes the service to return *TXM_MODULE_INVALID_MEMORY*.
+
+The same rule is what allows an object the application created to be shared with a module. Such an object is not in the Module Manager's object pool and the manager has no record of its own to consult, so the kernel created list stands in place of one. An application object found by *_txm_module_object_pointer_get_* is authenticated exactly as a module's own object is, and needs no separate registration. It must have been created: a control block the application has declared but not yet created is not yet an object.
+
+What object authentication settles is identity, type and liveness. It does not settle whether the requesting module is *authorised* to operate on an authentic object that belongs to somewhere else. An application that shares objects between modules, or between itself and a module, decides that question for itself.
+
+Authenticating an object costs a walk of the created list for its type, bounded by the count the kernel maintains beside that list, and the walk runs with interrupts disabled because that is the protection the list is maintained under. It introduces no blocking point and no priority inversion into a kernel request. Only modules built with *TXM_MODULE_MEMORY_PROTECTION* pay it.
+
+Two services behave differently as a consequence:
+
+* *_tx_thread_reset_* returns *TX_NOT_DONE* for a thread that is not a module thread. Resetting a thread rebuilds its stack around the shell entry function of the module that created it, and a thread the application created has no such module.
+* *_txm_module_object_deallocate_* clears the control block ID of the memory it gives back. An object whose memory is released without first being deleted therefore stops being recognised as an object at the moment the manager stops owning its memory, rather than returning to the pool still carrying an ID for whatever is allocated there next.
+
 === Cortex-A7 MMU ports
 
 On the Cortex-A7 MMU ports the module's own data region is answered from the Module Manager's records, which name it exactly. Shared and external memory has no such record, so the port asks the MMU to translate every page the range touches, using an unprivileged read or an unprivileged write according to what the service will do with it.
