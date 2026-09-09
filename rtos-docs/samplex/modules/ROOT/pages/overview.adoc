@@ -1,0 +1,85 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Overview of SampleX
+:description: What the SampleX board support package framework is, and which boards it currently supports.
+
+The https://github.com/eclipse-threadx/samplex[SampleX repository] holds sample applications for Eclipse ThreadX and the board support package (BSP) framework they are built on. ThreadX, NetX Duo, FileX and USBX are consumed as submodules, so the samples track the components rather than vendoring a copy of them.
+
+== What the framework is for
+
+An embedded sample is usually written against the board it ships for: it includes the vendor SDK headers, names the linker symbols of one memory map, and reads one set of peripheral registers. Such a sample demonstrates ThreadX, but it cannot be moved to another board, and it cannot show that the code above the hardware is portable.
+
+The SampleX framework separates the two concerns with a small set of C interfaces:
+
+* `bsp/include/bsp/` declares the interfaces. They are target agnostic and contain no board detail.
+* `targets/<Vendor>/<BOARD>/lib/bsp/` implements them for one board, using that board's vendor SDK or direct register access.
+* `apps/` holds applications that any target can build. They include only C standard headers, `<tx_api.h>` and `+<bsp/...>+`.
+
+An application therefore reaches the user LED, the serial console, the RAM it may allocate and the board's startup self-tests through the interfaces described in xref:bsp-interface.adoc[The BSP interface contract], and names no vendor header, no board register and no linker-defined address.
+
+Three properties of the framework are worth stating explicitly, because they constrain how it may be extended:
+
+Board support is additive.::
+Each target owns its own BSP implementation, toolchain files and build helpers under its own directory. No BSP code is shared between targets, so adding a board, or changing one, cannot regress another. The board directories that predate the framework are left untouched for the same reason.
+
+The interface set is deliberately small.::
+It covers core board initialization, the user LED, the serial console, the application's RAM budget and the board's startup self-tests, and nothing more. A board that lacks one of those pieces of hardware implements the calls as no-ops so that a portable binary still links and runs.
+
+Portability is verified, not asserted.::
+`apps/threadx_demo/main.c` is built by both supported targets from that one source file, and continuous integration runs the resulting firmware under emulation on 32-bit Arm and 64-bit RISC-V, asserting on the same console output from both. A claim only one architecture exercises is not treated as a claim.
+
+== Supported boards
+
+|===
+| Board | Core | Toolchain | Verification
+
+| NUCLEO-F401RE
+| Arm Cortex-M4 (STM32F401RE, 84 MHz)
+| GNU Arm Embedded (`arm-none-eabi`)
+| Renode
+
+| PolarFire SoC Icicle Kit
+| 64-bit RISC-V, `rv64gc` (U54 application hart, 600 MHz)
+| RISC-V GNU (`riscv-none-elf`)
+| Renode
+|===
+
+Neither target requires physical hardware to be exercised. Both ship a Renode platform description, an interactive simulation script and a headless test script that advances a fixed span of virtual time and exits non-zero if any assertion is unmet, so the result does not depend on host speed. Both headless suites gate continuous integration.
+
+The two boards were chosen for what they disagree about rather than for coverage. They differ in machine word size, in whether `ULONG` is `unsigned long` or `unsigned int` in the ThreadX port for that architecture, in whether the console receiver is polled or interrupt driven, and in whether the board's boot stack sits above or below the first address ThreadX reports as unused. Each of those differences has caught a defect in code that looked correct on the other board.
+
+== Where the per-board detail lives
+
+Build commands, toolchain versions, memory maps, self-test inventories and expected console output are documented in the target directory next to the code they describe, and not here:
+
+[cols="1,2"]
+|===
+| Target | Reference
+
+| NUCLEO-F401RE
+| `targets/STMicroelectronics/NUCLEO_F401RE/README.md`
+
+| PolarFire SoC Icicle Kit
+| `targets/Microchip/POLARFIRE_ICICLE_RENODE/README.md`
+
+| Framework architecture and directory layout
+| `docs/architecture.md`
+
+| Onboarding blueprint and asset mapping
+| `templates/target/README.md`
+|===
+
+Those figures change whenever a target does, and they are verified by the SampleX build and its emulation suites. This section documents the interface contract, which is what a board author has to satisfy and an application author may rely on.

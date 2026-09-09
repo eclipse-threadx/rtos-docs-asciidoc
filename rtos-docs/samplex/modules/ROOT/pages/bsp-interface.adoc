@@ -1,0 +1,128 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= The BSP interface contract
+:description: The C interfaces a SampleX board support package implements and a portable application relies on.
+
+The interfaces below are declared in `bsp/include/bsp/` in the https://github.com/eclipse-threadx/samplex[SampleX repository]. Every board added under `targets/` implements all of them; every application in `apps/` is written against them and against nothing else that is board specific.
+
+[NOTE]
+====
+These are SampleX framework interfaces, not ThreadX kernel services. They are not part of the xref:threadx:ROOT:index.adoc[ThreadX] API and they are not available to an application that does not link a SampleX board support package.
+====
+
+Two rules apply to the set as a whole.
+
+*The contract is closed to boards.* A new board implements the existing interfaces rather than changing them or adding board-specific headers next to them. Widening the contract is a change to the framework, made once for all boards, not a change one board makes for itself.
+
+*Every board implements every call.* Where a board has no hardware for a call, it implements the call as a no-op instead of omitting it, so a portable binary continues to link and run. A board with no user LED still exports the four `led.h` entry points; a board whose console cannot receive still accepts and stores a receive handler. This is what allows an application to call into the contract unconditionally, without compile-time tests for which board it is being built for.
+
+== Summary
+
+[cols="1,2"]
+|===
+| Header | Interface
+
+| `<bsp/board.h>`
+| `bsp_board_init()`
+
+| `<bsp/led.h>`
+| `bsp_led_init()`, `bsp_led_on()`, `bsp_led_off()`, `bsp_led_toggle()`
+
+| `<bsp/console.h>`
+| `bsp_console_init()`, `bsp_console_write()`, `bsp_console_set_rx_handler()`
+
+| `<bsp/memory.h>`
+| `bsp_ram_region()`
+
+| `<bsp/selftest.h>`
+| `bsp_self_test()`
+|===
+
+== Core board control
+
+[source,c]
+----
+void bsp_board_init(void);
+----
+
+Brings the core up: clock tree, flash wait states, power scaling and any system-level configuration the board needs before peripherals are touched. An application calls it first, before any other BSP call and before `tx_kernel_enter()`.
+
+== User LED
+
+[source,c]
+----
+void bsp_led_init(void);
+void bsp_led_on(void);
+void bsp_led_off(void);
+void bsp_led_toggle(void);
+----
+
+Configures and drives the board's user LED. `bsp_led_init()` performs the pin muxing and must be called before the other three. A board without a user LED implements all four as no-ops.
+
+== Serial console
+
+[source,c]
+----
+void bsp_console_init(void);
+void bsp_console_write(const char *data, size_t length);
+
+typedef void (*bsp_console_rx_fn)(char c, void *context);
+
+void bsp_console_set_rx_handler(bsp_console_rx_fn handler, void *context);
+----
+
+`bsp_console_init()` configures the board's debug UART and its pin muxing. `bsp_console_write()` transmits `length` characters from `data`; it is the output path an application can rely on whether or not the C library's `printf()` is available on that target.
+
+`bsp_console_set_rx_handler()` registers the handler invoked once for each byte the console receives, together with an opaque context pointer that is passed back unmodified. Passing `NULL` as the handler detaches the current one. Bytes that arrive with no handler attached are dropped rather than faulting.
+
+The handler is called *from interrupt context* on a board that drives its receiver from an interrupt. It must therefore not block, must not allocate, and must not call any ThreadX service that is illegal from an interrupt service routine. Handing a byte to a ThreadX queue is the intended shape; formatting it is not.
+
+Registration exists rather than a fixed callback symbol because the alternative breaks linking. A board support package whose interrupt handler calls a fixed, application-defined symbol cannot be linked by any application that does not define that symbol. An application with no interest in console input would have to define a board-specific interrupt callback in order to say that it wants nothing, and a second executable built against the same board support package would fail to link outright. That is the board support package reaching up into the application, expressed through the linker rather than through a header, and it is the coupling this framework exists to remove.
+
+A board whose console has no receive-interrupt path still implements the call and stores what it is given; the handler is simply never invoked. The two supported targets show both shapes: the PolarFire SoC Icicle Kit dispatches to the stored handler from its trap handler, while the NUCLEO-F401RE polls its USART and never invokes the handler it holds. An application registers unconditionally and does not ask which case it is in.
+
+== Application RAM budget
+
+[source,c]
+----
+void bsp_ram_region(void *first_unused, void **base, size_t *size);
+----
+
+Reports the region of RAM the application may claim. `first_unused` is the pointer ThreadX passes to `tx_application_define()`. On return, `*base` is the first address the application owns and `*size` is the length of that region in bytes, or zero when the board has no RAM to spare. Neither output pointer may be `NULL`.
+
+ThreadX reports the first address it believes to be unused, but only the board knows what sits above it: a C heap reservation, a main stack at the top of RAM, or a memory-mapped peripheral window. This interface is what lets an application size a `TX_BYTE_POOL` without naming a board symbol or a linker-defined address.
+
+The region returned belongs entirely to the application, which will allocate every byte of it. A board must therefore never include its own heap or stack reservations in what it reports. Both supported targets verify in their startup self-tests that their C heap cannot grow into the region they hand out, which is the check that makes this guarantee testable rather than merely stated. The two shapes such a clamp takes are visible in the supported boards: one keeps its main stack at the top of SRAM and clamps the region below a fixed reservation, the other keeps its boot stack below ThreadX's first unused address and has only its C heap reservation to skip.
+
+== Startup self-tests
+
+[source,c]
+----
+typedef void (*bsp_selftest_report_fn)(int passed, const char *message,
+                                       void *context);
+
+unsigned bsp_self_test(bsp_selftest_report_fn report, void *context);
+----
+
+Runs the board's startup self-tests and returns the number of checks that failed, zero when all passed. Each check reports through `report` in execution order. `report` must not be `NULL`: passing `NULL` runs no check and returns 1, because a board whose results cannot be reported must not be assumed healthy.
+
+`bsp_self_test()` is intended to be called before `tx_kernel_enter()`, so that a hardware or configuration fault is reported even when the scheduler never starts. Checks that mutate board state undo it before returning, leaving the board as the caller found it.
+
+The board owns the checks and the application owns how their results reach the user. Verifying that a board came up as its own configuration promised needs vendor headers, linker symbols and register maps that no portable application can see, which is why these checks belong to the board support package rather than to the sample. Conversely, formatting the result line stays on the application side of the callback, and with it the choice between `printf()` and `bsp_console_write()`, so a board never has to know which of the two is available on that target.
+
+The `message` string describes the check and includes any measured value. It is valid only for the duration of the call; a handler that needs to keep it must copy it.
+
+The checks themselves are per-board and are listed in each target's readme. Their common floor is the heap-versus-`bsp_ram_region()` guarantee above; beyond that, a board checks what its own configuration asserts, such as the clock tree and timebase it programmed, or its timer arithmetic and interrupt routing.

@@ -1,0 +1,4 @@
+* xref:home:ROOT:pdf-legal.adoc[Legal Notice]
+* xref:samplex:ROOT:overview.adoc[Overview of SampleX]
+* xref:samplex:ROOT:bsp-interface.adoc[The BSP interface contract]
+* xref:samplex:ROOT:onboarding-a-board.adoc[Onboarding a new board]

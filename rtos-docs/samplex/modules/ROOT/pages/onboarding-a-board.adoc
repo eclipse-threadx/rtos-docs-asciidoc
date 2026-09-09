@@ -1,0 +1,81 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Onboarding a new board
+:description: How to add a board to the SampleX board support package framework.
+
+Adding a board to SampleX means creating one directory under `targets/`, implementing the interfaces described in xref:bsp-interface.adoc[The BSP interface contract] inside it, and building an application against them. Nothing outside that directory changes: the interface headers in `bsp/`, the component submodules in `libs/` and the other targets are all left as they are.
+
+`templates/target/` in the https://github.com/eclipse-threadx/samplex[SampleX repository] is the starting point. It is a documented blueprint rather than a target that compiles as it stands, because the startup assembly, the linker script and the vendor SDK can only come from the silicon vendor.
+
+== Steps
+
+. *Copy the template.* Copy `templates/target/` to `targets/<Vendor>/<BOARD>/`. The vendor directory groups boards from one silicon vendor and the board directory is the target name used throughout the build.
+
+. *Declare the board's specifications.* Fill in `lib/bsp/include/board_config.h`. It holds compile-time constants only, no executable code and no function prototypes: the core clock frequency, the debug console baud rate, the bounds of RAM, and whatever the board holds back at the top of RAM for its main stack or below it for its C heap. `bsp_ram_region()` is built from these, so getting them right is what keeps an application's byte pool clear of the board's own reservations.
+
+. *Implement the interfaces.* Fill in the driver stubs under `lib/bsp/src/`, one source file per interface, using the vendor SDK or direct register access. Three points are where new boards most often go wrong:
++
+--
+* `bsp_ram_region()` must subtract every reservation the board makes. The application allocates all of what this call reports.
+* `bsp_console_set_rx_handler()` must be implemented even on a board that only polls its console: accept the handler, store it, and never invoke it. A board that does raise a receive interrupt dispatches to the stored handler from its own interrupt handler, and must not call a symbol the application is required to define.
+* `bsp_self_test()` must at minimum verify that the board's C heap cannot grow into the region `bsp_ram_region()` hands out. Beyond that, check what this board's own configuration asserts.
+--
+
+. *Add the vendor startup files.* Take the startup assembly, the system initialization source and the linker script from the vendor's official SDK or reference package rather than writing them, and place them under `app/common/startup/` and `app/common/linker/`. Avoid editing vendor startup code unless it is strictly necessary; it is maintained upstream by the silicon vendor.
+
+. *Add the ThreadX low-level setup.* Copy `tx_initialize_low_level.S` from the ThreadX port directory matching this core and toolchain, under `libs/threadx/ports/`, into the target's startup directory. It handles core register setup and vector layout for that processor family and is normally copied unchanged.
+
+. *Wire up the build.* Each target carries its own CMake configuration and its own toolchain file under `cmake/`, so that changing one board's build cannot affect another. The target's CMake files expose the include paths, build the board support package as a static library, and link it with the vendor SDK, the ThreadX kernel and the chosen application into the final image.
+
+. *Build and run it.* Build the target, then run it. A board that can be emulated should ship a headless test script that advances a fixed span of virtual time, asserts on the console output and exits non-zero on any unmet assertion, as both currently supported boards do, so the result does not depend on host speed and the target can gate continuous integration.
+
+`templates/target/README.md` carries the full asset mapping — which vendor file belongs in which directory — and the per-file onboarding detail. Follow the two currently supported targets as worked examples; each target's readme records how that board was brought up.
+
+== Choosing the application
+
+A new board has two ways to get something to run, and both are legitimate.
+
+Point the target's `app/CMakeLists.txt` at `apps/threadx_demo/main.c` to build the shared portable demo. This is the fastest way to prove a fresh board support package is complete and correct: it exercises the board, LED, RAM-budget and self-test interfaces, and it already runs on two architectures, so a failure is a finding about the new board rather than about the demo.
+
+Or start from the template's own `app/main.c` and grow a board-specific application in place. That is the right choice when the demo genuinely depends on hardware only this board has.
+
+The rule for which directory an application belongs in is what its source names:
+
+* An application that names no board symbol, no vendor header and no linker-defined address is portable and belongs in `apps/`, where every target can build it.
+* An application that names any of those belongs with its board, under `targets/<Vendor>/<BOARD>/app/`.
+
+A target may do both. One of the currently supported boards keeps a sensor-monitoring demo as its own application because that demo models real hardware, and builds the shared portable demo alongside it as a second executable against the same board support package.
+
+== What not to change
+
+[cols="1,2"]
+|===
+| Directory | Why it stays as it is
+
+| `bsp/`
+| The target-agnostic interface contract. A new board implements these headers; it does not modify them or add board-specific headers beside them.
+
+| `libs/`
+| ThreadX, NetX Duo, FileX and USBX, consumed as submodules. Targets reference them rather than vendoring a copy.
+
+| `apps/`
+| Portable applications shared by every target. Extend one only in ways that stay board neutral.
+
+| Other targets
+| No board support package code is shared between targets, and none should become shared. This is what guarantees that onboarding a board cannot regress one already supported.
+|===
+
+If a board genuinely needs something the contract does not cover, that is a change to the framework, proposed once for all boards, rather than an interface added under one target. The contract is intentionally small, and adding to it is expected to be rare.

@@ -55,7 +55,7 @@ INT recvfrom(INT sockID, CHAR *buffer, INT buffersize, INT flags,
 INT recv(INT sockID, VOID *rcvBuffer, INT bufferLength, INT flags);
 
 INT sendto(INT sockID, CHAR *msg, INT msgLength, INT flags,
-            struct sockaddr *destAddr, INT destAddrLen);
+            const struct sockaddr *destAddr, INT destAddrLen);
 
 INT send(INT sockID, const CHAR *msg, INT msgLength, INT flags);
 

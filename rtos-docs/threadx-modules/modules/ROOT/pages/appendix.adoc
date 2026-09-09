@@ -3995,6 +3995,696 @@ Module always has read access to shared memory.
 | Write access
 |===
 
+== Cortex-R52 processor
+
+=== Cortex-R52 using GNU
+
+The Cortex-R52 module port lives in `+ports_module/cortex_r52/gnu+` and is built with
+CMake and Ninja. It is an ARMv8-R AArch32 port: protection comes from the PMSAv8-R
+MPU programmed through `PRBAR`, `PRLAR` and `PRSELR`, not from an MMU and not from
+the PMSAv7 region model used by the Cortex-R4 and Cortex-R5 ports. Kernel threads
+run in System mode and module threads in User mode, both on the User-banked stack
+pointer.
+
+Two example builds ship with the port and are kept deliberately independent of one
+another:
+
+* `+ports_module/cortex_r52/gnu/example_build/fvp_baser_aemv8r+`, which runs on the
+  freely available ARMv8-R AEM Fixed Virtual Platform and is registered with CTest.
+* `+ports_module/cortex_r52/gnu/example_build/s32z280_evb+`, which runs on NXP
+  S32Z280 silicon.
+
+The subsections below cover the things a user of this port cannot deduce from the
+portable Module documentation. Read xref:chapter2.adoc[Chapter 2] and
+xref:chapter3.adoc[Chapter 3] first; everything here is in addition to them. The
+kernel port the manager runs on is documented separately, at
+xref:home:ROOT:cortex-r52-port.adoc[Cortex-R52 port].
+
+==== MPU region budget for Cortex-R52 using GNU
+
+The port divides the EL1 MPU regions between the board support package and the
+module manager at fixed indices.
+
+|===
+| Regions | Owner | Notes
+
+| 0-7
+| Kernel and board support boot table
+| Permanent. A module switch never rebuilds them.
+
+| 8-15
+| Module block
+| `+TXM_MODULE_MPU_FIRST_REGION+` is 8 and `+TXM_MODULE_MPU_TOTAL_ENTRIES+` is 8.
+
+| 16
+| The kernel's window over the module area
+| Programmed by the board support package. The scheduler enables it for a thread
+  that owns no module and disables it for a thread that does.
+|===
+
+Within the module block the indices are relative to `+TXM_MODULE_MPU_FIRST_REGION+`:
+
+|===
+| Index | Region | MPU region | Attributes
+
+| `+TXM_MODULE_MPU_KERNEL_ENTRY_INDEX+` (0)
+| The privileged kernel entry, `+_txm_module_manager_user_mode_entry+`
+| 8
+| Read only, executable
+
+| `+TXM_MODULE_MPU_CODE_INDEX+` (1)
+| Module code
+| 9
+| Read only, executable
+
+| `+TXM_MODULE_MPU_DATA_INDEX+` (2)
+| Module data
+| 10
+| Read/write, execute never
+
+| `+TXM_MODULE_MPU_SHARED_INDEX+` (3), `+TXM_MODULE_MPU_SHARED_ENTRIES+` (5) of them
+| Shared and external memory
+| 11-15
+| As requested, execute never
+|===
+
+IMPORTANT: This port needs at least *17* EL1 MPU regions and *will not run on a
+Cortex-R52 configured with 16*. That is a legal configuration: the Cortex-R52 TRM
+(Table 3-115) says `MPUIR.DREGION` can be 16, 20 or 24. Sixteen regions is not
+merely cramped, it is excluded outright, because regions 0-15 are entirely spoken
+for and the manager's load window has nowhere to go. A user with a 16-region part
+must shrink the module block *and* relocate the window; changing
+`+TXM_MODULE_MPU_TOTAL_ENTRIES+` alone is not enough.
+
+The example board support asks the hardware rather than assuming. `+mpu_init()+`
+reads `MPUIR` and refuses to enable protection at all if fewer than
+`+MPU_MODULE_REGIONS_REQUIRED+` (17) regions are implemented, rather than programming
+a region that does not exist and continuing.
+
+`+TXM_MODULE_MPU_FIRST_REGION+` being 8 also assumes the board support package uses
+regions 0 to 7 and no more. A board that needs more than eight kernel regions must
+either shrink the module block or move it, and moving it past region 15 changes the
+`MCR` encodings the scheduler emits.
+
+The choice of 8 to 15 for the module block is not arbitrary. TRM section 8.4 encodes
+the region number into `CRm` and `opc2`, with regions 0 to 15 at CP15 `op1` 0 and
+regions 16 to 24 at `op1` 1, so every region on this core has a direct encoding and
+`PRSELR` is only the indirect alternative. What 8 to 15 buys is that all eight
+regions sit in the `op1` 0 range, which is the form measured on this part, and that
+they are contiguous, so the block is written as one unrolled sequence with a single
+barrier pair at the end. Measured on an S32Z280, one region programmed through
+`PRSELR` costs 542 to 604 cycles against 434 to 470 written directly, and `PRSELR`
+requires an `ISB` per region where the direct block needs one barrier pair in total.
+The cost of a module switch therefore does not vary with how many shared entries a
+module has been granted.
+
+NOTE: The TRM contradicts itself here. Sections 3.3.85 and 3.3.86, the register
+descriptions, state that direct access is provided to `PRBAR0` to `PRBAR15` and give
+only the `op1` 0 form; section 8.4 and Table 8-9 give both forms, and Table 8-9 also
+prints `opc2` 0 for the even limit registers where the prose of 8.4 says 1. The port
+uses `op1` 0 for the module block and `PRSELR` for the kernel's region 16 window,
+which is the half of the manual it has been measured against.
+
+==== Protection granule for Cortex-R52 using GNU
+
+`+TXM_MODULE_MPU_ALIGNMENT+` is *64 bytes*, and every base address and limit the port
+programs is masked to it.
+
+This matters more than an alignment requirement usually does, because on PMSAv8-R an
+under-aligned address does not fault. `PRBAR` is `BASE[31:6]`, `RES0[5]`, `SH[4:3]`,
+`AP[2:1]`, `XN[0]`, and `PRLAR` is `LIMIT[31:6]`, `RES0[5:4]`, `AttrIndx[3:1]`,
+`EN[0]`. The low six bits of an address that was not masked land on the shareability,
+permission and execute-never fields of the base register, or on the memory-type index
+of the limit register. The region is still programmed, the module still runs, and it
+runs with attributes nobody asked for.
+
+The manager's `+_txm_module_manager_alignment_adjust()+` rounds the code and data sizes
+up to the granule and declares the granule as the alignment the loader must allocate
+on, so a module loaded through `+txm_module_manager_*_load()+` is aligned by
+construction. An address supplied by the application, which is what
+`+txm_module_manager_external_memory_enable()+` receives, is checked instead and
+rejected with `+TXM_MODULE_ALIGNMENT_ERROR+`.
+
+The example applications verify, for every load, that
+`+txm_module_instance_code_start+`, `+txm_module_instance_data_start+` and
+`txm_module_instance_data_end + 1` are granule aligned. Note that
+`+txm_module_instance_code_end+` is *not* checked: it is the true end of the image and
+is rounded to nothing, so checking it fails on a working build.
+
+==== Module preamble for Cortex-R52 using GNU
+
+[,c]
+----
+    .syntax unified
+    .arm
+
+    .global __txm_module_preamble
+
+    .extern _txm_module_thread_shell_entry
+    .extern _txm_module_callback_request_thread_entry
+    .extern demo_module_start
+
+@ Supplied by the module's linker script rather than written in by hand.
+
+    .extern __txm_module_code_size
+    .extern __txm_module_data_size
+
+@   0x02000000  TXM_MODULE_GNU_COMPILER
+@   0x00000001  TXM_MODULE_USER_MODE
+@   0x00000002  TXM_MODULE_MEMORY_PROTECTION
+
+    .equ    MODULE_PROPERTIES,  0x02000003
+
+    .section .txm_module_preamble, "a"
+    .align  6
+
+__txm_module_preamble:
+
+    .word   0x4D4F4455                      @ Module ID, "MODU"
+    .word   0x6                             @ Major version
+    .word   0x1                             @ Minor version
+    .word   32                              @ Preamble size, 32-bit words
+    .word   0x52520001                      @ Application-defined ID
+    .word   MODULE_PROPERTIES               @ Properties, see above
+
+@ Entry points, as offsets from the word that holds them.
+
+    .word   _txm_module_thread_shell_entry - .
+    .word   demo_module_start - .
+    .word   0                               @ No stop thread
+    .word   1                               @ Start/stop thread priority
+    .word   1024                            @ Start/stop thread stack size
+    .word   _txm_module_callback_request_thread_entry - .
+    .word   1                               @ Callback thread priority
+    .word   1024                            @ Callback thread stack size
+
+@ Sizes, from the linker script.
+
+    .word   __txm_module_code_size
+    .word   __txm_module_data_size
+
+    .word   0                               @ Reserved 0
+    .word   0                               @ Reserved 1
+    .word   0                               @ Reserved 2
+    .word   0                               @ Reserved 3
+    .word   0                               @ Reserved 4
+    .word   0                               @ Reserved 5
+    .word   0                               @ Reserved 6
+    .word   0                               @ Reserved 7
+    .word   0                               @ Reserved 8
+    .word   0                               @ Reserved 9
+    .word   0                               @ Reserved 10
+    .word   0                               @ Reserved 11
+    .word   0                               @ Reserved 12
+    .word   0                               @ Reserved 13
+    .word   0                               @ Reserved 14
+    .word   0                               @ Reserved 15
+----
+
+Three details of this preamble are easy to get wrong.
+
+*The four entry-point words are relative to themselves, not to the base of the
+preamble.* The manager recovers the offset from the module base by adding the field's
+own byte offset back: `+TXM_MODULE_GNU_SHELL_ADJUST+` is 24,
+`+TXM_MODULE_GNU_START_ADJUST+` 28, `+TXM_MODULE_GNU_STOP_ADJUST+` 32 and
+`+TXM_MODULE_GNU_CALLBACK_ADJUST+` 44, which are exactly the byte offsets of those four
+words. Writing `+symbol - __txm_module_preamble+` instead counts the offset twice and
+the module is entered that many bytes into its shell entry, past the prologue.
+All four GNU module ports use the same convention; the Cortex-M33 preamble spells it
+`symbol - . - 0`.
+
+*The two size words come from the linker script.* The manager rounds both up to the
+64-byte granule and maps exactly that much, so a literal that has fallen behind the
+real size of the module produces a fault in code that did nothing wrong.
+
+*The property word must carry both `+TXM_MODULE_USER_MODE+` and
+`+TXM_MODULE_MEMORY_PROTECTION+`.* This port requires them together, unlike the
+others, and a preamble carrying either alone is refused at load time. The module
+properties section below says why.
+
+==== Module properties for Cortex-R52 using GNU
+
+|===
+| Bit | Value | Meaning
+
+| 0
+| 0 +
+1
+| Privileged mode execution +
+User mode execution
+
+| 1
+| 0 +
+1
+| No MPU protection +
+MPU protection (must have user mode selected)
+
+| 2
+| 0 +
+1
+| Disable shared/external memory access +
+Enable shared/external memory access
+
+| [23-3]
+| 0
+| Reserved
+
+| [31-24]
+| {blank} +
+0x00 +
+0x01 +
+0x02
+| *Compiler ID* +
+IAR +
+ARM +
+GNU
+|===
+
+*This port requires bits 0 and 1 together.* A preamble that asks for user mode
+without MPU protection, for MPU protection without user mode, or for neither, is
+refused by `+txm_module_manager_in_place_load()+` with
+`+TXM_MODULE_INVALID_PROPERTIES+`. Every other module port in the tree accepts a
+privileged or unprotected module, so this is a genuine difference and not an
+oversight; `+TXM_MODULE_MANAGER_REQUIRED_OPTIONS+` in
+`+ports_module/cortex_r52/gnu/inc/txm_module_port.h+` is where it is set.
+
+The reason is PMSAv8-R rather than policy. The port programs a module's region
+set only when both bits are present, and the scheduler closes the kernel's window
+over the module area before it dispatches a module thread -- the two regions
+describe the same memory and PMSAv8-R has no region priority. There is no
+background region to fall back on: per the Cortex-R52 TRM section 8.2.1 the
+EL1-controlled background region applies only when the MPU is disabled or when
+`+SCTLR.BR+` is set, and accesses from EL0 are faulted whenever the MPU is
+enabled. So a module that asked for user mode without protection would not run
+unprotected. It would have no mapping at all, and would abort on the fetch of its
+own first instruction. Refusing it at load time reports the problem where the
+property word can still be corrected.
+
+*Bit 2 is supported and optional.* A module that does not set it still loads and
+runs; it simply has no shared or external memory region granted to it. Note that
+`+txm_module_manager_external_memory_enable()+` does not itself check the bit, on
+this port or on any other, so a manager that grants a region to a module that did
+not ask for one is not refused.
+
+==== Module linker for Cortex-R52 using GNU
+
+*The module must be built and linked as a separate image from the manager, and this
+is a requirement rather than a preference.* Both sides define the ThreadX API: the
+kernel defines the real `+_txe_*+` entry points, and the module library defines shims
+of the same names that trap into the kernel instead. Linking the two together does
+not produce a duplicate-symbol error, because the kernel arrives as a static library
+and the module library as ordinary objects, and an object always beats an archive
+member. The module's shims therefore win for the whole image and the manager's own
+calls to `+tx_thread_create()+` and friends are quietly redirected into the module. On
+the S32Z280 this put `+_txe_thread_create+` inside the module area, which no kernel MPU
+region covers, so `+tx_application_define()+` called into unmapped memory and the core
+took a prefetch abort with nothing on the console to say so.
+
+The port therefore links the module on its own, converts it to a raw binary with
+`objcopy -O binary`, and includes those bytes in the manager image with `.incbin`
+from `+module_blob.S+`. No symbol of the module reaches the manager's link.
+
+The module is linked position independent and *does not run at the addresses in its
+linker script*. The two segment origins are nominal, chosen only so that the loader
+can tell a code address from a data address by comparing against
+`+__data_segment_start__+`. They are far apart for that reason, and neither is zero,
+because `+_gcc_setup+` treats a zero GOT entry as one the linker never filled in and
+skips it.
+
+`.data` and `.got` have their VMAs in the data segment, where the module will run,
+and their load addresses in the code segment, inside the blob, where `+_gcc_setup+` can
+find them and copy them out. `AT>CODE` is what says that. This is not optional:
+`+_txm_module_manager_internal_load()+` always allocates the module's data from the byte
+pool and memsets it, and never copies the module's `.data` anywhere. A module linked
+without the load images has no way to reach its own initialised variables.
+
+The declared code size covers the whole blob, the load images of the GOT and `.data`
+included, because the module has to read them in order to copy them out and the code
+region is the only mapping it has over the blob. Ending the code region at `.rodata`
+puts the GOT template outside every region the module owns and `+_gcc_setup+` faults on
+its first read.
+
+The declared data size covers the GOT, `.data` and `.bss`, and *not* the thread
+stacks: the manager adds the start/stop and callback stack sizes to that figure
+itself, from the two stack-size words in the preamble.
+
+The manager's own linker script has three requirements that come from PMSAv8-R having
+no region priority. TRM section 8.1 lists an access that hits more than one region as
+a cause of a translation fault, so the abort seen on the S32Z280 is the architected
+result rather than part-specific behaviour, and every overlap is a defect rather than
+a preference:
+
+. *The kernel's writable region must end where the module area begins.* A module's
+  data comes out of a pool in the module area, so a kernel data region that runs past
+  the base of that area overlaps every region a module is given. The example sets
+  `+__data_end__ = ORIGIN(MODULE)+` and asserts that `+_end+` has not grown into it.
+. *`+_txm_module_manager_user_mode_entry+` must sit outside the kernel's code region.*
+  It is placed in its own section, `+.txm_user_entry+`, after `+__code_end__+`, because
+  the manager grants every module a region over it and that region would otherwise
+  overlap the kernel's own code region. Nothing else may share the section: whatever
+  does becomes executable by every module.
+. *The module pool must live in the module area, not in `.bss`.* A pool in `.bss`
+  sits inside the kernel's data region, and the data the manager hands to a module out
+  of it therefore overlaps that region.
+
+==== Building Modules for Cortex-R52 using GNU
+
+The module is built with the position-independent flags below, and *only* the module:
+putting any of them on the manager would be a defect, since the manager is the
+resident image linked absolutely at the address it boots from.
+
+[,dos]
+----
+-fpic                            data references go through the GOT
+-msingle-pic-base                r9 is the GOT base, set up by the caller
+-mno-pic-data-is-text-relative   the gap between code and data is decided at run time
+-fno-plt                         no procedure linkage table; a module has no loader
+-mno-long-calls                  see below
+----
+
+`-mno-long-calls` deserves an explanation, because a manager for a part like the
+S32Z280 genuinely needs `-mlong-calls` -- its image spans TCM at `0x30000000` and code
+at `0x79900000`, far beyond the reach of a direct `BL`. Applied to a module the same
+flag is fatal. Under `-fpic` it makes GCC route *every* call through the GOT,
+emitting `+R_ARM_GOT32+` instead of `+R_ARM_CALL+`, including the shell entry's call to
+`+_gcc_setup+` -- which is the function that fills the GOT in. The module loads, enters
+its shell entry, reads a zero out of the not-yet-written GOT and branches to address
+zero. A module never needs long calls: it is one contiguous blob and it never calls
+out of itself, because kernel services go through the dispatcher function pointer in
+its entry information.
+
+`.incbin` searches the *assembler's* include path rather than the source tree, so the
+directory holding the generated raw image has to be added to it with
+`-Wa,-I<binary directory>` on `+module_blob.S+`.
+
+Both examples, and the toolchain file they are built with, are A32: the port sets
+`-marm` for the manager and the module alike. The manager builds a module thread's
+first stack frame with the `T` bit taken from bit 0 of the module's shell entry
+pointer, so a module linked for Thumb is *meant* to start in Thumb state, but
+nothing in the tree demonstrates that it does. The rest of the path is what makes
+this worth stating rather than assuming: the position-independent flags above have
+to survive interworking, and module entry, the supervisor call dispatcher,
+preemption and fault recovery all cross between an A32 manager and the module.
+Until an example exercises those, treat a Thumb module as unvalidated on this port
+and build modules `-marm`.
+
+The two example builds are driven from their board's `CMakeLists.txt`; a module
+example has no `CMakeLists.txt` of its own. To build the model example:
+
+[,dos]
+----
+cmake -B build_fvp -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/cortex_r52.cmake \
+      -DTX_R52_BUILD_FVP_EXAMPLE=ON -DTX_R52_BUILD_FVP_MODULE_EXAMPLE=ON .
+ninja -C build_fvp fvp_module.elf
+----
+
+and the silicon example:
+
+[,dos]
+----
+cmake -B build_mod -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/cortex_r52.cmake \
+      -DTX_R52_BUILD_S32Z280_EXAMPLE=ON -DTX_R52_BUILD_S32Z280_MODULE_EXAMPLE=ON .
+ninja -C build_mod s32z280_module.elf
+----
+
+Both options are needed in each case. The module option alone produces no targets,
+because it extends the board example rather than replacing it.
+
+==== Thread extension definition for Cortex-R52 using GNU
+
+[,c]
+----
+#define TX_THREAD_EXTENSION_2           ULONG   tx_thread_vfp_enable;                   \
+                                        VOID    *tx_thread_module_instance_ptr;         \
+                                        VOID    *tx_thread_module_entry_info_ptr;       \
+                                        ULONG   tx_thread_module_current_user_mode;     \
+                                        ULONG   tx_thread_module_user_mode;             \
+                                        ULONG   tx_thread_module_saved_lr;              \
+                                        VOID    *tx_thread_module_kernel_stack_start;   \
+                                        VOID    *tx_thread_module_kernel_stack_end;     \
+                                        ULONG   tx_thread_module_kernel_stack_size;     \
+                                        VOID    *tx_thread_module_stack_ptr;            \
+                                        VOID    *tx_thread_module_stack_start;          \
+                                        VOID    *tx_thread_module_stack_end;            \
+                                        ULONG   tx_thread_module_stack_size;            \
+                                        VOID    *tx_thread_module_reserved;
+----
+
+`+tx_thread_vfp_enable+` is defined unconditionally rather than under
+`+TX_ENABLE_VFP_SUPPORT+`, because the assembly reaches this field through a hard-coded
+structure offset and a conditional field would move every following member between
+build configurations. `+tx_port_offset_check.c+` turns a wrong offset into a build
+failure.
+
+Two of these fields have nearly the same name and mean opposite things.
+`+tx_thread_module_user_mode+` records whether the thread should *start* unprivileged;
+`+tx_thread_module_current_user_mode+` records whether it is unprivileged *right now*.
+The assembly reads the former at offset `0xA0`. The Cortex-R4 module port reads
+`0x9C`, which in this layout is the latter, so copying that constant across builds
+cleanly, and starts module threads in the wrong mode.
+
+==== Building Module Manager for Cortex-R52 using GNU
+
+*A manager build needs its own ThreadX library.* The module port's `+tx_port.h+` adds
+the owning module instance to `+TX_QUEUE+`, `+TX_SEMAPHORE+`, `+TX_EVENT_FLAGS_GROUP+` and
+`+TX_TIMER+`, and the module fields above to `+TX_THREAD+`. Measured against the base
+Cortex-R52 port: `+TX_QUEUE+` is 68 bytes against 60, `+TX_SEMAPHORE+` 40 against 32 and
+`+TX_THREAD+` 236 against 184. A kernel compiled against the base port's headers and a
+manager compiled against the module port's headers disagree about every object, and
+they *link without complaint*, because C linking does not compare structure layouts.
+The examples therefore build a second library, `+threadx_module+`, from the same common
+sources with `+TXM_MODULE_MANAGER+` defined and the module port's `inc` directory first
+on the include path.
+
+The manager image is made of the board support package, the module manager port files
+from `+ports_module/cortex_r52/gnu/module_manager/src+`, the portable manager from
+`+common_modules/module_manager/src+`, the application, and `+module_blob.S+`. It links
+against `+threadx_module+`. It must *not* link anything from
+`+common_modules/module_lib/src+`: those are the module-side shims, and they belong to
+the module's image.
+
+The port replaces five of the base port's files, because the region switch happens in
+the scheduler and a module thread starts in a different processor mode:
+`+tx_thread_schedule.S+`, `+tx_thread_context_save.S+`, `+tx_thread_context_restore.S+`,
+`+tx_thread_stack_build.S+` and `+tx_thread_system_return.S+`. The rest of the base
+port's assembly is reused unchanged.
+
+`+_txm_module_manager_port_dispatch+` is deliberately left undefined. It exists for
+port-specific kernel requests, and the only ones dispatched by any port are ARMv8-M's
+secure-stack allocate and free -- a security extension this core does not have. The
+Cortex-R4 module port leaves it undefined for the same reason.
+
+==== Board support requirements for Cortex-R52 using GNU
+
+A board support package that is otherwise sufficient for the base Cortex-R52 port
+needs four additions before it can host the module manager. All four are behind
+`+TXM_MODULE_MANAGER+` in the example.
+
+*The EL1 supervisor call vector must route to `+__tx_module_svc_interrupt+`.* That is
+the privilege boundary a module crosses to reach the kernel.
+
+*Both EL1 abort vectors must route a fault taken from User mode to the manager's
+capture*, `+_txm_module_manager_data_abort+` for a data abort and
+`+_txm_module_manager_prefetch_abort+` for a prefetch abort. The two exist separately
+because the core reports the two kinds of violation in different registers: `DFSR`
+and `DFAR` for a data abort, `IFSR` and `IFAR` for a prefetch abort. A fault from a
+privileged mode is not the manager's and must fall through to the board's own
+handling.
+
+IMPORTANT: *The abort vector -- not the fault handler -- must increment
+`+_tx_thread_system_state+` around the call to
+`+_txm_module_manager_memory_fault_handler+`, and decrement it afterwards. Without
+that bracket the application's fault-notify callback is never called.* This is a fact
+about every AArch32 module port and it is worth stating plainly, because nothing in
+the portable Module documentation says it and the symptom points at the wrong file.
+`+_txm_module_manager_memory_fault_handler()+` terminates the faulting thread and *then*
+calls the notify hook, and the second statement is reached only if
+`+_tx_thread_terminate()+` returns. Terminating the running thread returns only when
+the kernel believes it is inside an exception: `+_tx_thread_terminate()+` ends in
+`+_tx_thread_system_preempt_check()+`, which calls `+_tx_thread_system_return()+` whenever
+`+_tx_thread_system_state+` and `+_tx_thread_preempt_disable+` are both zero, and on
+AArch32 `+_tx_thread_system_return()+` switches context immediately and never comes
+back. The Cortex-M ports get away without the bracket because there
+`+_tx_thread_system_return()+` only pends PendSV and returns. The vector owes the
+handler three things, exactly as the Cortex-A7 module port's abort vector does:
+`+_tx_thread_system_state+` incremented across the call, `+_tx_thread_current_ptr+`
+cleared afterwards, and an exception return into `+_tx_thread_schedule+` in System
+mode. Omitting the first also leaks about 56 bytes of the Abort stack per fault, for
+the life of the run.
+
+*The MPU initialisation must program the kernel's window over the module area* --
+region 16 in this port, `+MPU_MODULE_LOAD_REGION+` in the example's `mpu.h` -- and must
+check `MPUIR` against `+MPU_MODULE_REGIONS_REQUIRED+` before doing so.
+
+*A loader that copies module code owes the instruction side maintenance.* The module
+area is Normal write-back memory, so a `memcpy` of module code leaves the bytes in
+dirty D-cache lines while the instruction side, which is not coherent with the D-cache
+on this core, fetches whatever main memory holds. Call `+cache_clean_all()+` and then
+`+cache_invalidate_icache_all()+`, or the by-range equivalents. This is worth doing even
+though it appears to work without: a cold instruction cache over a never-executed
+address happens to produce the right answer, and keeps doing so until the staging area
+is reused or an eviction lands differently.
+
+==== Module Manager initialization for Cortex-R52 using GNU
+
+Two things about starting the manager on this port are not obvious from
+xref:chapter3.adoc[Chapter 3].
+
+*The manager needs an object pool as well as a module pool.*
+`+txm_module_manager_object_pool_create()+` is not optional for a User-mode module: the
+privileged side of each system call needs a kernel stack, and the manager allocates it
+from that pool. `+txm_module_manager_initialize()+` deliberately leaves the pool
+uncreated, and the failure surfaces much later as `+TX_NOT_AVAILABLE+` returned from
+deep inside thread creation. The kernel stack size is
+`+TXM_MODULE_KERNEL_STACK_SIZE+`, 768 bytes by default.
+
+[,c]
+----
+    status =  txm_module_manager_initialize((VOID *) module_pool, MODULE_POOL_SIZE);
+
+    /* Not optional for a user mode module: the privileged side of each system
+       call takes its stack from this pool.  */
+    status =  txm_module_manager_object_pool_create((VOID *) module_object_pool,
+                                                    MODULE_OBJECT_POOL_SIZE);
+----
+
+*Manager services must be called from a thread, never from `+tx_application_define()+`.*
+Loading a module takes the manager's protection mutex, and a service that can block
+before the scheduler is running stops there permanently.
+
+==== Attributes for external memory enable API for Cortex-R52 using GNU
+
+`+txm_module_manager_external_memory_enable()+` programs one of the five shared entries
+in the module block. The attribute parameter supplies the shareability and access
+permission fields of `PRBAR` directly; execute-never is forced on by the port and is
+not a caller's choice.
+
+|===
+| Attribute parameter | Meaning
+
+| TXM_MODULE_ATTRIBUTE_NON_SHAREABLE
+| Non-shareable
+
+| TXM_MODULE_ATTRIBUTE_OUTER_SHAREABLE
+| Outer shareable
+
+| TXM_MODULE_ATTRIBUTE_INNER_SHAREABLE
+| Inner shareable
+
+| TXM_MODULE_ATTRIBUTE_READ_WRITE
+| Read and write access
+
+| TXM_MODULE_ATTRIBUTE_READ_ONLY
+| Read access only
+|===
+
+The contract this port implements has six properties an application has to design
+around.
+
+. *Five shared regions per module.* `+TXM_MODULE_MPU_SHARED_ENTRIES+` is 5, at MPU
+  regions 11 to 15. The sixth grant returns `+TX_NO_MEMORY+`.
+. *A grant is accepted only while the module is loaded and not yet started.* Any
+  other state returns `+TX_START_ERROR+`. Because
+  `+_txm_module_manager_internal_load()+` memsets the whole instance, a grant made
+  *before* the load is silently erased rather than reported, so grants belong strictly
+  between `+txm_module_manager_*_load()+` and `+txm_module_manager_start()+`.
+. *An unaligned base returns `+TXM_MODULE_ALIGNMENT_ERROR+`* -- but the entry-count
+  check runs first. An application that has already spent its five entries gets
+  `+TX_NO_MEMORY+` for an unaligned address too, and nothing at all about the alignment.
+  A test written to cover the granule rule has to make its unaligned probe while
+  entries remain, or it covers nothing.
+. *A zero `length`, or one whose last byte falls past the top of the address space,
+  returns `+TX_SIZE_ERROR+`.* Either would describe a region whose limit lies below
+  its base -- a zero length computes `base - 1` outright, and an end address that
+  wraps computes some low address -- so the grant is refused before any register is
+  written and before an entry is spent. An application that recovers from one still
+  has all five. The other module ports do not make this check; a Cortex-R52 build of
+  code moved from one of them may see `+TX_SIZE_ERROR+` where it used to see
+  `+TX_SUCCESS+`.
+. *A grant covers exactly `length` rounded up to the granule, and not the granule
+  above that.* An adjacent granule the application did not grant is not reachable
+  from a granted one. The rounding is the hardware's: `PRLAR` describes an inclusive
+  end of `LIMIT:0x3F`, so one granule is the smallest region that can be expressed
+  and there is no `length` that grants a module less. A one-byte grant hands the
+  module 64 bytes and a 65-byte grant hands it 128, and *the application owns every
+  byte of the rounded range* -- put nothing in it the module may not have.
+  The length the manager records, and therefore the length
+  `+_txm_module_manager_inside_data_check()+` validates a kernel call's pointers
+  against, is the unrounded one that was asked for, so a module can reach the surplus
+  bytes with a load or a store while a kernel call carrying a pointer into them is
+  refused. Pass a multiple of the granule and the two lengths agree.
+. *Read access is not implied.* Unlike the Cortex-R4 and ARM11 ports, where a module
+  always has read access to shared memory and the attribute parameter only adds write
+  access, this port programs the permission field it is given.
+
+NOTE: For anyone porting this file to another PMSAv8 target: the limit must be masked
+to the granule *before* the attributes are ORed into `PRLAR`. `PRLAR` is
+`LIMIT[31:6]`, `RES0[5:4]`, `AttrIndx[3:1]`, `EN[0]`, and the hardware reads the limit
+back as `LIMIT` concatenated with `0x3F`, so masking does not change the inclusive end
+address. Without the mask, `base + length - 1` for a granule-sized region ends in
+`0x3F` and those bits land on the attributes: `AttrIndx` comes out 7 instead of 0,
+selecting an unwritten `MAIR` byte and giving the shared region a Device memory type,
+and both `RES0` bits are set as well. The region still works well enough to pass a
+functional test, which is why it is worth stating.
+
+==== Running the port without hardware for Cortex-R52 using GNU
+
+The module example runs on the free ARMv8-R AEM Fixed Virtual Platform
+(`+FVP_BaseR_AEMv8R+`), which is enough to exercise the whole module boundary without a
+board.
+
+[,dos]
+----
+cmake -B build_fvp -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/cortex_r52.cmake \
+      -DTX_R52_BUILD_FVP_EXAMPLE=ON -DTX_R52_BUILD_FVP_MODULE_EXAMPLE=ON .
+ninja -C build_fvp boot_check.elf demo_m2.elf demo_m3.elf demo_mpu.elf \
+                   demo_threadx.elf demo_clz.elf fvp_module.elf \
+                   fvp_module_properties.elf
+ctest --test-dir build_fvp
+----
+
+`+TX_R52_BUILD_FVP_MODULE_EXAMPLE+` adds `+fvp_module.elf+` and
+`+fvp_module_properties.elf+` to the suite; without it the suite is the base port's six
+default images. The images are excluded from the default target, so a bare `ninja`
+builds none of them and CTest then fails with "application file not found".
+Either image can be run alone with `+ninja -C build_fvp run-module-r52+` or
+`+ninja -C build_fvp run-module-properties-r52+`, which shows its output.
+
+The example loads the same module blob four times. Pass 1 runs it at the address it
+was linked into the manager image at, and pass 2 runs the same bytes from a staging
+area elsewhere in the module region, which together are what show a module is
+genuinely relocatable; both then write into the kernel's memory and take a data
+abort. Pass 3 branches into the kernel's memory instead and takes a prefetch abort,
+which is the other fault path. Pass 4 grants all five shared entries, exercises both
+refusal paths, and writes the one granule *between* two granted ones, which must
+fault. A fifth module is then loaded and unloaded without ever being started, only
+to probe the size guards: a zero-length grant and one that runs off the top of
+memory must each come back `+TX_SIZE_ERROR+` and leave the entry count where they
+found it, while a grant ending exactly at `0xFFFFFFFF` must be accepted. It is never
+started because a grant it accepts must not reach a real MPU region. The image
+reports `MODULE RESULT: ALL CHECKS PASSED`, and the test runner treats a missing
+result line as a failure, so a hang cannot pass.
+
+`+fvp_module_properties.elf+` is the other half of the same question and a separate
+image because four of its six cases never run a module at all. It stages the same
+blob six times, changing only the preamble's property word, and checks each outcome
+against the contract above: the four combinations this port refuses must come back
+`+TXM_MODULE_INVALID_PROPERTIES+` and leave the instance and the manager's loaded
+count untouched, and the two it accepts must load, run in User mode and fault where
+they should -- the one granted no shared region on the shared area it never asked
+for, the one granted the status granule on the kernel's memory beyond it. It reports
+`MODULE PROPERTY RESULT: ALL CHECKS PASSED`.
+
+IMPORTANT: *A green run on the model says nothing about the region budget on
+silicon.* The AEM FVP is an architecture envelope model rather than a Cortex-R52
+implementation, and it reports 32 EL1 MPU regions -- a value `MPUIR.DREGION` is not
+architecturally permitted to take on this core, which allows only 16, 20 or 24. The
+model is strictly more permissive than every real part, so code that assumed more
+regions than a real Cortex-R52 has would pass here and fail on all hardware. The
+module image prints `MPUIR regions available` next to the number of regions the port
+needs, precisely so that the difference is visible in the log. Validate the budget on
+the part.
+
 == MCF544xx processor
 
 === MCF544xx using GHS

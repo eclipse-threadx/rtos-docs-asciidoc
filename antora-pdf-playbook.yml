@@ -13,6 +13,7 @@ content:
         - rtos-docs/guix
         - rtos-docs/levelx
         - rtos-docs/netx-duo
+        - rtos-docs/samplex
         - rtos-docs/threadx
         - rtos-docs/threadx-modules
         - rtos-docs/tracex

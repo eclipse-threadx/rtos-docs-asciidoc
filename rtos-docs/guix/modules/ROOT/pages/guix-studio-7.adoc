@@ -109,6 +109,8 @@ If you are defining multiple actions to associate with one trigger event, it can
 
 When you define trigger events and actions within GUIX Studio, automated event handlers are generated within your project specifications file to handle these events and execute the specified actions. This means that you do NOT need to handle these events in your application code, although the trigger events are still passed to any custom event handlers you have defined. In other words the Studio generated event handlers augment, rather than replace, your own custom event handlers.
 
+NOTE: The generated support for the *Animation* action type is conditional on the availability of the GUIX animation pool. If your application defines *GX_ANIMATION_POOL_SIZE* as zero in gx_user.h, the animation helpers are compiled out of the generated specifications file and any *Animation* action is ignored at runtime. All the other action types remain fully functional, so a screen flow that does not use animations can still be built with an empty animation pool. See xref:appendix-h.adoc[Appendix H] for the description of *GX_ANIMATION_POOL_SIZE*.
+
 == Running the Application
 
 Once startup screens and a screen flow diagram have been created, you can run your application within Studio by selecting the "Run Application"

@@ -1,0 +1,161 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= Cortex-R52 Port
+:description: What the ARM Cortex-R52 ThreadX port provides, how it differs from the ARMv7-R ports, and how to build and run it.
+
+The Cortex-R52 port is the ThreadX tree's ARMv8-R port. It lives in
+`+ports/cortex_r52/gnu+`, targets AArch32 state, and supports the GNU toolchain.
+A ThreadX Modules port is maintained alongside it in
+`+ports_module/cortex_r52/gnu+`.
+
+This page covers what a board support package has to provide, how the port is
+built and tested, and where the module port's own documentation is.
+
+== How it differs from the ARMv7-R ports
+
+The Cortex-R4, R5 and R7 ports in the tree implement ARMv7-R. The Cortex-R52
+differs from them in ways that matter when writing board support:
+
+* The processor always implements EL2 and resets into it. The port is
+  EL2-aware: the reset path configures EL2, installs both the EL2 and EL1
+  vector tables, and then drops to EL1 to run the kernel. Several registers
+  must be programmed while still at EL2, notably `CNTFRQ`,
+  `CNTHCTL.PL1PCTEN`/`PL1PCEN` for EL1 access to the physical timer, and
+  `ICC_HSRE` for EL1 access to the GICv3 CPU interface.
+* Exceptions routed to EL2 from EL1 or EL0 all arrive at the Hyp Trap Entry,
+  vector offset `0x14`, and are distinguished by decoding `HSR.EC`.
+  Offsets `0x04`–`0x10` are exceptions taken from Hyp mode itself.
+* Memory protection is PMSAv8-R, programmed through `PRSELR`, `PRBAR` and
+  `PRLAR` with memory types supplied by `MAIR`. This replaces the PMSAv7
+  region model used by the ARMv7-R ports.
+* Interrupts are handled by a GICv3, whose CPU interface is reached through
+  `+ICC_*+` system registers rather than memory-mapped registers.
+* Floating point is FPv5 with double precision. As on the other ARM ports,
+  context is saved lazily for threads that call `+tx_thread_vfp_enable()+`;
+  note that enabling the FPU hardware itself (`CPACR`, `FPEXC.EN`) is the
+  board support package's responsibility, not the kernel's.
+
+== Scheduler priority search
+
+The port uses the `CLZ` instruction for the scheduler's lowest-set-bit priority
+search, in place of the portable loop in `+tx_thread.h+`. Upstream gates that
+optimisation on `+__TARGET_ARCH_ARM+`, an Arm Compiler 5 predefine that GCC does
+not define, so it had never once been compiled in under GCC; this port asks
+`+__ARM_FEATURE_CLZ+` instead.
+
+It applies in the default 32-priority configuration rather than only above 32,
+and it is worth around 40% of the priority search's code size. A Thumb build
+deliberately keeps the portable loop, because `+__ARM_FEATURE_CLZ+` describes the
+architecture rather than the instruction set and Thumb-1 has no `CLZ`.
+
+== Building and running
+
+The port is built with CMake and Ninja, and ships an example build for the freely
+available ARMv8-R AEM Fixed Virtual Platform (`+FVP_BaseR_AEMv8R+`). That is
+enough to run the standard demonstration and the port's own self-tests without
+hardware.
+
+[,dos]
+----
+cmake -B build_r52 -G Ninja \
+      -DCMAKE_TOOLCHAIN_FILE=cmake/cortex_r52.cmake \
+      -DTX_R52_BUILD_FVP_EXAMPLE=ON .
+ninja -C build_r52 boot_check.elf demo_m2.elf demo_m3.elf \
+                   demo_threadx.elf demo_mpu.elf demo_clz.elf
+ctest --test-dir build_r52
+----
+
+|===
+| Image | What it exercises
+
+| `+boot_check.elf+`
+| EL2 configuration, the drop to EL1 and the EL2 seam
+
+| `+demo_m2.elf+`
+| Cooperative context switching, no interrupts
+
+| `+demo_m3.elf+`
+| Generic timer tick, GICv3 and preemption
+
+| `+demo_threadx.elf+`
+| The standard eight-thread demonstration plus verification
+
+| `+demo_mpu.elf+`
+| PMSAv8-R protection and cache enable
+
+| `+demo_clz.elf+`
+| The `CLZ` lowest-set-bit priority search
+|===
+
+Further images are added by the optional feature switches: `+demo_m5.elf+` for
+lazy VFP context save with `+TX_R52_ENABLE_VFP+`, and the IRQ and FIQ nesting
+demonstrations with their own options. Enabling the module manager example
+described below adds two more.
+
+Each image reports its own result and terminates the model through the
+semihosting `+SYS_EXIT+` call, so no host-side timeout is needed. The test runner
+treats a missing result line as a failure, so a hang cannot pass.
+
+See `+ports/cortex_r52/gnu/readme_threadx.txt+` for the full set of build options
+and board-support detail.
+
+NOTE: The AEM FVP is an architecture envelope model rather than a Cortex-R52
+implementation -- it reports MIDR `+0x410FD0F0+`, part number `+0xD0F+`. It
+validates architecture. Implementation details such as MPU region count, TCM,
+lockstep and RAS must be validated on silicon. Nothing in this port is gated on
+MIDR.
+
+== ThreadX Modules support
+
+The module port in `+ports_module/cortex_r52/gnu+` gives each module its own
+PMSAv8-R region set, runs module threads in User mode while kernel threads run in
+System mode, and supports up to five shared or external memory regions per
+module. It ships example builds for the same Fixed Virtual Platform and for NXP
+S32Z280 silicon.
+
+Unlike every other module port in the tree, this one *requires* a module to ask
+for user mode and memory protection together: a preamble carrying either alone is
+refused at load time with `+TXM_MODULE_INVALID_PROPERTIES+`. PMSAv8-R gives EL1 no
+background region unless `+SCTLR.BR+` is set and faults EL0 accesses that match no
+region, so closing the kernel's window over the module area leaves a module
+without its own region set with no mapping at all rather than with a weaker one.
+Shared and external memory access stays optional.
+
+Modules are built A32, like the manager, and that is the only state the port is
+validated in. A Thumb module is expected to start correctly -- the manager takes
+the initial `T` bit from the module's entry pointer -- but nothing in the tree
+proves the interworking path through entry, the supervisor call dispatcher,
+preemption and fault recovery, so build modules `-marm`.
+
+One constraint is worth knowing before choosing a part. The port needs at least
+*17* EL1 MPU regions -- eight for the board support package, eight for the module
+block and one for the kernel's window over the module area -- and therefore *will
+not run on a Cortex-R52 configured with 16*, which `MPUIR.DREGION` permits. The
+example board support reads `MPUIR` and refuses to enable protection at all
+rather than programming a region that does not exist.
+
+Hosting the module manager also asks four things of a board support package that
+the kernel port alone does not: routing the EL1 supervisor call vector to the
+manager, routing both abort vectors to the manager's fault capture for faults
+taken from User mode, programming the kernel's window over the module area, and
+performing cache maintenance after copying module code.
+
+xref:threadx-modules:ROOT:appendix.adoc[The ThreadX Modules appendix] documents
+all of this for the port: the region budget and the 64-byte protection granule,
+the module preamble and linker arrangement, the position-independent build flags,
+the separate ThreadX library a manager build needs, the board support
+requirements above, the shared-memory grant contract, and how to run the module
+example on the model.

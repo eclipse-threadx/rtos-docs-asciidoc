@@ -25,6 +25,7 @@ Documentation for components:
 - xref:levelx:ROOT:index.adoc[LevelX]
 - xref:usbx:ROOT:index.adoc[USBX]
 - xref:tracex:ROOT:index.adoc[TraceX]
+- xref:samplex:ROOT:index.adoc[SampleX]
 
 Other resources:
 

@@ -165,7 +165,7 @@ of 32 (the default), which allows GUIX to scroll vertically without recalculatin
 
 * Default: 6.
 * Description: GUIX defines an animation pool from which animation information structures can be dynamically allocated and returned, using gx_system_animation_get and gx_system_animation_free()
-APIs. This definition defines the size of this animation control block pool.
+APIs. This definition defines the size of this animation control block pool. Defining it as zero removes the animation pool and its related services from the GUIX system component. In that case, the animation support that GUIX Studio generates for a Screen Flow *Animation* action is also compiled out of the specifications file, and any *Animation* action is ignored at runtime.
 
 *GX_MOUSE_SUPPORT*
 

@@ -3,6 +3,7 @@
 * xref:guix:ROOT:index.adoc[GUIX]
 * xref:levelx:ROOT:index.adoc[LevelX]
 * xref:netx-duo:ROOT:index.adoc[NetX Duo]
+* xref:samplex:ROOT:index.adoc[SampleX]
 * xref:threadx:ROOT:index.adoc[ThreadX]
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
 * xref:tracex:ROOT:index.adoc[TraceX]

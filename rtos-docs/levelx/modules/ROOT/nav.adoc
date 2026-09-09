@@ -12,6 +12,7 @@
 *** xref:levelx:ROOT:chapter6.adoc[Ch. 6 - LevelX NOR APIs]
 ** xref:levelx:ROOT:security/index.adoc[Security advisories]
 * xref:netx-duo:ROOT:index.adoc[NetX Duo]
+* xref:samplex:ROOT:index.adoc[SampleX]
 * xref:threadx:ROOT:index.adoc[ThreadX]
 * xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
 * xref:tracex:ROOT:index.adoc[TraceX]

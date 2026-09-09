@@ -44,4 +44,5 @@ xref:index.adoc[Eclipse ThreadX components]
 * xref:levelx:ROOT:index.adoc[LevelX]
 * xref:usbx:ROOT:index.adoc[USBX]
 * xref:tracex:ROOT:index.adoc[TraceX]
+* xref:samplex:ROOT:index.adoc[SampleX]
 

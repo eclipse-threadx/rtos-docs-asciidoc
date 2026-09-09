@@ -49,33 +49,10 @@ The Cortex-M23, M33, M55 and M85 ports implement the ARMv8-M architecture, inclu
 |===
 
 The Cortex-R4, R5 and R7 ports implement the ARMv7-R architecture. The
-Cortex-R52 port implements ARMv8-R in AArch32 state and differs from them in
-ways that matter when writing board support:
-
-* The processor always implements EL2 and resets into it. The port is
-  EL2-aware: the reset path configures EL2, installs both the EL2 and EL1
-  vector tables, and then drops to EL1 to run the kernel. Several registers
-  must be programmed while still at EL2, notably `CNTFRQ`,
-  `CNTHCTL.PL1PCTEN`/`PL1PCEN` for EL1 access to the physical timer, and
-  `ICC_HSRE` for EL1 access to the GICv3 CPU interface.
-* Exceptions routed to EL2 from EL1 or EL0 all arrive at the Hyp Trap Entry,
-  vector offset `0x14`, and are distinguished by decoding `HSR.EC`.
-  Offsets `0x04`–`0x10` are exceptions taken from Hyp mode itself.
-* Memory protection is PMSAv8-R, programmed through `PRSELR`, `PRBAR` and
-  `PRLAR` with memory types supplied by `MAIR`. This replaces the PMSAv7
-  region model used by the ARMv7-R ports.
-* Interrupts are handled by a GICv3, whose CPU interface is reached through
-  `ICC_*` system registers rather than memory-mapped registers.
-* Floating point is FPv5 with double precision. As on the other ARM ports,
-  context is saved lazily for threads that call `tx_thread_vfp_enable()`;
-  note that enabling the FPU hardware itself (`CPACR`, `FPEXC.EN`) is the
-  board support package's responsibility, not the kernel's.
-
-The port is built with CMake and Ninja and ships an example build for the
-freely available ARMv8-R AEM Fixed Virtual Platform, which is sufficient to
-run the standard demonstration and the port's own self-tests without
-hardware. See `ports/cortex_r52/gnu/readme_threadx.txt` for build options and
-board-support detail.
+Cortex-R52 port implements ARMv8-R in AArch32 state, and differs from them in
+ways that matter when writing board support; a ThreadX Modules port for it is
+maintained alongside the kernel port. See
+xref:home:ROOT:cortex-r52-port.adoc[Cortex-R52 port] for both.
 
 == ARM Cortex-A (single-core)
 

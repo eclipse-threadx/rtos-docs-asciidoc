@@ -1,0 +1,44 @@
+////
+
+ Copyright (c) 2026-present Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+ Contributors:
+     * Frédéric Desbiens - Initial AsciiDoc version.
+
+////
+
+= SampleX documentation
+:description: Board support package framework and sample applications for Eclipse ThreadX.
+
+SampleX hosts sample applications for Eclipse ThreadX together with the board support package (BSP) framework they are built on. The framework defines a small set of C interfaces that a board implements and an application consumes, so that one application source file can be built for boards of different architectures without being changed.
+
+SampleX guide
+
+* xref:overview.adoc[Overview of SampleX]
+* xref:bsp-interface.adoc[The BSP interface contract]
+* xref:onboarding-a-board.adoc[Onboarding a new board]
+
+https://github.com/eclipse-threadx/samplex[SampleX repository]
+
+[NOTE]
+====
+The `bsp_*` calls described in this section are *framework* interfaces defined by SampleX, not ThreadX kernel services. They carry no `tx_` prefix and they are not part of the xref:threadx:ROOT:index.adoc[ThreadX] API. An application that uses them still calls ThreadX for every kernel service.
+====
+
+xref:home:ROOT:index.adoc[Eclipse ThreadX components]
+
+* xref:threadx:ROOT:index.adoc[ThreadX]
+* xref:threadx-modules:ROOT:index.adoc[ThreadX Modules]
+* xref:netx-duo:ROOT:index.adoc[NetX Duo]
+* xref:guix:ROOT:index.adoc[GUIX]
+* xref:filex:ROOT:index.adoc[FileX]
+* xref:levelx:ROOT:index.adoc[LevelX]
+* xref:usbx:ROOT:index.adoc[USBX]
+* xref:tracex:ROOT:index.adoc[TraceX]
+* xref:samplex:ROOT:index.adoc[SampleX]
