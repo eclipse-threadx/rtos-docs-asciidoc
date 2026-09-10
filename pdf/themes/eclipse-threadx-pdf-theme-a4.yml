@@ -137,6 +137,12 @@ footer:
 
 title_page:
   align: center
+  # Eclipse Foundation logo, sized to stay subordinate to the ThreadX logo
+  # above it: 1.25in wide renders 1.25x0.40in against the ThreadX logo's
+  # 2x2in. Resolved relative to this theme directory rather than imagesdir,
+  # which is why it lives in pdf/assets/. Note that position accepts only
+  # the keywords top, center and bottom; percentages are silently ignored.
+  background-image: image:../assets/eclipse-foundation-logo.svg[fit=none,pdfwidth=1.25in,position=center]
   logo:
     top: 10%
   title:
