@@ -20,7 +20,7 @@ assembly:
     rouge-style: github
     pdf-theme: ./pdf/themes/eclipse-threadx-pdf-theme-a4.yml
     # Eclipse ThreadX logo — placed in rtos-docs/home/modules/ROOT/assets/images/
-    title-logo-image: 'image:home::eclipse-threadx-logo.png[pdfwidth=2in,align=center]'
+    title-logo-image: 'image:home::eclipse-threadx-logo.svg[pdfwidth=2in,align=center]'
 
 build:
   dir: ./build/assembler/a4
