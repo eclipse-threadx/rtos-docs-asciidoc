@@ -13,47 +13,73 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      # Publishing is skipped until the output repository exists and the token
+      # is configured. The build and the artifact upload still run, so this
+      # workflow can be dispatched to check the manuals before then.
+      HAS_PDF_TOKEN: ${{ secrets.PDF_REPO_TOKEN != '' }}
+
     steps:
       - name: Checkout documentation sources
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Checkout PDF output repository
-        uses: actions/checkout@v4
-        with:
-          repository: eclipse-threadx/rtos-docs-pdf
-          path: ../rtos-docs-pdf
-          token: ${{ secrets.PDF_REPO_TOKEN }}
+          path: 'asciidoc'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: 'asciidoc/package-lock.json'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
+          working-directory: 'asciidoc'
 
       - name: Install Node.js dependencies
-        # The @antora/pdf-extension requires Antora >= 3.2 (testing channel).
-        run: npm install @antora/cli@testing @antora/site-generator@testing @antora/pdf-extension
+        # package.json pins the Antora 3.2 alphas the pdf-extension needs.
+        run: npm ci
+        working-directory: 'asciidoc'
 
       - name: Generate PDF manuals (A4 and US Letter)
         run: npx antora --fetch antora-pdf-playbook.yml
+        working-directory: 'asciidoc'
 
-      - name: Copy PDFs to output repository
-        run: |
-          mkdir -p ../rtos-docs-pdf/a4
-          mkdir -p ../rtos-docs-pdf/letter
-          cp build/assembler/a4/*.pdf ../rtos-docs-pdf/a4/ 2>/dev/null || echo "No A4 PDFs found"
-          cp build/assembler/letter/*.pdf ../rtos-docs-pdf/letter/ 2>/dev/null || echo "No Letter PDFs found"
+      - name: Collect PDFs
+        # copy-pdfs.js walks build/assembler/<size>/<component>/main/_exports/
+        # and gives each file a descriptive name; it owns that convention, so
+        # this workflow does not restate it. It exits non-zero when it finds
+        # nothing, so a silent build failure fails the job here rather than
+        # publishing an empty commit.
+        run: node scripts/copy-pdfs.js --output "${{ github.workspace }}/pdf-out"
+        working-directory: 'asciidoc'
+
+      - name: Upload PDFs as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: eclipse-threadx-manuals
+          path: pdf-out/*.pdf
+          if-no-files-found: error
+
+      - name: Checkout PDF output repository
+        if: env.HAS_PDF_TOKEN == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: eclipse-threadx/rtos-docs-pdf
+          path: 'rtos-docs-pdf'
+          token: ${{ secrets.PDF_REPO_TOKEN }}
+
+      - name: Copy PDFs into the output repository
+        if: env.HAS_PDF_TOKEN == 'true'
+        run: cp pdf-out/*.pdf rtos-docs-pdf/
 
       - name: Commit and push PDFs
-        working-directory: ../rtos-docs-pdf
+        if: env.HAS_PDF_TOKEN == 'true'
+        working-directory: 'rtos-docs-pdf'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -66,3 +92,9 @@ jobs:
           Generated from ${{ github.repository }}@${{ github.sha }}"
             git push
           fi
+
+      - name: Report skipped publish
+        if: env.HAS_PDF_TOKEN != 'true'
+        run: |
+          echo "PDF_REPO_TOKEN is not configured, so publishing was skipped." >> "$GITHUB_STEP_SUMMARY"
+          echo "The manuals are attached to this run as the 'eclipse-threadx-manuals' artifact." >> "$GITHUB_STEP_SUMMARY"
