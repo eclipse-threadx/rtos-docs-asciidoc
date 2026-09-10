@@ -418,7 +418,7 @@ Application threads can suspend while attempting to send or receive a message fr
 
 After the condition for suspension is resolved, the service requested is completed and the waiting thread is resumed. If multiple threads are suspended on the same queue, they are resumed in the order they were suspended (FIFO).
 
-However, priority resumption is also possible if the application calls *_tx_queue_prioritize_* prior to the queue service that lifts thread suspension. The queue prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order.
+However, priority resumption is also possible if the application calls *_tx_queue_prioritize_* prior to the queue service that lifts thread suspension. The queue prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order. Note that the prioritize service acts at a single point in time: if an ISR or another thread suspends on or resumes from the same queue before the call that lifts suspension is made, the highest priority thread may no longer be at the front of the list. An application that needs the two calls to be atomic must protect them itself, either with *_tx_interrupt_control_* or, when only threads access the queue, with a mutex.
 
 Time-outs are also available for all queue suspensions. Basically, a time-out specifies the maximum number of timer ticks the thread will stay suspended. If a time-out occurs, the thread is resumed and the service returns with the appropriate error code.
 
@@ -498,7 +498,7 @@ Application threads can suspend while attempting to perform a get operation on a
 
 After a put operation is performed, the suspended thread's get operation is performed and the thread is resumed. If multiple threads are suspended on the same counting semaphore, they are resumed in the same order they were suspended (FIFO).
 
-However, priority resumption is also possible if the application calls *_tx_semaphore_prioritize_* prior to the semaphore put call that lifts thread suspension. The semaphore prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order.
+However, priority resumption is also possible if the application calls *_tx_semaphore_prioritize_* prior to the semaphore put call that lifts thread suspension. The semaphore prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order. Note that the prioritize service acts at a single point in time: if an ISR or another thread suspends on or resumes from the same semaphore before the call that lifts suspension is made, the highest priority thread may no longer be at the front of the list. An application that needs the two calls to be atomic must protect them itself, either with *_tx_interrupt_control_* or, when only threads access the semaphore, with a mutex.
 
 === Semaphore Put Notification
 
@@ -580,7 +580,7 @@ Application threads can suspend while attempting to perform a get operation on a
 
 After the same number of put operations are performed by the owning thread, the suspended thread's get operation is performed, giving it ownership of the mutex, and the thread is resumed. If multiple threads are suspended on the same mutex, they are resumed in the same order they were suspended (FIFO).
 
-However, priority resumption is done automatically if the mutex priority inheritance was selected during creation. Priority resumption is also possible if the application calls *_tx_mutex_prioritize_* prior to the mutex put call that lifts thread suspension. The mutex prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order.
+However, priority resumption is done automatically if the mutex priority inheritance was selected during creation. Priority resumption is also possible if the application calls *_tx_mutex_prioritize_* prior to the mutex put call that lifts thread suspension. The mutex prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order. Note that the prioritize service acts at a single point in time: if an ISR or another thread suspends on or resumes from the same mutex before the call that lifts suspension is made, the highest priority thread may no longer be at the front of the list. An application that needs the two calls to be atomic must protect them itself, either with *_tx_interrupt_control_* or, when only threads access the mutex, with a mutex.
 
 === Run-time Mutex Performance Information
 
@@ -720,7 +720,7 @@ Application threads can suspend while waiting for a memory block from an empty p
 
 If multiple threads are suspended on the same memory block pool, they are resumed in the order they were suspended (FIFO).
 
-However, priority resumption is also possible if the application calls *_tx_block_pool_prioritize_* prior to the block release call that lifts thread suspension. The block pool prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order.
+However, priority resumption is also possible if the application calls *_tx_block_pool_prioritize_* prior to the block release call that lifts thread suspension. The block pool prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order. Note that the prioritize service acts at a single point in time: if an ISR or another thread suspends on or resumes from the same pool before the call that lifts suspension is made, the highest priority thread may no longer be at the front of the list. An application that needs the two calls to be atomic must protect them itself, either with *_tx_interrupt_control_* or, when only threads access the pool, with a mutex.
 
 === Run-time Block Pool Performance Information
 
@@ -784,7 +784,7 @@ Application threads can suspend while waiting for memory bytes from a pool. When
 
 If multiple threads are suspended on the same memory byte pool, they are given memory (resumed) in the order they were suspended (FIFO).
 
-However, priority resumption is also possible if the application calls *_tx_byte_pool_prioritize_* prior to the byte release call that lifts thread suspension. The byte pool prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order.
+However, priority resumption is also possible if the application calls *_tx_byte_pool_prioritize_* prior to the byte release call that lifts thread suspension. The byte pool prioritize service places the highest priority thread at the front of the suspension list, while leaving all other suspended threads in the same FIFO order. Note that the prioritize service acts at a single point in time: if an ISR or another thread suspends on or resumes from the same pool before the call that lifts suspension is made, the highest priority thread may no longer be at the front of the list. An application that needs the two calls to be atomic must protect them itself, either with *_tx_interrupt_control_* or, when only threads access the pool, with a mutex.
 
 === Run-time Byte Pool Performance Information
 
