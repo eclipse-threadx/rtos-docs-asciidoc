@@ -2492,7 +2492,7 @@ UINT  nx_secure_tls_session_send(NX_SECURE_TLS_SESSION *session_ptr,
 
 This service sends data in the supplied NX_PACKET, using the specified active TLS session, and handling the encryption of that data before sending it to the remote host. If the receiver's last advertised window size is less than this request, the service optionally suspends based on the wait options specified.
 
-IMPORTANT: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will release the packet after transmission._
+IMPORTANT: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver releases the packet after transmission and the application would release it a second time._
 
 === Parameters
 

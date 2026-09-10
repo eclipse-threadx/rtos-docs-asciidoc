@@ -4152,7 +4152,7 @@ For a multihome system, NetX Duo uses the destination IP address to find an appr
 
 To send a raw IPv6 packet, application shall use the service *_nxd_ip_raw_packet_send,_* or *_nxd_ip_raw_packet_source_send._*
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will release the packet after transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -5040,7 +5040,7 @@ This service copies data from the supplied packet into the supplied buffer. The 
 
 Note that this service does not change internal state of the packet. The data being retrieved is still available in the packet.
 
-CAUTION: _The destination buffer must be large enough to hold the packet's contents. If not, memory will be corrupted causing unpredictable results_.
+CAUTION: _The destination buffer must be large enough to hold the packet's contents. If it is not, the behavior is undefined. That said, a typical consequence is memory corruption of the area following the buffer_.
 
 === Parameters
 
@@ -5438,7 +5438,7 @@ This service releases a packet, including any additional packets chained to the 
 
 ____
 [!NOTE] +
-_The application must prevent releasing a packet more than once, because doing so will cause unpredictable results_.
+_The application must prevent releasing a packet more than once, because releasing a packet twice results in undefined behavior_.
 ____
 
 === Parameters
@@ -8267,8 +8267,7 @@ UINT nx_tcp_socket_send(
 
 This service sends TCP data through a previously connected TCP socket. If the receiver's last advertised window size is less than this request, the service optionally suspends based on the wait option specified. This service guarantees that no packet data larger than MSS is sent to the IP layer.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -9768,8 +9767,7 @@ Note that this service returns immediately regardless of whether the UDP datagra
 
 The socket must be bound to a local port.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -9860,8 +9858,7 @@ UINT nx_udp_socket_source_send(
 
 This service sends a UDP datagram through a previously created and bound UDP socket through the network interface with the specified IP address as the source address. Note that service returns immediately, regardless of whether or not the UDP datagram was successfully sent. *_nxd_udp_socket_source_send_* works for both IPv4 and IPv6 networks.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -10466,8 +10463,7 @@ This service sends a raw IPv4 or IPv6 packet (no transport-layer protocol header
 
 The IP instance must be previously created and raw IP packet handling must be enabled using the *_nx_ip_raw_packet_enable_* service.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -10566,8 +10562,7 @@ This service sends a raw IPv4 or IPv6 packet using the specified IPv4 or IPv6 ad
 
 The IP instance must be previously created and raw IP packet handling must be enabled using the **nx_ip_raw_packet_enable*: service.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -12574,8 +12569,7 @@ Note that this service returns immediately regardless of whether the UDP datagra
 
 The socket must be bound to a local port.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 
@@ -12693,8 +12687,7 @@ The socket must be bound to a local port.
 
 The NetX (IPv4) equivalent service is *_nx_udp_socket_source_send_*.
 
-WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so will cause unpredictable results because the network driver will also try to release the packet after
-transmission_.
+WARNING: _Unless an error is returned, the application should not release the packet after this call. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time_.
 
 === Parameters
 

@@ -2164,7 +2164,7 @@ UINT nx_secure_dtls_server_x509_client_verify_disable(NX_SECURE_DTLS_SERVER *ser
 
 This service disables X.509 Client certificate verification on a DTLS Server. The service has no effect if X.509 Client certificate verification is not enabled.
 
-NOTE: Disabling client authentication on an active DTLS Server instance may result in unpredictable behavior. The nx_secure_dtls_server_stop service should be called before changing server state.
+NOTE: Disabling client authentication on an active DTLS Server instance leaves the server in an unspecified state, and NetX Duo Secure makes no guarantees about the behavior of sessions already in progress. The nx_secure_dtls_server_stop service should be called before changing server state.
 
 === Parameters
 

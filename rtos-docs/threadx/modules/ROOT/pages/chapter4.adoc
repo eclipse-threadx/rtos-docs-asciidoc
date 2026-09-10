@@ -153,7 +153,7 @@ UINT tx_block_allocate(
 
 This service allocates a fixed-size memory block from the specified memory pool. The actual size of the memory block is determined during memory pool creation.
 
-IMPORTANT: _It is important to ensure application code does not write outside the allocated memory block. If this happens, the behavior is undefined. Likewise, if the destination is not large enough, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area. The results are unpredictable and often fatal!_
+IMPORTANT: _It is important to ensure application code does not write outside the allocated memory block. If this happens, the behavior is undefined. Likewise, if the destination is not large enough, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area, which is often fatal!_
 
 === Parameters
 
@@ -673,7 +673,7 @@ UINT tx_byte_allocate(
 
 This service allocates the specified number of bytes from the specified memory byte pool.
 
-IMPORTANT: _It is important to ensure application code does not write outside the allocated memory block. If this happens, the behavior is undefined. Likewise, if the destination is not large enough, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area. The results are unpredictable and often fatal!_
+IMPORTANT: _It is important to ensure application code does not write outside the allocated memory block. If this happens, the behavior is undefined. Likewise, if the destination is not large enough, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area, which is often fatal!_
 
 NOTE: _The performance of this service is a function of the block size and the amount of fragmentation in the pool. Hence, this service should not be used during time-critical threads of execution._
 
@@ -1727,7 +1727,7 @@ This service enables or disables interrupts as specified by the input parameter 
 
 NOTE: _If this service is called from an application thread, the interrupt posture remains part of that thread's context. For example, if the thread calls this routine to disable interrupts and then suspends, when it is resumed, interrupts are disabled again._
 
-WARNING: _This service should not be used to enable interrupts during initialization! Doing so could cause unpredictable results._
+WARNING: _This service should not be used to enable interrupts during initialization. If it is, ThreadX makes no guarantees about the resulting system state._
 
 === Parameters
 
