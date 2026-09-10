@@ -41,7 +41,7 @@ jobs:
           working-directory: 'asciidoc'
 
       - name: Install Node.js dependencies
-        # package.json pins the Antora 3.2 alphas the pdf-extension needs.
+        # Versions come from package.json; see the note above on lockfiles.
         run: npm install
         working-directory: 'asciidoc'
 
