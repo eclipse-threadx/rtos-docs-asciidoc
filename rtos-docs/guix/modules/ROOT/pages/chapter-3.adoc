@@ -401,8 +401,9 @@ character array, to hold a dynamically generated string and then assign
 this string to a widget that does not have the *GX_STYLE_TEXT_COPY*
 style. When this style is not enabled, the widget simply copies the
 provided string pointer, and the string data must be statically
-allocated or the widget string pointer will likely end up pointing at
-garbage data producing unpredictable results.
+allocated. Otherwise the widget retains a pointer to storage whose
+lifetime has ended, and the behavior is undefined. That said, a typical
+consequence is that the widget draws garbage data.
 
 === Passing GX_STRING arguments
 

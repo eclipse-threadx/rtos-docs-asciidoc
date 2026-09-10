@@ -15,7 +15,7 @@
 
 Widget status flags represent the runtime state of a `GX_WIDGET`. They are stored in the `gx_widget_status` field of the widget control block and can be read or modified using the xref:chapter-4.adoc#gx_widget_status_add[gx_widget_status_add], xref:chapter-4.adoc#gx_widget_status_get[gx_widget_status_get], xref:chapter-4.adoc#gx_widget_status_remove[gx_widget_status_remove], and xref:chapter-4.adoc#gx_widget_status_test[gx_widget_status_test] API functions.
 
-NOTE: Several flags are set and cleared internally by GUIX. Modifying them directly via the status API may produce undefined behavior. Flags documented as "managed internally" are described here for reference purposes only.
+NOTE: Several flags are set and cleared internally by GUIX. Modifying them directly via the status API leaves GUIX in an unspecified state, and GUIX makes no guarantees about its subsequent behavior. Flags documented as "managed internally" are described here for reference purposes only.
 
 ***_General Widget Status Flags:_***
 

@@ -212,7 +212,7 @@ Find system object and retrieve object pointer
 
 WARNING: *_This service is deprecated. Do not use it in new code._* Use <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>> instead, passing the actual length of the name buffer.
 
-This function passes `UINT_MAX` as the name-buffer length to the underlying search. If the `name` pointer addresses a buffer shorter than the object name being compared, the comparison loop reads past the end of the buffer, which is undefined behaviour.
+This function passes `UINT_MAX` as the name-buffer length to the underlying search. If the `name` pointer addresses a buffer shorter than the object name being compared, the comparison loop reads past the end of the buffer, which is undefined behavior.
 
 Because no length is passed, the Module Manager cannot establish how much of the buffer it is allowed to read, and a module loaded with *TXM_MODULE_MEMORY_PROTECTION* is therefore refused this service with *TXM_MODULE_INVALID_MEMORY*. Such a module must use <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>. Modules loaded without memory protection are unaffected.
 

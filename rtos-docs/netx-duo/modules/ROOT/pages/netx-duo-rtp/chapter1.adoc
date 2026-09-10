@@ -70,7 +70,7 @@ The application chooses different RTP session send function(s) in RTP sender dep
 * Step 2: fill the RTP packet with the payload data by calling *_nx_packet_data_append()_*.
 * Step 3: send the RTP packet by calling *_nx_rtp_sender_session_packet_send()_*.
 
-WARNING: Unless an error is returned, the application should not release the allocated RTP packet by calling *_nx_packet_release()_* after calling the function *_nx_packet_data_append()_* or *_nx_rtp_sender_session_packet_send()_*. Doing so will cause unpredictable results because the network driver will also try to release the packet after transmission.
+WARNING: Unless an error is returned, the application should not release the allocated RTP packet by calling *_nx_packet_release()_* after calling the function *_nx_packet_data_append()_* or *_nx_rtp_sender_session_packet_send()_*. Doing so results in undefined behavior, because the network driver also releases the packet after transmission and the application would release it a second time.
 
 Transferring *sample-based encoding* payload such as PCM audio payload is special, due to the way how RTP timestamp increases. The application shall call enable sample-based encoding payload transfer for the session by calling *_nx_rtp_sender_session_sample_factor_set()_* and set a none-zero value. The sample factor is computed and provided by the application. With the sample factor configured, when fragmentation happens, the function nx_rtp_sender_session_packet_send is able to handle the automatic increase RTP timestamp as required for each fragmented packet. The application can then send sample-based encoding payload through the procedure described above.
 

@@ -27,7 +27,7 @@ The FileX Fault Tolerant Module works by journaling steps required to update a f
 
 IMPORTANT: _The FileX Fault Tolerant Module is not designed to prevent file system corruption caused by physical media corruption with valid data in it._
 
-IMPORTANT: _After the FileX Fault Tolerant module protects a media, the media must not be mounted by anything other than FileX with Fault Tolerant enabled. Doing so can cause the log entries in the file system to be inconsistent with system information on the media. If the FileX Fault Tolerant module attempts to process log entries after the media is updated by another file system, the recovery procedure may fail, leaving the entire file system in an unpredictable state._
+IMPORTANT: _After the FileX Fault Tolerant module protects a media, the media must not be mounted by anything other than FileX with Fault Tolerant enabled. Doing so can cause the log entries in the file system to be inconsistent with system information on the media. If the FileX Fault Tolerant module attempts to process log entries after the media is updated by another file system, the recovery procedure may fail, leaving the entire file system in an inconsistent state that FileX cannot repair._
 
 == Use of the Fault Tolerant Module
 

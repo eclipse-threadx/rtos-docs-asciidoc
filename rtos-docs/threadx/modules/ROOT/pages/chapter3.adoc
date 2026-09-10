@@ -134,7 +134,7 @@ Some ports do initialize the kernel before _main_ is reached, because the develo
 
 === Interrupts
 
-Interrupts are left disabled during the entire initialization process. If the application somehow enables interrupts, unpredictable behavior may occur. Figure 4 shows the entire
+Interrupts are left disabled during the entire initialization process. If the application somehow enables interrupts, ThreadX makes no guarantees about the resulting system state. Figure 4 shows the entire
 initialization process, from system reset through application-specific initialization.
 
 == Thread Execution
@@ -322,7 +322,7 @@ IMPORTANT: _By default, ThreadX initializes every byte of each thread stack with
 
 The stack requirements for threads can be large. Therefore, it is important to design the application to have a reasonable number of threads. Furthermore, some care must be taken to avoid excessive stack usage within threads. Recursive algorithms and large local data structures should be avoided.
 
-In most cases, an overflowed stack causes thread execution to corrupt memory adjacent (usually before) its stack area. The results are unpredictable, but most often result in an unnatural change in the program counter. This is often called "jumping into the weeds." Of course, the only way to prevent this is to ensure all thread stacks are large enough.
+A stack overflow results in undefined behavior. That said, a typical consequence is that thread execution corrupts the memory adjacent to (usually before) its stack area, which most often shows up as an unnatural change in the program counter. This is often called "jumping into the weeds." Of course, the only way to prevent this is to ensure all thread stacks are large enough.
 
 === Optional Run-time Stack Checking
 
@@ -786,7 +786,7 @@ Pool control blocks can also be located anywhere in memory, but it is most commo
 
 === Overwriting Memory Blocks
 
-It is important to ensure that the user of an allocated memory block does not write outside its boundaries. If this happens, corruption occurs in an adjacent (usually subsequent) memory area. The results are unpredictable and often fatal to the application.
+It is important to ensure that the user of an allocated memory block does not write outside its boundaries. If this happens, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area, which is often fatal to the application.
 
 == Memory Byte Pools
 
@@ -868,7 +868,7 @@ TIP: _As a result of the nondeterministic behavior of memory byte pools, it is g
 
 === Overwriting Memory Blocks
 
-It is important to ensure that the user of allocated memory does not write outside its boundaries. If this happens, corruption occurs in an adjacent (usually subsequent) memory area. The results are unpredictable and often catastrophic for program execution.
+It is important to ensure that the user of allocated memory does not write outside its boundaries. If this happens, the behavior is undefined. That said, a typical consequence is memory corruption of an adjacent (usually subsequent) memory area, which is often catastrophic for program execution.
 
 == Application Timers
 
