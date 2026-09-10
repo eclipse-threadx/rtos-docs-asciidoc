@@ -13,6 +13,9 @@ permission.
 
 Copyright (c) Eclipse Foundation. All Rights Reserved.
 
+The file used is `PORTRAIT/RGB/ThreadX-Color.svg` from the package below,
+copied verbatim to `rtos-docs/home/modules/ROOT/assets/images/eclipse-threadx-logo.svg`.
+
 Source: https://www.eclipse.org/org/artwork/zip-files/threadx-logo.zip
 
 == Eclipse Foundation Logo
@@ -24,6 +27,9 @@ Usage Policy]. These logos may not be altered without the Eclipse Foundation's
 permission.
 
 Copyright (c) Eclipse Foundation. All Rights Reserved.
+
+The file used is `EF Logo/RGB/SVG/EF_Color.svg` from the package below, copied
+verbatim to `pdf/assets/eclipse-foundation-logo.svg`.
 
 Source: https://www.eclipse.org/org/artwork/zip-files/eclipse-foundation-logo.zip
 

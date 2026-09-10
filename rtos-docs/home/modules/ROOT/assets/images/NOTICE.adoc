@@ -17,11 +17,7 @@ Source: https://www.eclipse.org/org/artwork/zip-files/threadx-logo.zip
 
 == Eclipse Foundation Logo
 
-The Eclipse Foundation logo is the intellectual property of the Eclipse Foundation,
-provided under the
-https://www.eclipse.org/legal/logo_guidelines.php[Eclipse Foundation Trademark
-Usage Policy]. It may not be altered without the Eclipse Foundation's permission.
-
-Copyright (c) Eclipse Foundation. All Rights Reserved.
-
-Source: https://www.eclipse.org/org/artwork/zip-files/eclipse-foundation-logo.zip
+The Eclipse Foundation logo is no longer stored in this directory. It is used
+only on the generated PDF cover pages, and the PDF theme resolves it relative
+to its own directory, so it lives in `pdf/assets/` instead. See
+`pdf/NOTICE.adoc` for its attribution.

@@ -1,13 +1,24 @@
 = PDF Assets
 
-This directory is a placeholder for additional PDF branding assets that are
-not yet committed (e.g., custom cover page designs).
+This directory holds PDF branding assets that the PDF theme references
+directly.
 
 == Logo files
 
-The Eclipse ThreadX and Eclipse Foundation logo PNG files have been placed in
-`rtos-docs/home/modules/ROOT/assets/images/`. See the `NOTICE.adoc` file in
-that directory for trademark attribution and the source ZIP files.
+`eclipse-foundation-logo.svg` is the Eclipse Foundation logo used on the
+cover pages. It lives here rather than alongside the other images because
+asciidoctor-pdf resolves a title page background image relative to the theme
+directory, not to `imagesdir`; the theme refers to it as
+`../assets/eclipse-foundation-logo.svg`.
+
+The Eclipse ThreadX cover logo is content rather than a theme asset, so it
+stays in `rtos-docs/home/modules/ROOT/assets/images/` and the assembler
+configs reference it as `image:home::eclipse-threadx-logo.svg[]`.
+
+Both are SVG. A raster logo is not usable here: the PNGs that upstream ships
+are interlaced, which prawn cannot decode, and the logos may not be
+re-encoded under the Eclipse Foundation Trademark Usage Policy. See
+`pdf/NOTICE.adoc` for trademark attribution and the source ZIP files.
 
 == Custom cover pages
 
