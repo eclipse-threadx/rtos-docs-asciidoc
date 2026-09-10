@@ -13,7 +13,6 @@ installed toolchain rather than any globally installed `antora`.
 
 - Node.js 18+ with `npm`
 - Ruby 3.x with Bundler (`gem install bundler`), with Ruby on your `PATH`
-- [GraphicsMagick](http://www.graphicsmagick.org/) (required by `prawn-gmagick` for full image format support — needed for PDF generation only)
 
 ### Install dependencies
 
