@@ -13,7 +13,7 @@
 
 ////
 
-= SampleX documentation
+= SampleX User Guide
 :description: Board support package framework and sample applications for Eclipse ThreadX.
 
 SampleX hosts sample applications for Eclipse ThreadX together with the board support package (BSP) framework they are built on. The framework defines a small set of C interfaces that a board implements and an application consumes, so that one application source file can be built for boards of different architectures without being changed.

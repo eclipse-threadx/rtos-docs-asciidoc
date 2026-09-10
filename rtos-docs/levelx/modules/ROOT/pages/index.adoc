@@ -14,7 +14,7 @@
 
 ////
 
-= LevelX documentation
+= LevelX User Guide
 
 LevelX user guide
 

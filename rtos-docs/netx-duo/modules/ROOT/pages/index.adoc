@@ -14,7 +14,7 @@
 
 ////
 
-= NetX Duo documentation
+= NetX Duo User Guide
 
 xref:overview-netx-duo.adoc[Overview of NetX Duo]
 

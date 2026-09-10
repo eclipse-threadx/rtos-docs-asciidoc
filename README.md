@@ -54,7 +54,7 @@ under `<component>/main/_exports/index.pdf`.
 ### Copy PDFs to a directory
 
 To collect all PDFs into a single directory with descriptive filenames
-(e.g. `eclipse-threadx-threadx-a4.pdf`):
+(e.g. `eclipse-threadx-threadx-user-guide-a4.pdf`):
 
 ```
 node scripts/copy-pdfs.js --output /path/to/output/dir

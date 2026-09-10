@@ -14,7 +14,7 @@
 
 ////
 
-= ThreadX documentation
+= ThreadX User Guide
 
 xref:overview-threadx.adoc[Overview of ThreadX]
 

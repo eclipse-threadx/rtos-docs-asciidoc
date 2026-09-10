@@ -14,7 +14,7 @@
 
 ////
 
-= GUIX documentation
+= GUIX User Guide
 
 xref:overview-guix.adoc[Overview of GUIX]
 
