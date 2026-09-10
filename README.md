@@ -6,8 +6,9 @@ If you want to propose changes or additions to the documentation, this is the ri
 
 ## Setup
 
-The project uses specific pre-release versions of Antora. Always use the locally
-installed toolchain rather than any globally installed `antora`.
+Always use the locally installed toolchain rather than any globally installed
+`antora`, so that the Antora version matches the one the PDF build is tested
+against.
 
 ### Prerequisites
 
