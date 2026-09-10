@@ -26,23 +26,28 @@ jobs:
           fetch-depth: 0
           path: 'asciidoc'
 
+      # No dependency caching here, and no 'npm ci' or bundler-cache: this
+      # repository gitignores package-lock.json and Gemfile.lock, so there is
+      # no lockfile in a fresh checkout to cache against or install from.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: 'asciidoc/package-lock.json'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: true
           working-directory: 'asciidoc'
 
       - name: Install Node.js dependencies
-        # package.json pins the Antora 3.2 alphas the pdf-extension needs.
-        run: npm ci
+        # Versions come from package.json; see the note above on lockfiles.
+        run: npm install
+        working-directory: 'asciidoc'
+
+      - name: Install Ruby dependencies
+        # Antora Assembler shells out to 'bundle exec asciidoctor-pdf'.
+        run: bundle install
         working-directory: 'asciidoc'
 
       - name: Generate PDF manuals (A4 and US Letter)
