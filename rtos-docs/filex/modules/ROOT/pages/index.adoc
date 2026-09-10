@@ -14,7 +14,7 @@
 
 ////
 
-= FileX documentation
+= FileX User Guide
 
 xref:overview-filex.adoc[Overview of FileX]
 

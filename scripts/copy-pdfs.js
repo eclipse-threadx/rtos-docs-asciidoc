@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copies generated PDFs from the build directory to a configurable output directory,
-// renaming them from index.pdf to eclipse-threadx-<component>-<size>.pdf.
+// renaming them from index.pdf to eclipse-threadx-<component>-user-guide-<size>.pdf.
 //
 // Usage:
 //   PDF_OUTPUT_DIR=/path/to/dir  node scripts/copy-pdfs.js
@@ -42,7 +42,7 @@ for (const size of fs.readdirSync(assemblerDir)) {
     const src = path.join(sizeDir, component, 'main', '_exports', 'index.pdf');
     if (!fs.existsSync(src)) continue;
 
-    const destName = `eclipse-threadx-${component}-${size}.pdf`;
+    const destName = `eclipse-threadx-${component}-user-guide-${size}.pdf`;
     fs.copyFileSync(src, path.join(dest, destName));
     console.log(`  ${destName}`);
     copied++;
