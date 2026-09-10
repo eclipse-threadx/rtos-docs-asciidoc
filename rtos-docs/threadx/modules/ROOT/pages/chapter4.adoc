@@ -560,6 +560,8 @@ UINT tx_block_pool_prioritize(TX_BLOCK_POOL *pool_ptr);
 
 This service places the highest priority thread suspended for a block of memory on this pool at the front of the suspension list. All other threads remain in the same FIFO order they were suspended in.
 
+NOTE: _This service acts at a single point in time. Any asynchronous activity that follows it, such as an ISR or another thread suspending on or resuming from the same pool, can reorder the suspension list again, so the highest priority thread is not guaranteed to still be at the front when the next tx_block_release call is made. A second call to this service made while the list is already prioritized has no further effect. An application that needs the prioritize call and the call that lifts suspension to be atomic must protect the pair itself, either with tx_interrupt_control or, when only threads access the pool, with a mutex._
+
 === Parameters
 
 * _pool_ptr_: Pointer to a memory block pool control block.
@@ -1094,6 +1096,8 @@ UINT tx_byte_pool_prioritize(TX_BYTE_POOL *pool_ptr);
 === Description
 
 This service places the highest priority thread suspended for memory on this pool at the front of the suspension list. All other threads remain in the same FIFO order they were suspended in.
+
+NOTE: _This service acts at a single point in time. Any asynchronous activity that follows it, such as an ISR or another thread suspending on or resuming from the same pool, can reorder the suspension list again, so the highest priority thread is not guaranteed to still be at the front when the next tx_byte_release call is made. A second call to this service made while the list is already prioritized has no further effect. An application that needs the prioritize call and the call that lifts suspension to be atomic must protect the pair itself, either with tx_interrupt_control or, when only threads access the pool, with a mutex._
 
 === Parameters
 
@@ -2181,6 +2185,8 @@ UINT tx_mutex_prioritize(TX_MUTEX *mutex_ptr);
 
 This service places the highest priority thread suspended for ownership of the mutex at the front of the suspension list. All other threads remain in the same FIFO order they were suspended in.
 
+NOTE: _This service acts at a single point in time. Any asynchronous activity that follows it, such as an ISR or another thread suspending on or resuming from the same mutex, can reorder the suspension list again, so the highest priority thread is not guaranteed to still be at the front when the next tx_mutex_put call is made. A second call to this service made while the list is already prioritized has no further effect. An application that needs the prioritize call and the call that lifts suspension to be atomic must protect the pair itself, either with tx_interrupt_control or, when only threads access the mutex, with a mutex._
+
 === Parameters
 
 * _mutex_ptr_: Pointer to the previously created mutex.
@@ -2764,6 +2770,8 @@ UINT tx_queue_prioritize(TX_QUEUE *queue_ptr);
 This service places the highest priority thread suspended for a message (or to place a message) on this queue at the front of the suspension list.
 
 All other threads remain in the same FIFO order they were suspended in.
+
+NOTE: _This service acts at a single point in time. Any asynchronous activity that follows it, such as an ISR or another thread suspending on or resuming from the same queue, can reorder the suspension list again, so the highest priority thread is not guaranteed to still be at the front when the next tx_queue_send or tx_queue_receive call is made. A second call to this service made while the list is already prioritized has no further effect. An application that needs the prioritize call and the call that lifts suspension to be atomic must protect the pair itself, either with tx_interrupt_control or, when only threads access the queue, with a mutex._
 
 === Parameters
 
@@ -3458,6 +3466,8 @@ UINT tx_semaphore_prioritize(TX_SEMAPHORE *semaphore_ptr);
 === Description
 
 This service places the highest priority thread suspended for an instance of the semaphore at the front of the suspension list. All other threads remain in the same FIFO order they were suspended in.
+
+NOTE: _This service acts at a single point in time. Any asynchronous activity that follows it, such as an ISR or another thread suspending on or resuming from the same semaphore, can reorder the suspension list again, so the highest priority thread is not guaranteed to still be at the front when the next tx_semaphore_put call is made. A second call to this service made while the list is already prioritized has no further effect. An application that needs the prioritize call and the call that lifts suspension to be atomic must protect the pair itself, either with tx_interrupt_control or, when only threads access the semaphore, with a mutex._
 
 === Parameters
 
