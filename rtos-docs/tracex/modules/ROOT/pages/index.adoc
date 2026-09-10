@@ -14,7 +14,7 @@
 
 ////
 
-= TraceX documentation
+= TraceX User Guide
 
 xref:overview-tracex.adoc[Overview of TraceX]
 

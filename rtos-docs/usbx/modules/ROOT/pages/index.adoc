@@ -14,7 +14,7 @@
 
 ////
 
-= USBX documentation
+= USBX User Guide
 
 xref:overview-usbx.adoc[Overview of USBX]
 

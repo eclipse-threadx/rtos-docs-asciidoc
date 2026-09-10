@@ -13,7 +13,7 @@
 
 ////
 
-= ZoneX documentation
+= ZoneX User Guide
 :description: Deterministic partitioning hypervisor for Armv8-R, for mixed-criticality Eclipse ThreadX systems.
 
 ZoneX is a deterministic partitioning hypervisor for mixed-criticality embedded systems. It runs at EL2 on Armv8-R, gives each partition a statically declared slice of memory and of time, and treats a partition stepping outside either as a fault to be reported rather than a condition to be recovered from.

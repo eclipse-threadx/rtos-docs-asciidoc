@@ -14,7 +14,7 @@
 
 ////
 
-= ThreadX Modules documentation
+= ThreadX Modules User Guide
 
 ThreadX Modules user guide
 
