@@ -264,6 +264,10 @@ When defined, enables the gathering of performance information on event flags gr
 
 When defined, ThreadX improves the *_tx_thread_resume_* and *_tx_thread_suspend_* API calls via in-line code. This increases code size but enhances performance of these two API calls.
 
+*TX_LEGACY_NON_CONST_NAMES*
+
+When defined, restores the earlier object-name declarations: create services accept `CHAR *` and information services return names through `CHAR **`. Use this transition option while updating application code to const-qualified object-name pointers. By default, create services accept `const CHAR *`, information services return names through `const CHAR **`, and this option is not defined. This option is available for one release cycle.
+
 *TX_MAX_PRIORITIES*
 
 Defines the priority levels for ThreadX. Legal values range from 32 through 1024 (inclusive) and _must_ be evenly divisible by 32. Increasing the number of priority levels supported increases the RAM usage by 128 bytes for every group of 32 priorities. However, there is only a negligible effect on performance. By default, this value is set to 32 priority levels.
