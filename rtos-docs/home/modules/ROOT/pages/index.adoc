@@ -31,6 +31,7 @@ Documentation for components:
 Other resources:
 
 - xref:home:ROOT:hardware-support.adoc[Hardware Support]
+- xref:home:ROOT:continuous-integration.adoc[Continuous Integration]
 - xref:home:ROOT:releases-and-support.adoc[Releases And Product Support Policy]
 - xref:home:ROOT:security-updates.adoc[Security Updates]
 
