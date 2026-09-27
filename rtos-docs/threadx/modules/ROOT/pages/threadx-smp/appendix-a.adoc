@@ -32,14 +32,14 @@ UINT     tx_block_allocate(TX_BLOCK_POOL *pool_ptr,
             VOID **block_ptr, ULONG wait_option);
 
 UINT     tx_block_pool_create(TX_BLOCK_POOL *pool_ptr,
-            CHAR *name_ptr, ULONG block_size,
+            const CHAR *name_ptr, ULONG block_size,
             VOID *pool_start, ULONG pool_size);
 
 UINT     tx_block_pool_delete(TX_BLOCK_POOL *pool_ptr);
 
 UINT     tx_block_pool_info_get(TX_BLOCK_POOL
             *pool_ptr,
-            CHAR **name,
+            const CHAR **name,
             ULONG *available_blocks, ULONG
             *total_blocks,
             TX_THREAD **first_suspended,
@@ -74,13 +74,13 @@ UINT     tx_byte_allocate(TX_BYTE_POOL *pool_ptr,
             ULONG memory_size, ULONG wait_option);
 
 UINT     tx_byte_pool_create(TX_BYTE_POOL *pool_ptr,
-            CHAR *name_ptr,
+            const CHAR *name_ptr,
             VOID *pool_start, ULONG pool_size);
 
 UINT     tx_byte_pool_delete(TX_BYTE_POOL *pool_ptr);
 
 UINT     tx_byte_pool_info_get(TX_BYTE_POOL *pool_ptr,
-            CHAR **name, ULONG *available_bytes,
+            const CHAR **name, ULONG *available_bytes,
             ULONG *fragments, TX_THREAD
             **first_suspended,
             ULONG *suspended_count,
@@ -112,7 +112,7 @@ UINT     tx_byte_release(VOID *memory_ptr);
 ----
 UINT     tx_event_flags_create(TX_EVENT_FLAGS_GROUP
             *group_ptr,
-            CHAR *name_ptr);
+            const CHAR *name_ptr);
 
 UINT     tx_event_flags_delete(TX_EVENT_FLAGS_GROUP
             *group_ptr);
@@ -125,7 +125,7 @@ UINT     tx_event_flags_get(TX_EVENT_FLAGS_GROUP
 
 UINT     tx_event_flags_info_get(TX_EVENT_FLAGS_GROUP
             *group_ptr,
-            CHAR **name, ULONG *current_flags,
+            const CHAR **name, ULONG *current_flags,
             TX_THREAD **first_suspended,
             ULONG *suspended_count,
             TX_EVENT_FLAGS_GROUP **next_group);
@@ -163,7 +163,7 @@ UINT     tx_interrupt_control(UINT new_posture);
 
 [,C]
 ----
-UINT     tx_mutex_create(TX_MUTEX *mutex_ptr, CHAR
+UINT     tx_mutex_create(TX_MUTEX *mutex_ptr, const CHAR
             *name_ptr,
             UINT inherit);
 
@@ -172,7 +172,7 @@ UINT     tx_mutex_delete(TX_MUTEX *mutex_ptr);
 UINT     tx_mutex_get(TX_MUTEX *mutex_ptr, ULONG
             wait_option);
 
-UINT     tx_mutex_info_get(TX_MUTEX *mutex_ptr, CHAR
+UINT     tx_mutex_info_get(TX_MUTEX *mutex_ptr, const CHAR
             **name,
             ULONG *count, TX_THREAD **owner,
             TX_THREAD **first_suspended,
@@ -199,7 +199,7 @@ UINT     tx_mutex_put(TX_MUTEX *mutex_ptr);
 
 [,C]
 ----
-UINT     tx_queue_create(TX_QUEUE *queue_ptr, CHAR
+UINT     tx_queue_create(TX_QUEUE *queue_ptr, const CHAR
             *name_ptr,
             UINT message_size, VOID *queue_start,
             ULONG queue_size);
@@ -212,7 +212,7 @@ UINT     tx_queue_front_send(TX_QUEUE *queue_ptr, VOID
             *source_ptr,
             ULONG wait_option);
 
-UINT     tx_queue_info_get(TX_QUEUE *queue_ptr, CHAR
+UINT     tx_queue_info_get(TX_QUEUE *queue_ptr, const CHAR
             **name,
             ULONG *enqueued, ULONG *available_storage,
             TX_THREAD **first_suspended,
@@ -258,7 +258,7 @@ UINT     tx_semaphore_ceiling_put(TX_SEMAPHORE
 
 UINT     tx_semaphore_create(TX_SEMAPHORE
             *semaphore_ptr,
-            CHAR *name_ptr, ULONG initial_count);
+            const CHAR *name_ptr, ULONG initial_count);
 
 UINT     tx_semaphore_delete(TX_SEMAPHORE
             *semaphore_ptr);
@@ -267,7 +267,7 @@ UINT     tx_semaphore_get(TX_SEMAPHORE *semaphore_ptr,
             ULONG wait_option);
 
 UINT     tx_semaphore_info_get(TX_SEMAPHORE
-            *semaphore_ptr, CHAR **name,
+            *semaphore_ptr, const CHAR **name,
             ULONG *current_value,
             TX_THREAD **first_suspended,
             ULONG *suspended_count,
@@ -300,7 +300,7 @@ UINT     tx_semaphore_put_notify(TX_SEMAPHORE
 [,C]
 ----
 UINT     tx_thread_create(TX_THREAD *thread_ptr,
-            CHAR *name_ptr,
+            const CHAR *name_ptr,
             VOID (*entry_function)(ULONG), ULONG
             entry_input,
             VOID *stack_start, ULONG stack_size,
@@ -316,7 +316,7 @@ UINT     tx_thread_entry_exit_notify(TX_THREAD
 
 TX_THREAD *tx_thread_identify(VOID);
 
-UINT     tx_thread_info_get(TX_THREAD *thread_ptr, CHAR
+UINT     tx_thread_info_get(TX_THREAD *thread_ptr, const CHAR
             **name,
             UINT *state, ULONG *run_count, UINT
             *priority,
@@ -408,7 +408,7 @@ UINT     tx_timer_change(TX_TIMER *timer_ptr,
             ULONG reschedule_ticks);
 
 UINT     tx_timer_create(TX_TIMER *timer_ptr,
-            CHAR *name_ptr,
+            const CHAR *name_ptr,
             VOID (*expiration_function)(ULONG),
             ULONG expiration_input, ULONG
             initial_ticks,
@@ -419,7 +419,7 @@ UINT     tx_timer_deactivate(TX_TIMER *timer_ptr);
 
 UINT     tx_timer_delete(TX_TIMER *timer_ptr);
 
-UINT     tx_timer_info_get(TX_TIMER *timer_ptr, CHAR
+UINT     tx_timer_info_get(TX_TIMER *timer_ptr, const CHAR
             **name,
             UINT *active, ULONG *remaining_ticks,
             ULONG *reschedule_ticks,

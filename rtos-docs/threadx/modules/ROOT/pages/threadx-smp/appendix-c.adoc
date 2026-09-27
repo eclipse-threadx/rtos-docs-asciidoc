@@ -24,7 +24,7 @@
 typedef struct TX_BLOCK_POOL_STRUCT
 {
     ULONG tx_block_pool_id;
-    CHAR *tx_block_pool_name;
+    const CHAR *tx_block_pool_name;
     ULONG tx_block_pool_available;
     ULONG tx_block_pool_total;
     UCHAR *tx_block_pool_available_list;
@@ -64,7 +64,7 @@ tx_block_pool_performance_timeout_count;
 typedef struct TX_BYTE_POOL_STRUCT
 {
     ULONG tx_byte_pool_id;
-    CHAR *tx_byte_pool_name;
+    const CHAR *tx_byte_pool_name;
     ULONG tx_byte_pool_available;
     ULONG tx_byte_pool_fragments;
     UCHAR *tx_byte_pool_list;
@@ -109,7 +109,7 @@ tx_byte_pool_performance_timeout_count;
 typedef struct TX_EVENT_FLAGS_GROUP_STRUCT
 {
     ULONG tx_event_flags_group_id;
-    CHAR *tx_event_flags_group_name;
+    const CHAR *tx_event_flags_group_name;
     ULONG tx_event_flags_group_current;
     UINT tx_event_flags_group_reset_search;
     struct TX_THREAD_STRUCT
@@ -154,7 +154,7 @@ defined  */
 typedef struct TX_MUTEX_STRUCT
 {
     ULONG tx_mutex_id;
-    CHAR *tx_mutex_name;
+    const CHAR *tx_mutex_name;
     ULONG tx_mutex_ownership_count;
     TX_THREAD *tx_mutex_owner;
     UINT tx_mutex_inherit;
@@ -195,7 +195,7 @@ tx_mutex_performance__priority_inheritance_count
 typedef struct TX_QUEUE_STRUCT
 {
     ULONG tx_queue_id;
-    CHAR *tx_queue_name;
+    const CHAR *tx_queue_name;
     UINT tx_queue_message_size;
     ULONG tx_queue_capacity;
     ULONG tx_queue_enqueued;
@@ -242,7 +242,7 @@ TX_QUEUE_STRUCT *);
 typedef struct TX_SEMAPHORE_STRUCT
 {
     ULONG tx_semaphore_id;
-    CHAR *tx_semaphore_name;
+    const CHAR *tx_semaphore_name;
     ULONG tx_semaphore_count;
     struct TX_THREAD_STRUCT
 
@@ -293,7 +293,7 @@ typedef struct TX_THREAD_STRUCT
 
     TX_THREAD_EXTENSION_0  /* Port defined  */
 
-    CHAR *tx_thread_name;
+    const CHAR *tx_thread_name;
     UINT tx_thread_priority;
     UINT tx_thread_state;
     UINT tx_thread_delayed_suspend;
@@ -384,7 +384,7 @@ tx_thread_performance_wait_abort_count;
 typedef struct TX_TIMER_STRUCT
 {
     ULONG tx_timer_id;
-    CHAR *tx_timer_name;
+    const CHAR *tx_timer_name;
     TX_TIMER_INTERNAL tx_timer_internal;
     struct TX_TIMER_STRUCT
                       *tx_timer_created_next,
