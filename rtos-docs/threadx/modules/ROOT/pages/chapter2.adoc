@@ -98,6 +98,52 @@ IMPORTANT: _The ThreadX entry function **tx_kernel_enter*_ does not return. So b
 . Create the *_tx_application_define_* function. This is where the initial system resources are created. Examples of system resources include threads, queues, memory pools, event flags groups, mutexes, and semaphores.
 . Compile application source and link with the ThreadX run-time library *_tx.lib_*. The resulting image can be downloaded to the target and executed!
 
+=== C Library Integration on Bare-Metal Targets
+
+ThreadX does not supply a C standard library or the target-facing services that
+a C library may require. Hosted operating systems normally provide those
+services. On a bare-metal target, the application or board support package
+(BSP) must provide them when the selected C library needs them.
+
+For example, Newlib and Newlib-nano implement C library routines but delegate
+some operations to system calls supplied by the target. Depending on the
+Newlib version and configuration, linker specifications, and C library routines
+used by the application, the required functions may include *_sbrk_*, *_read_*,
+*_write_*, *_close_*, *_fstat_*, *_isatty_*, *_lseek_*, *_exit_*, *_kill_*,
+and *_getpid_*. Selecting Newlib-nano with a linker specification such as
+*nano.specs* reduces the C library footprint; it does not implement
+device-specific services. Consequently, changing toolchain versions can change
+the set of unresolved system-call symbols reported by the linker.
+
+Implement each required operation according to the target and application:
+
+* Connect *_read_* and *_write_* to the console or another appropriate device.
+* Reserve the heap used by *_sbrk_* in the linker script, enforce its bounds,
+  and prevent it from overlapping stacks, ThreadX memory pools, or other data.
+* Give *_exit_* behavior appropriate for the target, such as notifying a test
+  harness, resetting, or entering a defined halted state.
+* Return an error and set *_errno_* as required for unavailable services. A
+  stub that reports success without performing the operation can cause C
+  library code to behave incorrectly.
+
+The system-call interface is specific to the selected C library and toolchain.
+Consult the C library documentation rather than treating one sample's stub file
+as a portable or exhaustive implementation. Sample applications and BSPs are
+available in the https://github.com/eclipse-threadx/samplex[SampleX repository].
+The https://sourceware.org/newlib/libc.html#Syscalls[Newlib system-call
+documentation] describes Newlib's expected interface.
+
+Providing system calls alone does not make a C library safe for concurrent use.
+If multiple ThreadX threads call the C library, also implement and configure the
+locking and per-thread reentrancy support required by that particular library
+build. Ensure the integration covers initialization, thread creation and
+deletion, context switches, and any permitted interrupt usage.
+
+The ThreadX POSIX compatibility layer is separate from this C library
+integration. It implements a subset of POSIX APIs, including pthreads,
+semaphores, and message queues, by using ThreadX primitives. It does not provide
+Newlib's target-facing system calls.
+
 === Win64 Host Regression Build
 
 The ThreadX repository also includes a Win64 host port for the regression harness. This host port is intended for simulator-based regression work on Windows systems that have the Visual Studio 2022 Build Tools and Ninja installed.

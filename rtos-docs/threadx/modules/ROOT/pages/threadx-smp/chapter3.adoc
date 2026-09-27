@@ -970,6 +970,19 @@ ThreadX SMP provides applications with complete interrupt management. This manag
 
 WARNING: Suspension is not allowed from ISRs. Therefore, the *wait_option* parameter for all ThreadX SMP service calls made from an ISR must be set to *TX_NO_WAIT*.
 
+=== Application Locks and the ThreadX SMP Protection
+
+ThreadX SMP serialises its internal data structures with a single global protection lock, taken by *TX_DISABLE* and released by *TX_RESTORE*. Every service in the list above takes that lock.
+
+A core may hold the protection with interrupts enabled. This happens wherever a service defers preemption across a long operation, such as resuming the threads suspended on an object being deleted, or the interval between the suspension request in _tx_thread_sleep_ and the context switch that carries it out. A core in one of those windows owns the protection and can still take an interrupt.
+
+That fixes the lock order. The ThreadX SMP protection is the outer lock, and any application lock an ISR can take is acquired inside it. An ISR must therefore never call a ThreadX SMP service while holding such a lock: one core would spin for the protection while holding the application lock, and the core owning the protection would spin for the application lock in its own interrupt handler. Neither ever completes.
+
+Two ways to respect the order:
+
+* Use *TX_DISABLE* and *TX_RESTORE* as the application's inter-core lock rather than a private spinlock. They already provide inter-core protection, and they nest on the owning core, so a service call from inside the critical section is safe.
+* Release the private lock before calling the service. Copy out whatever the call needs, unlock, then call.
+
 === ISR Template
 
 To manage application interrupts, several ThreadX SMP utilities must be called in the beginning and end of application ISRs. The exact format for interrupt handling varies between ports. Review the *_readme_threadx.txt_* file on the distribution disk for specific instructions on managing ISRs.
