@@ -1,0 +1,72 @@
+////
+
+ Copyright (c) 2026 Eclipse ThreadX contributors
+
+ This program and the accompanying materials are made available
+ under the terms of the MIT license which is available at
+ https://opensource.org/license/mit.
+
+ SPDX-License-Identifier: MIT
+
+////
+
+= Continuous Integration
+:description: How automated builds and tests are configured across Eclipse ThreadX repositories.
+
+Each Eclipse ThreadX source repository defines its own GitHub Actions workflows under `.github/workflows/`. There is no single job that tests every component, port, and board. The workflow files are the source of truth for triggers, toolchain versions, and selected test configurations; this page explains what their results cover.
+
+Most component pull requests target `dev`, but the workflows do not all use the same branch policy. Some also run against a release branch, and TraceX packaging runs only when manually dispatched. A green check means that the jobs selected for that event passed. It does not imply that unselected configurations, embedded hardware, or every supported compiler was tested.
+
+== Shared regression infrastructure
+
+ThreadX, USBX, FileX, LevelX, and GUIX use the link:https://github.com/eclipse-threadx/threadx/blob/dev/.github/workflows/regression_template.yml[ThreadX reusable regression workflow] for Linux host suites. That worker runs on Ubuntu 24.04 and accepts suite-specific install, build, and test scripts and coverage settings. NetX Duo uses a link:https://github.com/eclipse-threadx/netxduo/blob/dev/.github/workflows/_test-suite.yml[repository-local worker] for its `dev` workflow and the ThreadX reusable workflow for its `master` regression workflow.
+
+Host regression tests exercise C code on the runner. Cross-build jobs compile and link code for an embedded target, but do not execute it. Emulator and FVP jobs execute target images in a model; physical hardware requires separate testing. Coverage percentages below describe the configured CI gates, not whole-repository or hardware coverage.
+
+== Component workflows
+
+=== ThreadX and ThreadX Modules
+
+The link:https://github.com/eclipse-threadx/threadx/blob/dev/.github/workflows/regression_test.yml[regression workflow] runs single-core kernel, SMP, FreeRTOS compatibility, and RISC-V suites. The merged single-core and SMP host reports each require at least 99% line coverage; these gates do not measure branch coverage. The link:https://github.com/eclipse-threadx/threadx/tree/dev/.github/workflows[port workflows] check Arm builds with GCC and Clang, selected Cortex-M builds, port-tree consistency, and Cortex-R52 FVP images. Module manager sources and ports are checked in the ThreadX repository; ThreadX Modules has no separate source repository or CI pipeline.
+
+Most port checks have path filters. Cortex-R52 execution requires the `FVP_AEMV8R_URL` repository variable. If it is unset, the workflow builds the images and reports that execution was skipped. A successful cross-build in that case is not an FVP run.
+
+=== NetX Duo
+
+The link:https://github.com/eclipse-threadx/netxduo/blob/dev/.github/workflows/ci-dev.yml[`dev` workflow] always runs a core coverage smoke profile. A change classifier selects additional protocol, 64-bit, fast-path, Secure, crypto, and interoperability profiles, and a final job requires every selected profile to pass. The job summary identifies what ran. Classification failure selects the full suite and fails the gate. The separate link:https://github.com/eclipse-threadx/netxduo/blob/master/.github/workflows/regression_test.yml[`master` workflow] runs broad regression suites.
+
+Selected Linux coverage profiles upload reports, but the `dev` workflow does not enforce a single numerical coverage floor. Windows simulator scripts are available for local testing; these CI suites run on Linux.
+
+=== USBX
+
+The link:https://github.com/eclipse-threadx/usbx/blob/dev/.github/workflows/regression_test.yml[regression workflow] runs on pull requests and pushes to `dev` and `master`, and by manual dispatch. Automatic Linux runs test all 17 configurations and merge their coverage. The full-suite gate requires at least 66% line and 54.5% branch coverage. Manual runs can select configurations and omit coverage. Windows simulator and USB hardware tests are outside this workflow.
+
+=== FileX
+
+The link:https://github.com/eclipse-threadx/filex/blob/dev/.github/workflows/regression_test.yml[regression workflow] runs on pull requests and pushes to `dev` and `master`, and by manual dispatch. Its Linux job tests nine configurations and requires at least 99.9% merged line and 99.4% merged branch coverage. A separate Win64 job builds and tests the same nine configurations with PowerShell scripts. Win32 and physical media are not exercised by this workflow.
+
+=== LevelX
+
+The link:https://github.com/eclipse-threadx/levelx/blob/dev/.github/workflows/regression_test.yml[regression workflow] runs on pull requests and pushes to `dev` and `master`, and by manual dispatch. It tests ten Linux configurations and requires at least 68.0% merged line and 65.4% merged branch coverage. It does not run Windows or NAND and NOR flash hardware tests.
+
+=== GUIX
+
+The link:https://github.com/eclipse-threadx/guix/blob/dev/.github/workflows/regression_test.yml[Linux regression workflow] runs all 18 GUIX configurations and requires at least 98.3% merged line and 96.0% merged branch coverage. Three link:https://github.com/eclipse-threadx/guix/tree/dev/.github/workflows[Windows workflows] check GUIX Studio demo generation, generated-demo compilation, and Studio View on pull requests and pushes to `dev` and `master`. The Studio MSIX packaging workflow is manual; display-driver hardware is not exercised by these jobs.
+
+=== SampleX
+
+The link:https://github.com/eclipse-threadx/samplex/blob/dev/.github/workflows/ci.yml[SampleX workflow] runs on pull requests to `dev`, `main`, and `master`, as well as configured pushes and manual dispatch. Three Ubuntu jobs cross-build the PolarFire Icicle, NUCLEO-F401RE, and MIMXRT1064-EVK demos; three dependent jobs run their assertions in Renode. The shared ThreadX demo runs on both 64-bit RISC-V and Cortex-M4. The workflow does not collect a whole-repository coverage report or run on physical boards.
+
+=== ZoneX
+
+Five link:https://github.com/eclipse-threadx/zonex/tree/dev/.github/workflows[workflows] run on pull requests and pushes to `dev` and `main`. They check repository terminology and references, run GCC host unit tests, cross-build Cortex-R52 images with GCC and Clang, and run images on the Armv8-R AEM FVP when configured. The host coverage gate requires 100% line and branch coverage for the selected architecture-independent core files. Architecture-dependent behavior needs execution on the FVP or on silicon; CI can run the FVP when configured.
+
+The FVP workflow uses the `FVP_AEMV8R_URL` repository variable. Without it, image execution is skipped and reported, while the other checks still run. The repository checks are unfiltered; the four build and test workflows use path filters.
+
+=== TraceX
+
+The link:https://github.com/eclipse-threadx/tracex/tree/main/.github/workflows[TraceX workflows] build a Windows installer and an MSIX package when manually dispatched. They do not run automatically for pull requests, and they are packaging jobs rather than a regression or coverage gate.
+
+== Interpreting a pull request result
+
+Check the workflow event, selected jobs, and job summary before citing a CI result. A path-filtered workflow may not run for a change; NetX Duo may select only some profiles; and an FVP job may build without executing when its model URL is unavailable. Coverage gates apply only to the instrumented suites named above. For commands to reproduce checks or test on Windows, an emulator, or hardware, consult the repository workflow, its `CONTRIBUTING.md`, and target-specific instructions.
