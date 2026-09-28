@@ -25,86 +25,89 @@ The FileX API functions available to the application are as follows.
 
 == Directory_Services
 
-* <<fx_directory_attributes_read,fx_directory_attributes_read>>
-* <<fx_directory_attributes_set,fx_directory_attributes_set>>
-* <<fx_directory_create,fx_directory_create>>
-* <<fx_directory_default_get,fx_directory_default_get>>
-* <<fx_directory_default_set,fx_directory_default_set>>
-* <<fx_directory_delete,fx_directory_delete>>
-* <<fx_directory_first_entry_find,fx_directory_first_entry_find>>
-* <<fx_directory_information_get,fx_directory_information_get>>
-* <<fx_directory_local_path_clear,fx_directory_local_path_clear>>
-* <<fx_directory_local_path_get,fx_directory_local_path_get>>
-* <<fx_directory_local_path_restore,fx_directory_local_path_restore>>
-* <<fx_directory_local_path_set,fx_directory_local_path_set>>
-* <<fx_directory_long_name_get,fx_directory_long_name_get>>
-* <<fx_directory_name_test,fx_directory_name_test>>
-* <<fx_directory_next_entry_find,fx_directory_next_entry_find>>
-* <<fx_directory_next_full_entry_find,fx_directory_next_full_entry_find>>
-* <<fx_directory_rename,fx_directory_rename>>
-* <<fx_directory_short_name_get,fx_directory_short_name_get>>
-* <<fx_directory_short_name_get_extended,fx_directory_short_name_get_extended>>
+* <<_fx_directory_attributes_read,fx_directory_attributes_read>>
+* <<_fx_directory_attributes_set,fx_directory_attributes_set>>
+* <<_fx_directory_create,fx_directory_create>>
+* <<_fx_directory_default_get,fx_directory_default_get>>
+* <<_fx_directory_default_set,fx_directory_default_set>>
+* <<_fx_directory_delete,fx_directory_delete>>
+* <<_fx_directory_first_entry_find,fx_directory_first_entry_find>>
+* <<_fx_directory_information_get,fx_directory_information_get>>
+* <<_fx_directory_local_path_clear,fx_directory_local_path_clear>>
+* <<_fx_directory_local_path_get,fx_directory_local_path_get>>
+* <<_fx_directory_local_path_restore,fx_directory_local_path_restore>>
+* <<_fx_directory_local_path_set,fx_directory_local_path_set>>
+* <<_fx_directory_long_name_get,fx_directory_long_name_get>>
+* <<_fx_directory_name_test,fx_directory_name_test>>
+* <<_fx_directory_next_entry_find,fx_directory_next_entry_find>>
+* <<_fx_directory_next_full_entry_find,fx_directory_next_full_entry_find>>
+* <<_fx_directory_rename,fx_directory_rename>>
+* <<_fx_directory_short_name_get,fx_directory_short_name_get>>
+* <<_fx_directory_short_name_get_extended,fx_directory_short_name_get_extended>>
 
 == File_Services
 
-* <<fx_file_allocate,fx_file_allocate>>
-* <<fx_file_attributes_read,fx_file_attributes_read>>
-* <<fx_file_attributes_set,fx_file_attributes_set>>
-* <<fx_file_best_effort_allocate,fx_file_best_effort_allocate>>
-* <<fx_file_close_fx_file_create,fx_file_close_fx_file_create>>
-* <<fx_file_date_time_set,fx_file_date_time_set>>
-* <<fx_file_delete,fx_file_delete>>
-* <<fx_file_extended_allocate,fx_file_extended_allocate>>
-* <<fx_file_extended_best_effort_allocate,fx_file_extended_best_effort_allocate>>
-* <<fx_file_extended_relative_seek,fx_file_extended_relative_seek>>
-* <<fx_file_extended_seek,fx_file_extended_seek>>
-* <<fx_file_extended_truncate,fx_file_extended_truncate>>
-* <<fx_file_extended_truncate_release,fx_file_extended_truncate_release>>
-* <<fx_file_open_fx_file_read,fx_file_open_fx_file_read>>
-* <<fx_file_relative_seek,fx_file_relative_seek>>
-* <<fx_file_rename_fx_file_seek,fx_file_rename_fx_file_seek>>
-* <<fx_file_truncate,fx_file_truncate>>
-* <<fx_file_truncate_release,fx_file_truncate_release>>
-* <<fx_file_write,fx_file_write>>
-* <<fx_file_write_notify_set,fx_file_write_notify_set>>
+* <<_fx_file_allocate,fx_file_allocate>>
+* <<_fx_file_attributes_read,fx_file_attributes_read>>
+* <<_fx_file_attributes_set,fx_file_attributes_set>>
+* <<_fx_file_best_effort_allocate,fx_file_best_effort_allocate>>
+* <<_fx_file_close,fx_file_close>>
+* <<_fx_file_create,fx_file_create>>
+* <<_fx_file_date_time_set,fx_file_date_time_set>>
+* <<_fx_file_delete,fx_file_delete>>
+* <<_fx_file_extended_allocate,fx_file_extended_allocate>>
+* <<_fx_file_extended_best_effort_allocate,fx_file_extended_best_effort_allocate>>
+* <<_fx_file_extended_relative_seek,fx_file_extended_relative_seek>>
+* <<_fx_file_extended_seek,fx_file_extended_seek>>
+* <<_fx_file_extended_truncate,fx_file_extended_truncate>>
+* <<_fx_file_extended_truncate_release,fx_file_extended_truncate_release>>
+* <<_fx_file_open,fx_file_open>>
+* <<_fx_file_read,fx_file_read>>
+* <<_fx_file_relative_seek,fx_file_relative_seek>>
+* <<_fx_file_rename,fx_file_rename>>
+* <<_fx_file_seek,fx_file_seek>>
+* <<_fx_file_truncate,fx_file_truncate>>
+* <<_fx_file_truncate_release,fx_file_truncate_release>>
+* <<_fx_file_write,fx_file_write>>
+* <<_fx_file_write_notify_set,fx_file_write_notify_set>>
 
 == Media_Services
 
-* <<fx_fault_tolerant_enable,fx_fault_tolerant_enable>>
-* <<fx_media_abort,fx_media_abort>>
-* <<fx_media_cache_invalidate,fx_media_cache_invalidate>>
-* <<fx_media_check,fx_media_check>>
-* <<fx_media_close,fx_media_close>>
-* <<fx_media_close_notify_set,fx_media_close_notify_set>>
-* <<fx_media_extended_space_available,fx_media_extended_space_available>>
-* <<fx_media_flush,fx_media_flush>>
-* <<fx_media_format,fx_media_format>>
-* <<fx_media_open,fx_media_open>>
-* <<fx_media_open_notify_set,fx_media_open_notify_set>>
-* <<fx_media_read,fx_media_read>>
-* <<fx_media_space_available,fx_media_space_available>>
-* <<fx_media_volume_get,fx_media_volume_get>>
-* <<fx_media_write,fx_media_write>>
+* <<_fx_fault_tolerant_enable,fx_fault_tolerant_enable>>
+* <<_fx_media_abort,fx_media_abort>>
+* <<_fx_media_cache_invalidate,fx_media_cache_invalidate>>
+* <<_fx_media_check,fx_media_check>>
+* <<_fx_media_close,fx_media_close>>
+* <<_fx_media_close_notify_set,fx_media_close_notify_set>>
+* <<_fx_media_extended_space_available,fx_media_extended_space_available>>
+* <<_fx_media_flush,fx_media_flush>>
+* <<_fx_media_format,fx_media_format>>
+* <<_fx_media_open,fx_media_open>>
+* <<_fx_media_open_notify_set,fx_media_open_notify_set>>
+* <<_fx_media_read,fx_media_read>>
+* <<_fx_media_space_available,fx_media_space_available>>
+* <<_fx_media_volume_get,fx_media_volume_get>>
+* <<_fx_media_write,fx_media_write>>
 
 == System_Services
 
-* <<fx_system_date_get,fx_system_date_get>>
-* <<fx_system_date_set,fx_system_date_set>>
-* <<fx_system_initialize,fx_system_initialize>>
-* <<fx_system_time_get,fx_system_time_get>>
-* <<fx_system_time_set,fx_system_time_set>>
+* <<_fx_system_date_get,fx_system_date_get>>
+* <<_fx_system_date_set,fx_system_date_set>>
+* <<_fx_system_initialize,fx_system_initialize>>
+* <<_fx_system_time_get,fx_system_time_get>>
+* <<_fx_system_time_set,fx_system_time_set>>
 
 == Unicode_Services
 
-* <<fx_unicode_directory_create,fx_unicode_directory_create>>
-* <<fx_unicode_directory_rename,fx_unicode_directory_rename>>
-* <<fx_unicode_file_create,fx_unicode_file_create>>
-* <<fx_unicode_file_rename,fx_unicode_file_rename>>
-* <<fx_unicode_length_get,fx_unicode_length_get>>
-* <<fx_unicode_length_get_extended,fx_unicode_length_get_extended>>
-* <<fx_unicode_name_get,fx_unicode_name_get>>
-* <<fx_unicode_short_name_get,fx_unicode_short_name_get>>
-* <<fx_unicode_short_name_get_extended,fx_unicode_short_name_get_extended>>
+* <<_fx_unicode_directory_create,fx_unicode_directory_create>>
+* <<_fx_unicode_directory_rename,fx_unicode_directory_rename>>
+* <<_fx_unicode_file_create,fx_unicode_file_create>>
+* <<_fx_unicode_file_rename,fx_unicode_file_rename>>
+* <<_fx_unicode_length_get,fx_unicode_length_get>>
+* <<_fx_unicode_length_get_extended,fx_unicode_length_get_extended>>
+* <<_fx_unicode_name_get,fx_unicode_name_get>>
+* <<_fx_unicode_short_name_get,fx_unicode_short_name_get>>
+* <<_fx_unicode_short_name_get_extended,fx_unicode_short_name_get_extended>>
 
 == fx_directory_attributes_read
 
@@ -898,7 +901,7 @@ character "\", use the construct "\\".*/
 
 Gets the long name of a directory from its short name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_directory_long_name_get_extended,fx_directory_long_name_get_extended>> instead, passing the actual size of the `long_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_directory_long_name_get_extended,fx_directory_long_name_get_extended>> instead, passing the actual size of the `long_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -1294,7 +1297,7 @@ status = fx_directory_rename(&my_media, "abc", "def");
 
 Gets the specified directory's short name from its long name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_directory_short_name_get_extended,fx_directory_short_name_get_extended>> instead, passing the actual size of the `short_name` buffer. This function writes up to `FX_MAX_SHORT_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_directory_short_name_get_extended,fx_directory_short_name_get_extended>> instead, passing the actual size of the `short_name` buffer. This function writes up to `FX_MAX_SHORT_NAME_LEN` characters regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -2271,7 +2274,7 @@ status = fx_file_extended_seek(&my_file, 0x100000000);
 === See Also
 
 * <<File_Services,filex file Services>>
-+
+
 == fx_file_extended_truncate
 
 Truncates a file.
@@ -3667,7 +3670,7 @@ status = fx_media_space_available(&my_media, &available_bytes);
 
 Gets the media's volume name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_media_volume_get_extended,fx_media_volume_get_extended>> instead, passing the actual size of the `volume_name` buffer. This function writes up to 12 characters regardless of the caller's buffer size, which can cause a buffer overrun.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_media_volume_get_extended,fx_media_volume_get_extended>> instead, passing the actual size of the `volume_name` buffer. This function writes up to 12 characters regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -4450,7 +4453,7 @@ status = fx_unicode_file_rename(&my_media, my_old_unicode_name,
 
 Gets the length of a Unicode name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_length_get_extended,fx_unicode_length_get_extended>> instead, passing the actual buffer size. This function scans up to 256 bytes regardless of the actual buffer size, which can cause an overread.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_unicode_length_get_extended,fx_unicode_length_get_extended>> instead, passing the actual buffer size. This function scans up to 256 bytes regardless of the actual buffer size, which can cause an overread.
 
 === Prototype
 
@@ -4557,7 +4560,7 @@ length = fx_unicode_length_get_extended(my_unicode_name, sizeof(my_unicode_name)
 
 Gets the Unicode name from a short name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_name_get_extended,fx_unicode_name_get_extended>> instead, passing the actual size of the `destination_unicode_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN*2` bytes regardless of the caller's buffer size, which can cause a buffer overrun.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_unicode_name_get_extended,fx_unicode_name_get_extended>> instead, passing the actual size of the `destination_unicode_name` buffer. This function writes up to `FX_MAX_LONG_NAME_LEN*2` bytes regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
@@ -4693,7 +4696,7 @@ length = fx_unicode_name_get_extended(&ram_disk, "ABC0~111.TXT",
 
 Gets the short name from a Unicode name.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<fx_unicode_short_name_get_extended,fx_unicode_short_name_get_extended>> instead, passing the actual size of the `destination_short_name` buffer. This function writes up to 13 bytes regardless of the caller's buffer size, which can cause a buffer overrun.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_fx_unicode_short_name_get_extended,fx_unicode_short_name_get_extended>> instead, passing the actual size of the `destination_short_name` buffer. This function writes up to 13 bytes regardless of the caller's buffer size, which can cause a buffer overrun.
 
 === Prototype
 
