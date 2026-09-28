@@ -65,6 +65,12 @@ RSA-PSS signature generation is supported as well, which completes TLS 1.3 RSA c
 
 The CertificateVerify encoding also handles the *rsa_pss_rsae_sha384* (0x0805) and *rsa_pss_rsae_sha512* (0x0806) schemes. Certificates carrying an RSASSA-PSS public key, which use the rsa_pss_pss_sha256, rsa_pss_pss_sha384 and rsa_pss_pss_sha512 schemes (0x0809 to 0x080B), are not supported. Signing is limited to RSA keys of 4096 bits or less; a larger key is rejected rather than used.
 
+== Brainpool Elliptic Curves
+
+NetX Duo Secure supports brainpoolP256r1, brainpoolP384r1 and brainpoolP512r1 from RFC 5639 for ECDH key exchange and ECDSA signature verification. The generic ECC configuration includes all three curves. Applications with a custom ECC list can add the corresponding `crypto_method_ec_brainpoolp256`, `crypto_method_ec_brainpoolp384` and `crypto_method_ec_brainpoolp512` methods to `nx_secure_tls_ecc_initialize()`, with matching curve IDs from _nx_crypto_const.h_. X.509 certificates and private keys using the RFC 5639 named-curve OIDs are recognized.
+
+TLS 1.3 uses the RFC 8734 named groups brainpoolP256r1tls13 (0x001F), brainpoolP384r1tls13 (0x0020) and brainpoolP512r1tls13 (0x0021), and the matching ECDSA signature schemes (0x081A, 0x081B and 0x081C). TLS 1.2 uses the RFC 7027 group IDs 26, 27 and 28. NetX Duo Secure maps these wire values to the same curve methods, so applications pass the curve IDs and methods to `nx_secure_tls_ecc_initialize()` for either version. A ClientHello offering TLS 1.3 advertises the TLS 1.3 Brainpool group IDs; a TLS 1.2-only ClientHello advertises the TLS 1.2 IDs.
+
 == Small Example System (TLS Client)
 
 An example of how easy it is to use NetX Duo Secure is described below. This demonstrates a simple TLS Client, using software crypto modules (not hardware specific) for encryption. It is designed to work with the OpenSSL reverse-echo server (openssl s_server -rev).
