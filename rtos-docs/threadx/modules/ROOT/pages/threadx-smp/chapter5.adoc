@@ -338,6 +338,8 @@ A similar discussion can be found in the interrupt management discussion at the 
 
 NOTE: If interrupt lockout is to be used to protect critical sections of driver code from driver ISR code, the thread level driver code must always execute on the same core that the ISR is processed on. Otherwise, internal ThreadX SMP primitives like TX_DISABLE and TX_RESTORE should be used that also have inter-core protection built-in.
 
+A driver that protects itself with a lock of its own rather than with *TX_DISABLE* and *TX_RESTORE* must not hold that lock across a ThreadX SMP service call made from an ISR. See "Application Locks and the ThreadX SMP Protection" in xref:threadx:ROOT:threadx-smp/chapter3.adoc[Chapter 3 - Functional Components of ThreadX SMP].
+
 === Thread Suspension
 
 In the simple driver example presented earlier in this chapter, the caller of the input service suspends if a character is not available. In some applications, this might not be acceptable.

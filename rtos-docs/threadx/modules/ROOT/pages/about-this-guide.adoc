@@ -70,7 +70,7 @@ The following is a list of ThreadX service call data types and their associated 
 | Basic unsigned integer. This type must support 8-bit unsigned data; however, it is mapped to the most convenient unsigned data type.
 
 | *ULONG*
-| Unsigned long type. This type must support 32-bit unsigned data.
+| Unsigned integer type that supports at least 32-bit values. Its width depends on the port and need not match the width of C `unsigned long` or a pointer.
 
 | *VOID*
 | Almost always equivalent to the compiler's void type.
@@ -78,6 +78,8 @@ The following is a list of ThreadX service call data types and their associated 
 | *CHAR*
 | Most often a standard 8-bit character type.
 |===
+
+On AArch64 ports, `ULONG` is 32 bits even though pointers are 64 bits. On the Linux GNU SMP port, `ULONG` is 64 bits with an LP64 compiler. Check the selected *_tx_port.h_* or `sizeof(ULONG)` when sizing storage or exchanging values with another library. A 32-bit `ULONG` cannot hold a 64-bit pointer.
 
 Additional data types are used within the ThreadX source. They are
 also located in the *_tx_port.h_* file.
