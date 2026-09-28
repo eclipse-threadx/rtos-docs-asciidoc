@@ -218,7 +218,7 @@ Create pool of fixed-size memory blocks
 ----
 UINT tx_block_pool_create(
     TX_BLOCK_POOL *pool_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     ULONG block_size,
     VOID *pool_start,
     ULONG pool_size);
@@ -345,7 +345,7 @@ Retrieve information about block pool
 ----
 UINT tx_block_pool_info_get(
     TX_BLOCK_POOL *pool_ptr,
-    const CHAR **name,
+    CHAR **name,
     ULONG *available,
     ULONG *total_blocks,
     TX_THREAD **first_suspended,
@@ -387,7 +387,7 @@ No
 [,c]
 ----
 TX_BLOCK_POOL my_pool;
-const CHAR *name;
+CHAR *name;
 ULONG available;
 ULONG total_blocks;
 TX_THREAD *first_suspended;
@@ -747,7 +747,7 @@ Create memory pool of bytes
 ----
 UINT tx_byte_pool_create(
     TX_BYTE_POOL *pool_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     VOID *pool_start,
     ULONG pool_size);
 ----
@@ -860,7 +860,7 @@ Retrieve information about byte pool
 ----
 UINT tx_byte_pool_info_get(
     TX_BYTE_POOL *pool_ptr,
-    const CHAR **name,
+    CHAR **name,
     ULONG *available,
     ULONG *fragments,
     TX_THREAD **first_suspended,
@@ -902,7 +902,7 @@ No
 [,c]
 ----
 TX_BYTE_POOL my_pool;
-const CHAR *name;
+CHAR *name;
 ULONG available;
 ULONG fragments;
 TX_THREAD *first_suspended;
@@ -1203,7 +1203,7 @@ Create event flags group
 ----
 UINT tx_event_flags_create(
     TX_EVENT_FLAGS_GROUP *group_ptr,
-    const CHAR *name_ptr);
+    CHAR *name_ptr);
 ----
 
 === Description
@@ -1397,7 +1397,7 @@ Retrieve information about event flags group
 ----
 UINT tx_event_flags_info_get(
     TX_EVENT_FLAGS_GROUP *group_ptr,
-    const CHAR **name, ULONG *current_flags,
+    CHAR **name, ULONG *current_flags,
     TX_THREAD **first_suspended,
     ULONG *suspended_count,
     TX_EVENT_FLAGS_GROUP **next_group);
@@ -1436,7 +1436,7 @@ No
 [,c]
 ----
 TX_EVENT_FLAGS_GROUP my_event_group;
-const CHAR *name;
+CHAR *name;
 ULONG current_flags;
 TX_THREAD *first_suspended;
 ULONG suspended_count;
@@ -1779,7 +1779,7 @@ Create mutual exclusion mutex
 ----
 UINT tx_mutex_create(
     TX_MUTEX *mutex_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     UINT priority_inherit);
 ----
 
@@ -1958,7 +1958,7 @@ Retrieve information about mutex
 ----
 UINT tx_mutex_info_get(
     TX_MUTEX *mutex_ptr,
-    const CHAR **name,
+    CHAR **name,
     ULONG *count,
     TX_THREAD **owner,
     TX_THREAD **first_suspended,
@@ -2000,7 +2000,7 @@ No
 [,c]
 ----
 TX_MUTEX my_mutex;
-const CHAR *name;
+CHAR *name;
 ULONG count;
 TX_THREAD *owner;
 TX_THREAD *first_suspended;
@@ -2290,7 +2290,7 @@ Create message queue
 ----
 UINT tx_queue_create(
     TX_QUEUE *queue_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     UINT message_size,
     VOID *queue_start,
     ULONG queue_size);
@@ -2540,7 +2540,7 @@ Retrieve information about queue
 ----
 UINT tx_queue_info_get(
     TX_QUEUE *queue_ptr,
-    const CHAR **name,
+    CHAR **name,
     ULONG *enqueued,
     ULONG *available_storage
     TX_THREAD **first_suspended,
@@ -2582,7 +2582,7 @@ No
 [,c]
 ----
 TX_QUEUE my_queue;
-const CHAR *name;
+CHAR *name;
 ULONG enqueued;
 ULONG available_storage;
 TX_THREAD *first_suspended;
@@ -3077,7 +3077,7 @@ Create counting semaphore
 ----
 UINT tx_semaphore_create(
     TX_SEMAPHORE *semaphore_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     ULONG initial_count);
 ----
 
@@ -3257,7 +3257,7 @@ Retrieve information about semaphore
 ----
 UINT tx_semaphore_info_get(
     TX_SEMAPHORE *semaphore_ptr,
-    const CHAR **name, ULONG *current_value,
+    CHAR **name, ULONG *current_value,
     TX_THREAD **first_suspended,
     ULONG *suspended_count,
     TX_SEMAPHORE **next_semaphore);
@@ -3296,7 +3296,7 @@ No
 [,c]
 ----
 TX_SEMAPHORE my_semaphore;
-const CHAR *name;
+CHAR *name;
 ULONG current_value;
 TX_THREAD *first_suspended;
 ULONG suspended_count;
@@ -3630,7 +3630,7 @@ Create application thread
 ----
 UINT tx_thread_create(
     TX_THREAD *thread_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     VOID (*entry_function)(ULONG),
     ULONG entry_input,
     VOID *stack_start,
@@ -3912,7 +3912,7 @@ Retrieve information about thread
 ----
 UINT tx_thread_info_get(
     TX_THREAD *thread_ptr,
-    const CHAR **name,
+    CHAR **name,
     UINT *state,
     ULONG *run_count,
     UINT *priority,
@@ -3970,7 +3970,7 @@ No
 [,c]
 ----
 TX_THREAD my_thread;
-const CHAR *name;
+CHAR *name;
 UINT state;
 ULONG run_count;
 UINT priority;
@@ -5064,7 +5064,7 @@ Create application timer
 ----
 UINT tx_timer_create(
     TX_TIMER *timer_ptr,
-    const CHAR *name_ptr,
+    CHAR *name_ptr,
     VOID (*expiration_function)(ULONG),
     ULONG expiration_input,
     ULONG initial_ticks,
@@ -5249,7 +5249,7 @@ Retrieve information about an application timer
 ----
 UINT tx_timer_info_get(
     TX_TIMER *timer_ptr,
-    const CHAR **name,
+    CHAR **name,
     UINT *active,
     ULONG *remaining_ticks,
     ULONG *reschedule_ticks,
@@ -5289,7 +5289,7 @@ No
 [,c]
 ----
 TX_TIMER my_timer;
-const CHAR *name;
+CHAR *name;
 UINT active;
 ULONG remaining_ticks;
 ULONG reschedule_ticks;
