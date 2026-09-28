@@ -28200,4 +28200,3 @@ status = gx_window_wallpaper_set(&my_window,
 === See Also
 
 * <<Window_Services,Guix Window Services>>
-
