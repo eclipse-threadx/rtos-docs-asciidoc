@@ -149,6 +149,9 @@ The following list describes each configuration option in detail:
 | FX_FAT_MAP_SIZE
 | Specifies the number of sectors that can be represented in the FAT update map. The default value is 256, but this can be overridden with a command-line define. Larger values help reduce unneeded updates of secondary FAT sectors.
 
+| FX_FAT32_FORCE_RECOUNT
+| Defined, FileX recounts free clusters from the FAT whenever a FAT32 volume is opened, even when its FSInfo count appears valid and its clean-shutdown markers are clear. By default, FileX uses a plausible FSInfo count on a clean volume and recounts when the FAT or boot-sector dirty marker is set. A recount updates a valid FSInfo sector's count and next-free hint when writable media is closed, but it does not repair other FAT corruption or clear a dirty marker that was already set before the volume was opened.
+
 | FX_MAX_FAT_CACHE
 | Specifies the number of entries in the internal FAT cache. The default value is 16, but this can be overridden with a command-line define. All values must be a power of 2.
 
