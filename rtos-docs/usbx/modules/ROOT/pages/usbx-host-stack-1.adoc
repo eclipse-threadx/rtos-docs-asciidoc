@@ -21,7 +21,7 @@ USBX is a full-featured USB stack for deeply embedded applications. This chapter
 
 == USBX features
 
-USBX support the three existing USB specifications: 1.1, 2.0 and OTG. It is designed to be scalable and will accommodate simple USB topologies with only one connected device as well as complex topologies with multiple devices and cascading hubs. USBX supports all the data transfer types of the USB protocols: control, bulk, interrupt, and isochronous.
+USBX supports USB 1.1 and USB 2.0 host and device operation. OTG protocol hooks require a controller-specific integration for runtime role switching. It is designed to be scalable and will accommodate simple USB topologies with only one connected device as well as complex topologies with multiple devices and cascading hubs. USBX supports all the data transfer types of the USB protocols: control, bulk, interrupt, and isochronous.
 
 USBX supports both the host side and the device side. Each side is
 comprised of three layers.
@@ -49,7 +49,7 @@ image::usbx-device-stack/usb-layers.png[USB Layers]
 * Support for USB composite devices
 * Support for cascading hubs
 * Support for USB power management
-* Support for USB OTG
+* OTG protocol hooks for controller-specific integration
 * Export trace events for TraceX
 
 == Powerful Services of USBX

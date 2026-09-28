@@ -15,13 +15,13 @@
 ////
 
 = Overview of USBX
-:description: USBX is a high-performance USB host, device, and on-the-go (OTG) embedded stack, USBX is fully integrated with ThreadX and available for all ThreadX–supported processors.
+:description: USBX is a high-performance USB host and device embedded stack with OTG protocol hooks.
 
-USBX is a high-performance USB host, device, and on-the-go (OTG) embedded stack. USBX is fully integrated with ThreadX and available for all ThreadX--supported processors. Like ThreadX, USBX is designed to have a small footprint and high performance, making it ideal for deeply embedded applications that require an interface with USB devices.
+USBX is a high-performance USB host and device embedded stack with OTG protocol hooks. USBX is integrated with ThreadX. Like ThreadX, USBX is designed to have a small footprint and high performance, making it ideal for deeply embedded applications that require an interface with USB devices.
 
-== Host, Device, OTG & Extensive Class Support
+== Host, Device, and Class Support
 
-USBX Host/Device embedded USB protocol stack is an Industrial Grade embedded USB solution designed specifically for deeply embedded, real-time, and IoT applications. USBX provides host, device, and OTG support, as well as extensive class support. USBX is fully integrated with ThreadX Real-Time Operating System, FileX embedded FAT-compatible file system, and NetX Duo embedded TCP/IP stack. All of this, combined with an extremely small footprint, fast execution and superior ease-of-use, make USBX the ideal choice for the most demanding embedded IoT applications requiring USB connectivity.
+USBX provides host and device stacks with extensive class support for embedded real-time applications. OTG role switching requires a controller-specific integration; the USBX repository does not include a ready-to-use OTG controller driver. See xref:usbx-host-stack-supplemental-5.adoc[USBX OTG] for the requirements. USBX integrates with ThreadX, FileX, and NetX Duo.
 
 === USBX memory footprint
 
@@ -34,7 +34,6 @@ Like ThreadX, the size of USBX automatically scales based on the services actual
 === USB Interoperability verification
 
 USBX Device Stack has been rigorously tested with the USB IF standard testing tool USBCV to ensure full compliance with the USB specifications and interoperability with different host systems.
-In addition, USBX OTG stack has been verified and certified by the independent test lab Allion in Taiwan.
 
 === USB Host controller support
 
@@ -60,7 +59,7 @@ USBX Host and Device support custom classes. An example custom class is provided
 Advanced technology
 USBX Host and Device support custom classes. An example custom class is provided in the USBX distribution. USBX is advanced technology that includes:
 
-* Host, Device, and OTG support
+* Host and device support, with OTG protocol hooks for controller-specific integration
 * USB low, full, and high-speed support
 * Automatic scaling
 * Fully integrated with ThreadX, FileX, and NetX Duo
