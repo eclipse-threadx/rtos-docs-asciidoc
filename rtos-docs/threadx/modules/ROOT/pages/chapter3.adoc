@@ -567,7 +567,7 @@ TIP: _It is also possible to use the suspension time-out associated with the get
 
 === Priority Inversion
 
-Another pitfall associated with mutual exclusion semaphores is priority inversion. This topic is discussed more fully in "<<thread-priority-pitfalls,Thread Priority Pitfalls>>".
+Another pitfall associated with mutual exclusion semaphores is priority inversion. This topic is discussed more fully in "<<_thread_priority_pitfalls,Thread Priority Pitfalls>>".
 
 The basic problem results from a situation in which a lower-priority thread has a semaphore that a higher priority thread needs. This in itself is normal. However, threads with priorities in between them may cause the priority inversion to last a nondeterministic amount of time. This can be handled through careful selection of thread priorities, using preemption-threshold, and temporarily raising the priority of the thread that owns the resource to that of the high priority thread.
 
@@ -630,7 +630,7 @@ One of the most interesting and dangerous pitfalls associated with mutex ownersh
 
 === Priority Inversion
 
-As mentioned previously, a major pitfall associated with mutual exclusion is priority inversion. This topic is discussed more fully in "<<thread-priority-pitfalls,Thread Priority Pitfalls>>".
+As mentioned previously, a major pitfall associated with mutual exclusion is priority inversion. This topic is discussed more fully in "<<_thread_priority_pitfalls,Thread Priority Pitfalls>>".
 
 The basic problem results from a situation in which a lower priority thread has a semaphore that a higher priority thread needs. This in itself is normal. However, threads with priorities in between them may cause the priority inversion to last a nondeterministic amount of time. Unlike semaphores discussed previously, the ThreadX mutex object has optional _priority inheritance_. The basic idea behind priority inheritance is that a lower priority thread has its priority raised temporarily to the priority of a high priority thread that wants the same mutex owned by the lower priority thread. When the lower priority thread releases the mutex, its original priority is then restored and the higher priority thread is given ownership of the mutex. This feature eliminates nondeterministic priority inversion by bounding the amount of inversion to the time the lower priority thread holds the mutex. Of course, the techniques discussed earlier in this chapter to handle nondeterministic priority inversion are also valid with mutexes
 as well.

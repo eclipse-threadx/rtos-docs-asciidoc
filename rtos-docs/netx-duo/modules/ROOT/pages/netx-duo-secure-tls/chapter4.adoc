@@ -22,99 +22,99 @@ This chapter contains a description of all NetX Duo Secure services (listed belo
 
 In the "Return Values" section in the following API descriptions, values in *BOLD* are not affected by the *NX_SECURE_DISABLE_ERROR_CHECKING* macro that is used to disable API error checking, while non-bold values are completely disabled.
 
-* <<nx_secure_crypto_table_self_test,nx_secure_crypto_table_self_test>>
+* <<_nx_secure_crypto_table_self_test,nx_secure_crypto_table_self_test>>
  ** Perform self_test on the crypto methods
-* <<nx_secure_module_hash_compute,nx_secure_module_hash_compute>>
+* <<_nx_secure_module_hash_compute,nx_secure_module_hash_compute>>
  ** Computes hash value using user_supplied hash function
-* <<nx_secure_tls_active_certificate_set,nx_secure_tls_active_certificate_set>>
+* <<_nx_secure_tls_active_certificate_set,nx_secure_tls_active_certificate_set>>
  ** Set the active identity certificate for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_client_psk_set,nx_secure_tls_client_psk_set>>
+* <<_nx_secure_tls_client_psk_set,nx_secure_tls_client_psk_set>>
  ** Set a Pre_Shared Key for a NetX Duo Secure TLS Client Session
-* <<nx_secure_tls_initialize,nx_secure_tls_initialize>>
+* <<_nx_secure_tls_initialize,nx_secure_tls_initialize>>
  ** Initializes the NetX Duo Secure TLS module]
-* <<nx_secure_tls_local_certificate_add,nx_secure_tls_local_certificate_add>>
+* <<_nx_secure_tls_local_certificate_add,nx_secure_tls_local_certificate_add>>
  ** Add a local certificate to NetX Duo Secure TLS Session
-* <<nx_secure_tls_local_certificate_find,nx_secure_tls_local_certificate_find>>
+* <<_nx_secure_tls_local_certificate_find,nx_secure_tls_local_certificate_find>>
  ** Find a local certificate in a NetX Duo Secure TLS Session by Common Name
-* <<nx_secure_tls_local_certificate_remove,nx_secure_tls_local_certificate_remove>>
+* <<_nx_secure_tls_local_certificate_remove,nx_secure_tls_local_certificate_remove>>
  ** Remove local certificate from NetX Duo Secure TLS Session
-* <<nx_secure_tls_metadata_size_calculate,nx_secure_tls_metadata_size_calculate>>
+* <<_nx_secure_tls_metadata_size_calculate,nx_secure_tls_metadata_size_calculate>>
  ** Calculate size of cryptographic metadata for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_packet_allocate,nx_secure_tls_packet_allocate>>
+* <<_nx_secure_tls_packet_allocate,nx_secure_tls_packet_allocate>>
  ** Allocate a packet for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_psk_add,nx_secure_tls_psk_add>>
+* <<_nx_secure_tls_psk_add,nx_secure_tls_psk_add>>
  ** Add a Pre_Shared Key to a NetX Duo Secure TLS Session
-* <<nx_secure_tls_remote_certificate_allocate,nx_secure_tls_remote_certificate_allocate>>
+* <<_nx_secure_tls_remote_certificate_allocate,nx_secure_tls_remote_certificate_allocate>>
  ** Allocate space for the certificate provided by a remote TLS host
-* <<nx_secure_tls_remote_certificate_buffer_allocate,nx_secure_tls_remote_certificate_buffer_allocate>>
+* <<_nx_secure_tls_remote_certificate_buffer_allocate,nx_secure_tls_remote_certificate_buffer_allocate>>
  ** Allocate space for all certificates provided by a remote TLS host
-* <<nx_secure_tls_remote_certificate_free_all,nx_secure_tls_remote_certificate_free_all>>
+* <<_nx_secure_tls_remote_certificate_free_all,nx_secure_tls_remote_certificate_free_all>>
  ** Free space allocated for incoming certificates
-* <<nx_secure_tls_server_certificate_add,nx_secure_tls_server_certificate_add>>
+* <<_nx_secure_tls_server_certificate_add,nx_secure_tls_server_certificate_add>>
  ** Add a certificate specifically for TLS servers using a numeric identifier
-* <<nx_secure_tls_server_certificate_find,nx_secure_tls_server_certificate_find>>
+* <<_nx_secure_tls_server_certificate_find,nx_secure_tls_server_certificate_find>>
  ** Find a certificate using a numeric identifier
-* <<nx_secure_tls_server_certificate_remove,nx_secure_tls_server_certificate_remove>>
+* <<_nx_secure_tls_server_certificate_remove,nx_secure_tls_server_certificate_remove>>
  ** Remove a local server certificate using a numeric identifier
-* <<nx_secure_tls_session_certificate_callback_set,nx_secure_tls_session_certificate_callback_set>>
+* <<_nx_secure_tls_session_certificate_callback_set,nx_secure_tls_session_certificate_callback_set>>
  ** Set up a callback for TLS to use for additional certificate validation
-* <<nx_secure_tls_session_client_callback_set,nx_secure_tls_session_client_callback_set>>
+* <<_nx_secure_tls_session_client_callback_set,nx_secure_tls_session_client_callback_set>>
  ** Set up a callback for TLS to invoke at the beginning of a TLS Client handshake
-* <<nx_secure_tls_session_x509_client_verify_configure,nx_secure_tls_session_x509_client_verify_configure>>
+* <<_nx_secure_tls_session_x509_client_verify_configure,nx_secure_tls_session_x509_client_verify_configure>>
  ** Enable client X.509 verification and allocate space for client certificates
-* <<nx_secure_tls_session_client_verify_disable,nx_secure_tls_session_client_verify_disable>>
+* <<_nx_secure_tls_session_client_verify_disable,nx_secure_tls_session_client_verify_disable>>
  ** Disable Client Certificate Authentication for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_client_verify_enable,nx_secure_tls_session_client_verify_enable>>
+* <<_nx_secure_tls_session_client_verify_enable,nx_secure_tls_session_client_verify_enable>>
  ** Enable Client Certificate Authentication for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_create,nx_secure_tls_session_create>>
+* <<_nx_secure_tls_session_create,nx_secure_tls_session_create>>
  ** Create a NetX Duo Secure TLS Session for secure communications
-* <<nx_secure_tls_session_delete,nx_secure_tls_session_delete>>
+* <<_nx_secure_tls_session_delete,nx_secure_tls_session_delete>>
  ** Delete a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_end,nx_secure_tls_session_end>>
+* <<_nx_secure_tls_session_end,nx_secure_tls_session_end>>
  ** End an active NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_packet_buffer_set,nx_secure_tls_session_packet_buffer_set>>
+* <<_nx_secure_tls_session_packet_buffer_set,nx_secure_tls_session_packet_buffer_set>>
  ** Set the packet reassembly buffer for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_packet_pool_set,nx_secure_tls_session_packet_pool_set>>
+* <<_nx_secure_tls_session_packet_pool_set,nx_secure_tls_session_packet_pool_set>>
  ** Configure a custom packet pool to be used in a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_protocol_version_override,nx_secure_tls_session_protocol_version_override>>
+* <<_nx_secure_tls_session_protocol_version_override,nx_secure_tls_session_protocol_version_override>>
  ** Override the default TLS protocol version for a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_receive,nx_secure_tls_session_receive>>
+* <<_nx_secure_tls_session_receive,nx_secure_tls_session_receive>>
  ** Receive data from a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_renegotiate_callback_set,nx_secure_tls_session_renegotiate_callback_set>>
+* <<_nx_secure_tls_session_renegotiate_callback_set,nx_secure_tls_session_renegotiate_callback_set>>
  ** Assign a callback that will be invoked at the beginning of a session renegotiation
-* <<nx_secure_tls_session_renegotiate,nx_secure_tls_session_renegotiate>>
+* <<_nx_secure_tls_session_renegotiate,nx_secure_tls_session_renegotiate>>
  ** Initiate a session renegotiation handshake with the remote host
-* <<nx_secure_tls_session_reset,nx_secure_tls_session_reset>>
+* <<_nx_secure_tls_session_reset,nx_secure_tls_session_reset>>
  ** Clear out and reset a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_send,nx_secure_tls_session_send>>
+* <<_nx_secure_tls_session_send,nx_secure_tls_session_send>>
  ** Send data through a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_server_callback_set,nx_secure_tls_session_server_callback_set>>
+* <<_nx_secure_tls_session_server_callback_set,nx_secure_tls_session_server_callback_set>>
  ** Set up a callback for TLS to invoke at the beginning of a TLS Server handshake
-* <<nx_secure_tls_session_sni_extension_parse,nx_secure_tls_session_sni_extension_parse>>
+* <<_nx_secure_tls_session_sni_extension_parse,nx_secure_tls_session_sni_extension_parse>>
  ** Parse a Server Name Indication (SNI) extension received from a TLS Client
-* <<nx_secure_tls_session_sni_extension_set,nx_secure_tls_session_sni_extension_set>>
+* <<_nx_secure_tls_session_sni_extension_set,nx_secure_tls_session_sni_extension_set>>
  ** Set a Server Name Indication (SNI) extension DNS name to send to a remote Server
-* <<nx_secure_tls_session_start,nx_secure_tls_session_start>>
+* <<_nx_secure_tls_session_start,nx_secure_tls_session_start>>
  ** Start a NetX Duo Secure TLS Session
-* <<nx_secure_tls_session_time_function_set,nx_secure_tls_session_time_function_set>>
+* <<_nx_secure_tls_session_time_function_set,nx_secure_tls_session_time_function_set>>
  ** Assign a timestamp function to a NetX Duo Secure TLS Session
-* <<nx_secure_tls_trusted_certificate_add,nx_secure_tls_trusted_certificate_add>>
+* <<_nx_secure_tls_trusted_certificate_add,nx_secure_tls_trusted_certificate_add>>
  ** Add trusted certificate to NetX Duo Secure TLS Session
-* <<nx_secure_tls_trusted_certificate_remove,nx_secure_tls_trusted_certificate_remove>>
+* <<_nx_secure_tls_trusted_certificate_remove,nx_secure_tls_trusted_certificate_remove>>
  ** Remove trusted certificate from NetX Duo Secure TLS Session
-* <<nx_secure_x509_certificate_initialize,nx_secure_x509_certificate_initialize>>
+* <<_nx_secure_x509_certificate_initialize,nx_secure_x509_certificate_initialize>>
  ** Initialize X.509 Certificate for NetX Duo Secure TLS
-* <<nx_secure_x509_common_name_dns_check,nx_secure_x509_common_name_dns_check>>
+* <<_nx_secure_x509_common_name_dns_check,nx_secure_x509_common_name_dns_check>>
  ** Check DNS name against X.509 Certificate
-* <<nx_secure_x509_crl_revocation_check,nx_secure_x509_crl_revocation_check>>
+* <<_nx_secure_x509_crl_revocation_check,nx_secure_x509_crl_revocation_check>>
  ** Check X.509 Certificate against a supplied Certificate Revocation List (CRL)]
-* <<nx_secure_x509_dns_name_initialize,nx_secure_x509_dns_name_initialize>>
+* <<_nx_secure_x509_dns_name_initialize,nx_secure_x509_dns_name_initialize>>
  ** Initialize an X.509 DNS name structure
-* <<nx_secure_x509_extended_key_usage_extension_parse,nx_secure_x509_extended_key_usage_extension_parse>>
+* <<_nx_secure_x509_extended_key_usage_extension_parse,nx_secure_x509_extended_key_usage_extension_parse>>
  ** Find and parse an X.509 extended key usage extension in an X.509 certificate
-* <<nx_secure_x509_extension_find,nx_secure_x509_extension_find>>
+* <<_nx_secure_x509_extension_find,nx_secure_x509_extension_find>>
  ** Find and return an X.509 extension in an X.509 certificate
-* <<nx_secure_x509_key_usage_extension_parse,nx_secure_x509_key_usage_extension_parse>>
+* <<_nx_secure_x509_key_usage_extension_parse,nx_secure_x509_key_usage_extension_parse>>
  ** Find and parse an X.509 Key Usage extension in an X.509 certificate
 
 == nx_secure_crypto_table_self_test

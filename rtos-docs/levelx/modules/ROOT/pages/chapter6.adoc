@@ -21,15 +21,15 @@ The LevelX NOR API functions available to the application are as follows.
 
 == NOR_Services
 
-* <<lx_nor_flash_close,lx_nor_flash_close>>
-* <<lx_nor_flash_defragment,lx_nor_flash_defragment>>
-* <<lx_nor_flash_extended_cache_enable,lx_nor_flash_extended_cache_enable>>
-* <<lx_nor_flash_initialize,lx_nor_flash_initialize>>
-* <<lx_nor_flash_open,lx_nor_flash_open>>
-* <<lx_nor_flash_partial_defragment,lx_nor_flash_partial_defragment>>
-* <<lx_nor_flash_sector_read,lx_nor_flash_sector_read>>
-* <<lx_nor_flash_sector_release,lx_nor_flash_sector_release>>
-* <<lx_nor_flash_sector_write,lx_nor_flash_sector_write>>
+* <<_lx_nor_flash_close,lx_nor_flash_close>>
+* <<_lx_nor_flash_defragment,lx_nor_flash_defragment>>
+* <<_lx_nor_flash_extended_cache_enable,lx_nor_flash_extended_cache_enable>>
+* <<_lx_nor_flash_initialize,lx_nor_flash_initialize>>
+* <<_lx_nor_flash_open,lx_nor_flash_open>>
+* <<_lx_nor_flash_partial_defragment,lx_nor_flash_partial_defragment>>
+* <<_lx_nor_flash_sector_read,lx_nor_flash_sector_read>>
+* <<_lx_nor_flash_sector_release,lx_nor_flash_sector_release>>
+* <<_lx_nor_flash_sector_write,lx_nor_flash_sector_write>>
 
 == lx_nor_flash_close
 
