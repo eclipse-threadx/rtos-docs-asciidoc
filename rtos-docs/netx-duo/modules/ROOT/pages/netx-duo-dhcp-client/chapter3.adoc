@@ -1388,7 +1388,7 @@ UINT nx_dhcp_user_option_retrieve(
 
 === Description
 
-This service retrieves the specified DHCP option from the DHCP options buffer on the first interface enabled for DHCP found on the DHCP Client record. If successful, the option data is copied into the specified buffer.
+This service retrieves the specified DHCP option from the DHCP options buffer on the first interface enabled for DHCP found on the DHCP Client record. If successful, the option data is copied into the specified buffer. Address options, including `NX_DHCP_OPTION_DNS_SVR`, are returned as 32-bit values in host byte order; the destination must be aligned for `ULONG` values. The returned size is in bytes and may contain more than one address.
 
 === Input Parameters
 
@@ -1415,15 +1415,15 @@ Threads
 
 [,c]
 ----
-UCHAR  dns_ip_string[4];
-ULONG  size;
+ULONG  dns_addresses[4];
+UINT   size;
 
-/* Obtain the IP address of the DNS server.  */
-size =    sizeof(dnx_ip_string);
+/* Obtain up to four DNS server addresses.  */
+size =    sizeof(dns_addresses);
 status =  nx_dhcp_user_option_retrieve(&my_dhcp, NX_DHCP_OPTION_DNS_SVR,
-                                        dns_ip_string, &size);
+                                        (UCHAR *)dns_addresses, &size);
 
-/* If status is NX_SUCCESS the DNS IP address is in dns_ip_string.  */
+/* If successful, size / 4 addresses are in dns_addresses.  */
 ----
 
 == nx_dhcp_interface_user_option_retrieve
@@ -1443,7 +1443,7 @@ UINT nx_dhcp_interface_user_option_retrieve(
 
 === Description
 
-This service retrieves the specified DHCP option from the DHCP options buffer on the specified interface, if that interface is enabled for DHCP. If successful, the option data is copied into the specified buffer.
+This service retrieves the specified DHCP option from the DHCP options buffer on the specified interface, if that interface is enabled for DHCP. If successful, the option data is copied into the specified buffer. Address options, including `NX_DHCP_OPTION_DNS_SVR`, are returned as 32-bit values in host byte order; the destination must be aligned for `ULONG` values. The returned size is in bytes and may contain more than one address.
 
 === Input Parameters
 
@@ -1471,15 +1471,15 @@ Threads
 
 [,c]
 ----
-UCHAR  dns_ip_string[4];
-ULONG  size;
+ULONG  dns_addresses[4];
+UINT   size;
 
-/* Obtain the IP address of the DNS server on the primary interface.  */
-size =    sizeof(dnx_ip_string);
+/* Obtain up to four DNS server addresses on the primary interface.  */
+size =    sizeof(dns_addresses);
 status =  nx_dhcp_interface_user_option_retrieve(&my_dhcp, 0, NX_DHCP_OPTION_DNS_SVR,
-                                                  dns_ip_string, &size);
+                                                  (UCHAR *)dns_addresses, &size);
 
-/* If status is NX_SUCCESS the DNS IP address is in dns_ip_string.  */
+/* If successful, size / 4 addresses are in dns_addresses.  */
 ----
 
 == nx_dhcp_user_option_convert
@@ -1495,8 +1495,7 @@ ULONG nx_dhcp_user_option_convert(UCHAR *option_string_ptr);
 
 === Description
 
-This service converts the four characters pointed to by _"option_string_ptr"_ into an unsigned long value. It is especially useful when IP addresses are +
-present.
+This service converts four bytes in network byte order, such as a raw IPv4 address, to an unsigned long value in host byte order. The DHCP option retrieval services already convert address options to host byte order, so do not apply this service to their output.
 
 === Input Parameters
 
@@ -1514,14 +1513,12 @@ Threads
 
 [,c]
 ----
-UCHAR  dns_ip_string[4];
+UCHAR  raw_address[4] = {10, 6, 6, 1};
 ULONG  dns_ip;
 
-/* Convert the first four bytes of "dns_ip_string" to an actual IP
-address in "dns_ip."  */
-dns_ip=  nx_dhcp_user_option_convert(dns_ip_string);
+/* Convert a raw network-order address to 0x0A060601.  */
+dns_ip = nx_dhcp_user_option_convert(raw_address);
 
-/* If status is NX_SUCCESS the DNS IP address is in "dns_ip."  */
 ----
 
 == nx_dhcp_user_option_add_callback_set
