@@ -25,14 +25,14 @@ The Threadx SMP API functions available to the application are as follows.
 
 == Thread_SMP_Services
 
-* <<tx_thread_smp_core_exclude,tx_thread_smp_core_exclude>>
-* <<tx_thread_smp_core_exclude_get,tx_thread_smp_core_exclude_get>>
-* <<tx_thread_smp_core_get,tx_thread_smp_core_get>>
+* <<_tx_thread_smp_core_exclude,tx_thread_smp_core_exclude>>
+* <<_tx_thread_smp_core_exclude_get,tx_thread_smp_core_exclude_get>>
+* <<_tx_thread_smp_core_get,tx_thread_smp_core_get>>
 
 == Timer_SMP_Services
 
-* <<tx_timer_smp_core_exclude,tx_timer_smp_core_exclude>>
-* <<tx_timer_smp_core_exclude_get,tx_timer_smp_core_exclude_get>>
+* <<_tx_timer_smp_core_exclude,tx_timer_smp_core_exclude>>
+* <<_tx_timer_smp_core_exclude_get,tx_timer_smp_core_exclude_get>>
 
 == tx_thread_smp_core_exclude
 

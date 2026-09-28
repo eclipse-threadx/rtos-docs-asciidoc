@@ -35,9 +35,9 @@ Internally, creating an IP instance is accomplished in two parts: The first part
 
 When the network driver returns from its initialization processing, the IP creation is complete.
 
-Initialization of IPv6 in NetX Duo requires a few additional NetX Duo services. These are described in greater detail in the section <<ipv6-in-netx-duo,IPv6 in NetX Duo>> later in this chapter.
+Initialization of IPv6 in NetX Duo requires a few additional NetX Duo services. These are described in greater detail in the section <<_ipv6_in_netx_duo,IPv6 in NetX Duo>> later in this chapter.
 
-NOTE: _The NetX Duo service *nx_ip_status_check* is available to obtain information on the IP instance and its primary interface status. Such status information includes whether or not the link is initialized, enabled and IP address is resolved. This information is used to synchronize application threads needing to use a newly created IP instance. For multihome systems, see <<multihome-support,Multihome Support>>. *nx_ip_interface_status_check* is available to obtain 3information on the specified interface._
+NOTE: _The NetX Duo service *nx_ip_status_check* is available to obtain information on the IP instance and its primary interface status. Such status information includes whether or not the link is initialized, enabled and IP address is resolved. This information is used to synchronize application threads needing to use a newly created IP instance. For multihome systems, see <<_multihome_support,Multihome Support>>. *nx_ip_interface_status_check* is available to obtain 3information on the specified interface._
 
 === Application Interface Calls
 
@@ -684,7 +684,7 @@ After RARP has been enabled, it is disabled automatically after all interface ad
 
 === RARP Request
 
-The format of an RARP request packet is almost identical to the ARP packet shown in <<arp-messages,Figure 6>>.The only difference is the frame type field is 0x8035 and the _Operation Code_ field is 3, designating an RARP request. As mentioned previously, RARP requests will be sent periodically (every *_NX_RARP_UPDATE_RATE_* seconds) until a RARP reply with the network assigned IP address is received.
+The format of an RARP request packet is almost identical to the ARP packet shown in <<_arp_messages,Figure 6>>.The only difference is the frame type field is 0x8035 and the _Operation Code_ field is 3, designating an RARP request. As mentioned previously, RARP requests will be sent periodically (every *_NX_RARP_UPDATE_RATE_* seconds) until a RARP reply with the network assigned IP address is received.
 
 NOTE: _All RARP messages in the TCP/IP implementation are expected to be in *big endian* format. In this format, the most significant byte of the word resides at the lowest byte address._
 
@@ -792,7 +792,7 @@ Before any multicasting activity can take place in NetX Duo, the application mus
 
 === Multicast IPv4 Addressing
 
-As mentioned previously, multicast addresses are actually Class D IP addresses as shown in <<ipv4-addresses,Figure 4>>. The lower 28-bits of the Class D address correspond to the multicast group ID. There are a series of pre-defined multicast addresses; however, the _all hosts address_ (244.0.0.1) is particularly important to IGMP processing. The _all hosts address_ is used by routers to query all multicast members to report on which multicast groups they belong to.
+As mentioned previously, multicast addresses are actually Class D IP addresses as shown in <<_ipv4_addresses,Figure 4>>. The lower 28-bits of the Class D address correspond to the multicast group ID. There are a series of pre-defined multicast addresses; however, the _all hosts address_ (244.0.0.1) is particularly important to IGMP processing. The _all hosts address_ is used by routers to query all multicast members to report on which multicast groups they belong to.
 
 === Physical Address Mapping in IPv4
 
@@ -1826,7 +1826,7 @@ VOID _nx_udp_socket_driver_packet_receive(NX_UDP_SOCKET *socket_ptr, NX_PACKET *
 
 === TCP/IP Offload Driver
 
-A driver function is needed for each IP interface. Refer to link:chapter5.md#tcpip-offload-driver-guidance[Chapter 5] for more details on how to develop NetX Duo driver functions.
+A driver function is needed for each IP interface. Refer to xref:chapter5.adoc#_tcpip_offload_driver_guidance[Chapter 5] for more details on how to develop NetX Duo driver functions.
 
 === TCP/IP Offload Known Limitations
 
