@@ -178,7 +178,7 @@ TX_REACTIVATE_INLINE
 TX_INLINE_THREAD_RESUME_SUSPEND
 ----
 
-<<detailed-configuration-options,Detailed configuration options>> are described.
+<<_detailed_configuration_options,Detailed configuration options>> are described.
 
 === Global Time Source
 
