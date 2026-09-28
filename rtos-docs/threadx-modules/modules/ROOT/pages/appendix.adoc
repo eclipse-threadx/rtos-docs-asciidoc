@@ -4210,8 +4210,7 @@ own byte offset back: `+TXM_MODULE_GNU_SHELL_ADJUST+` is 24,
 `+TXM_MODULE_GNU_CALLBACK_ADJUST+` 44, which are exactly the byte offsets of those four
 words. Writing `+symbol - __txm_module_preamble+` instead counts the offset twice and
 the module is entered that many bytes into its shell entry, past the prologue.
-All four GNU module ports use the same convention; the Cortex-M33 preamble spells it
-`symbol - . - 0`.
+All four GNU module ports use the same convention.
 
 *The two size words come from the linker script.* The manager rounds both up to the
 64-byte granule and maps exactly that much, so a literal that has fallen behind the
@@ -4504,13 +4503,11 @@ the kernel believes it is inside an exception: `+_tx_thread_terminate()+` ends i
 `+_tx_thread_system_preempt_check()+`, which calls `+_tx_thread_system_return()+` whenever
 `+_tx_thread_system_state+` and `+_tx_thread_preempt_disable+` are both zero, and on
 AArch32 `+_tx_thread_system_return()+` switches context immediately and never comes
-back. The Cortex-M ports get away without the bracket because there
-`+_tx_thread_system_return()+` only pends PendSV and returns. The vector owes the
-handler three things, exactly as the Cortex-A7 module port's abort vector does:
-`+_tx_thread_system_state+` incremented across the call, `+_tx_thread_current_ptr+`
-cleared afterwards, and an exception return into `+_tx_thread_schedule+` in System
-mode. Omitting the first also leaks about 56 bytes of the Abort stack per fault, for
-the life of the run.
+back. The vector owes the handler three things, exactly as the Cortex-A7 module
+port's abort vector does: `+_tx_thread_system_state+` incremented across the call,
+`+_tx_thread_current_ptr+` cleared afterwards, and an exception return into
+`+_tx_thread_schedule+` in System mode. Omitting the first also leaks about 56
+bytes of the Abort stack per fault, for the life of the run.
 
 *The MPU initialisation must program the kernel's window over the module area* --
 region 16 in this port, `+MPU_MODULE_LOAD_REGION+` in the example's `mpu.h` -- and must
