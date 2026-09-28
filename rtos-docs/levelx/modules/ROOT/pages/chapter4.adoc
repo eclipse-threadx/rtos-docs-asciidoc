@@ -23,14 +23,14 @@ Under the "Allowed From" heading, "Initialization" means from *_tx_application_d
 
 == NAND_Services
 
-* <<lx_nand_flash_close,lx_nand_flash_close>>
-* <<lx_nand_flash_initialize,lx_nand_flash_initialize>>
-* <<lx_nand_flash_open,lx_nand_flash_open>>
-* <<lx_nand_flash_page_ecc_check,lx_nand_flash_page_ecc_check>>
-* <<lx_nand_flash_page_ecc_compute,lx_nand_flash_page_ecc_compute>>
-* <<lx_nand_flash_sectors_read,lx_nand_flash_sectors_read>>
-* <<lx_nand_flash_sectors_release,lx_nand_flash_sectors_release>>
-* <<lx_nand_flash_sectors_write,lx_nand_flash_sectors_write>>
+* <<_lx_nand_flash_close,lx_nand_flash_close>>
+* <<_lx_nand_flash_initialize,lx_nand_flash_initialize>>
+* <<_lx_nand_flash_open,lx_nand_flash_open>>
+* <<_lx_nand_flash_page_ecc_check,lx_nand_flash_page_ecc_check>>
+* <<_lx_nand_flash_page_ecc_compute,lx_nand_flash_page_ecc_compute>>
+* <<_lx_nand_flash_sectors_read,lx_nand_flash_sectors_read>>
+* <<_lx_nand_flash_sectors_release,lx_nand_flash_sectors_release>>
+* <<_lx_nand_flash_sectors_write,lx_nand_flash_sectors_write>>
 
 == lx_nand_flash_close
 

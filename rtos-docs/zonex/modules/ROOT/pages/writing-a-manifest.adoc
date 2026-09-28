@@ -52,7 +52,7 @@ Granting a partition a device is a later phase, and on this part it carries a co
 
 A partition is isolated from another by *which regions are enabled while it runs*, never by permission bits.
 
-This matters when reading the attribute encodings: at stage 2 there is no encoding that grants a guest access while denying EL2. So a region that grants a partition access must be *disabled* while any other partition runs, and a partition switch is one write that changes the whole enabled set. See xref:platform-requirements.adoc#a-region-must-also-be-reachable-by-the-partition-switch[the switch-mask budget] for the constraint that follows.
+This matters when reading the attribute encodings: at stage 2 there is no encoding that grants a guest access while denying EL2. So a region that grants a partition access must be *disabled* while any other partition runs, and a partition switch is one write that changes the whole enabled set. See xref:platform-requirements.adoc#_a_region_must_also_be_reachable_by_the_partition_switch[the switch-mask budget] for the constraint that follows.
 
 == The validator
 

@@ -1781,7 +1781,7 @@ This service determines the location of the start of data within the current mul
 
 NOTE: *NX_HTTP_MULTIPART_ENABLE* must be enabled to use this service.
 
-See <<nx_http_server_get_entity_header,_nx_http_server_get_entity_header_>> for more details.
+See <<_nx_http_server_get_entity_header,_nx_http_server_get_entity_header_>> for more details.
 
 === Input Parameters
 
@@ -2511,7 +2511,7 @@ UINT string_length;
 /* If string_length is non zero, the HTTP string is extracted. */
 ----
 
-For a more detailed example, see the description for <<nx_http_server_callback_generate_response_header,_nx_http_server_callback_generate_response_header_>>.
+For a more detailed example, see the description for <<_nx_http_server_callback_generate_response_header,_nx_http_server_callback_generate_response_header_>>.
 
 == nx_http_server_digest_authenticate_notify_set
 

@@ -27,629 +27,629 @@ The GUIX API functions available to the application are as follows.
 
 == Accordion_Menu_Services
 
-* <<gx_accordion_menu_create,gx_accordion_menu_create>>
-* <<gx_accordion_menu_draw,gx_accordion_menu_draw>>
-* <<gx_accordion_menu_event_process,gx_accordion_menu_event_process>>
-* <<gx_accordion_menu_position,gx_accordion_menu_position>>
+* <<_gx_accordion_menu_create,gx_accordion_menu_create>>
+* <<_gx_accordion_menu_draw,gx_accordion_menu_draw>>
+* <<_gx_accordion_menu_event_process,gx_accordion_menu_event_process>>
+* <<_gx_accordion_menu_position,gx_accordion_menu_position>>
 
 == Animation_Services
 
-* <<gx_animation_canvas_define,gx_animation_canvas_define>>
-* <<gx_animation_create,gx_animation_create>>
-* <<gx_animation_delete,gx_animation_delete>>
-* <<gx_animation_drag_disable,gx_animation_drag_disable>>
-* <<gx_menu_remove,gx_menu_remove>>
-* <<gx_animation_drag_enable,gx_animation_drag_enable>>
-* <<gx_animation_landing_speed_set,gx_animation_landing_speed_set>>
-* <<gx_animation_start,gx_animation_start>>
-* <<gx_animation_stop,gx_animation_stop>>
+* <<_gx_animation_canvas_define,gx_animation_canvas_define>>
+* <<_gx_animation_create,gx_animation_create>>
+* <<_gx_animation_delete,gx_animation_delete>>
+* <<_gx_animation_drag_disable,gx_animation_drag_disable>>
+* <<_gx_menu_remove,gx_menu_remove>>
+* <<_gx_animation_drag_enable,gx_animation_drag_enable>>
+* <<_gx_animation_landing_speed_set,gx_animation_landing_speed_set>>
+* <<_gx_animation_start,gx_animation_start>>
+* <<_gx_animation_stop,gx_animation_stop>>
 
 == Binres_Services
 
-* <<gx_binres_font_load,gx_binres_font_load>>
-* <<gx_binres_language_count_get,gx_binres_language_count_get>>
-* <<gx_binres_language_info_load,gx_binres_language_info_load>>
-* <<gx_binres_language_table_load,gx_binres_language_table_load>>
-* <<gx_binres_language_table_load_ext,gx_binres_language_table_load_ext>>
-* <<gx_binres_pixelmap_load,gx_binres_pixelmap_load>>
-* <<gx_binres_theme_load,gx_binres_theme_load>>
+* <<_gx_binres_font_load,gx_binres_font_load>>
+* <<_gx_binres_language_count_get,gx_binres_language_count_get>>
+* <<_gx_binres_language_info_load,gx_binres_language_info_load>>
+* <<_gx_binres_language_table_load,gx_binres_language_table_load>>
+* <<_gx_binres_language_table_load_ext,gx_binres_language_table_load_ext>>
+* <<_gx_binres_pixelmap_load,gx_binres_pixelmap_load>>
+* <<_gx_binres_theme_load,gx_binres_theme_load>>
 
 == Brush_Services
 
-* <<gx_brush_default,gx_brush_default>>
-* <<gx_brush_define,gx_brush_define>>
+* <<_gx_brush_default,gx_brush_default>>
+* <<_gx_brush_define,gx_brush_define>>
 
 == Button_Services
 
-* <<gx_button_background_draw,gx_button_background_draw>>
-* <<gx_button_create,gx_button_create>>
-* <<gx_button_deselect,gx_button_deselect>>
-* <<gx_button_draw,gx_button_draw>>
-* <<gx_button_event_process,gx_button_event_process>>
-* <<gx_button_select,gx_button_select>>
+* <<_gx_button_background_draw,gx_button_background_draw>>
+* <<_gx_button_create,gx_button_create>>
+* <<_gx_button_deselect,gx_button_deselect>>
+* <<_gx_button_draw,gx_button_draw>>
+* <<_gx_button_event_process,gx_button_event_process>>
+* <<_gx_button_select,gx_button_select>>
 
 == Canvas_Services
 
-* <<gx_canvas_aligned_text_draw,gx_canvas_aligned_text_draw>>
-* <<gx_canvas_alpha_set,gx_canvas_alpha_set>>
-* <<gx_canvas_arc_draw,gx_canvas_arc_draw>>
-* <<gx_canvas_block_move,gx_canvas_block_move>>
-* <<gx_canvas_circle_draw,gx_canvas_circle_draw>>
-* <<gx_canvas_create,gx_canvas_create>>
-* <<gx_canvas_delete,gx_canvas_delete>>
-* <<gx_canvas_drawing_complete,gx_canvas_drawing_complete>>
-* <<gx_canvas_ellipse_draw,gx_canvas_ellipse_draw>>
-* <<gx_canvas_hardware_layer_bind,gx_canvas_hardware_layer_bind>>
-* <<gx_canvas_hide,gx_canvas_hide>>
-* <<gx_canvas_line_draw,gx_canvas_line_draw>>
-* <<gx_canvas_memory_define,gx_canvas_memory_define>>
-* <<gx_canvas_mouse_define,gx_canvas_mouse_define>>
-* <<gx_canvas_mouse_hide,gx_canvas_mouse_hide>>
-* <<gx_canvas_offset_set,gx_canvas_offset_set>>
-* <<gx_canvas_pie_draw,gx_canvas_pie_draw>>
-* <<gx_canvas_pixel_draw,gx_canvas_pixel_draw>>
-* <<gx_canvas_pixelmap_blend,gx_canvas_pixelmap_blend>>
-* <<gx_canvas_pixelmap_draw,gx_canvas_pixelmap_draw>>
-* <<gx_canvas_pixelmap_get,gx_canvas_pixelmap_get>>
-* <<gx_canvas_pixelmap_rotate,gx_canvas_pixelmap_rotate>>
-* <<gx_canvas_pixelmap_tile,gx_canvas_pixelmap_tile>>
-* <<gx_canvas_polygon_draw,gx_canvas_polygon_draw>>
-* <<gx_canvas_rectangle_draw,gx_canvas_rectangle_draw>>
-* <<gx_canvas_rotated_text_draw,gx_canvas_rotated_text_draw>>
-* <<gx_canvas_rotated_text_draw_ext,gx_canvas_rotated_text_draw_ext>>
-* <<gx_canvas_shift,gx_canvas_shift>>
-* <<gx_canvas_show,gx_canvas_show>>
-* <<gx_canvas_text_draw,gx_canvas_text_draw>>
-* <<gx_canvas_text_draw_ext,gx_canvas_text_draw_ext>>
+* <<_gx_canvas_aligned_text_draw,gx_canvas_aligned_text_draw>>
+* <<_gx_canvas_alpha_set,gx_canvas_alpha_set>>
+* <<_gx_canvas_arc_draw,gx_canvas_arc_draw>>
+* <<_gx_canvas_block_move,gx_canvas_block_move>>
+* <<_gx_canvas_circle_draw,gx_canvas_circle_draw>>
+* <<_gx_canvas_create,gx_canvas_create>>
+* <<_gx_canvas_delete,gx_canvas_delete>>
+* <<_gx_canvas_drawing_complete,gx_canvas_drawing_complete>>
+* <<_gx_canvas_ellipse_draw,gx_canvas_ellipse_draw>>
+* <<_gx_canvas_hardware_layer_bind,gx_canvas_hardware_layer_bind>>
+* <<_gx_canvas_hide,gx_canvas_hide>>
+* <<_gx_canvas_line_draw,gx_canvas_line_draw>>
+* <<_gx_canvas_memory_define,gx_canvas_memory_define>>
+* <<_gx_canvas_mouse_define,gx_canvas_mouse_define>>
+* <<_gx_canvas_mouse_hide,gx_canvas_mouse_hide>>
+* <<_gx_canvas_offset_set,gx_canvas_offset_set>>
+* <<_gx_canvas_pie_draw,gx_canvas_pie_draw>>
+* <<_gx_canvas_pixel_draw,gx_canvas_pixel_draw>>
+* <<_gx_canvas_pixelmap_blend,gx_canvas_pixelmap_blend>>
+* <<_gx_canvas_pixelmap_draw,gx_canvas_pixelmap_draw>>
+* <<_gx_canvas_pixelmap_get,gx_canvas_pixelmap_get>>
+* <<_gx_canvas_pixelmap_rotate,gx_canvas_pixelmap_rotate>>
+* <<_gx_canvas_pixelmap_tile,gx_canvas_pixelmap_tile>>
+* <<_gx_canvas_polygon_draw,gx_canvas_polygon_draw>>
+* <<_gx_canvas_rectangle_draw,gx_canvas_rectangle_draw>>
+* <<_gx_canvas_rotated_text_draw,gx_canvas_rotated_text_draw>>
+* <<_gx_canvas_rotated_text_draw_ext,gx_canvas_rotated_text_draw_ext>>
+* <<_gx_canvas_shift,gx_canvas_shift>>
+* <<_gx_canvas_show,gx_canvas_show>>
+* <<_gx_canvas_text_draw,gx_canvas_text_draw>>
+* <<_gx_canvas_text_draw_ext,gx_canvas_text_draw_ext>>
 
 == Checkbox_Services
 
-* <<gx_checkbox_create,gx_checkbox_create>>
-* <<gx_checkbox_draw,gx_checkbox_draw>>
-* <<gx_checkbox_event_process,gx_checkbox_event_process>>
-* <<gx_checkbox_pixelmap_set,gx_checkbox_pixelmap_set>>
-* <<gx_checkbox_select,gx_checkbox_select>>
+* <<_gx_checkbox_create,gx_checkbox_create>>
+* <<_gx_checkbox_draw,gx_checkbox_draw>>
+* <<_gx_checkbox_event_process,gx_checkbox_event_process>>
+* <<_gx_checkbox_pixelmap_set,gx_checkbox_pixelmap_set>>
+* <<_gx_checkbox_select,gx_checkbox_select>>
 
 == Circular_Gauge_Services
 
-* <<gx_circular_gauge_angle_get,gx_circular_gauge_angle_get>>
-* <<gx_circular_gauge_angle_set,gx_circular_gauge_angle_set>>
-* <<gx_circular_gauge_animation_set,gx_circular_gauge_animation_set>>
-* <<gx_circular_gauge_background_draw,gx_circular_gauge_background_draw>>
-* <<gx_circular_gauge_create,gx_circular_gauge_create>>
-* <<gx_circular_gauge_draw,gx_circular_gauge_draw>>
-* <<gx_circular_gauge_event_process,gx_circular_gauge_event_process>>
+* <<_gx_circular_gauge_angle_get,gx_circular_gauge_angle_get>>
+* <<_gx_circular_gauge_angle_set,gx_circular_gauge_angle_set>>
+* <<_gx_circular_gauge_animation_set,gx_circular_gauge_animation_set>>
+* <<_gx_circular_gauge_background_draw,gx_circular_gauge_background_draw>>
+* <<_gx_circular_gauge_create,gx_circular_gauge_create>>
+* <<_gx_circular_gauge_draw,gx_circular_gauge_draw>>
+* <<_gx_circular_gauge_event_process,gx_circular_gauge_event_process>>
 
 == Context_Services
 
-* <<gx_context_brush_default,gx_context_brush_default>>
-* <<gx_context_brush_define,gx_context_brush_define>>
-* <<gx_circular_gauge_draw,gx_context_brush_get>>
-* <<gx_context_brush_set,gx_context_brush_set>>
-* <<gx_context_brush_style_set,gx_context_brush_style_set>>
-* <<gx_context_brush_pattern_set,gx_context_brush_pattern_set>>
-* <<gx_context_brush_width_set,gx_context_brush_width_set>>
-* <<gx_context_color_get,gx_context_color_get>>
-* <<gx_context_fill_color_set,gx_context_fill_color_set>>
-* <<gx_context_font_get,gx_context_font_get>>
-* <<gx_context_font_set,gx_context_font_set>>
-* <<gx_context_line_color_set,gx_context_line_color_set>>
-* <<gx_context_pixelmap_get,gx_context_pixelmap_get>>
-* <<gx_context_pixelmap_set,gx_context_pixelmap_set>>
-* <<gx_context_raw_brush_define,gx_context_raw_brush_define>>
-* <<gx_context_raw_fill_color_set,gx_context_raw_fill_color_set>>
-* <<gx_context_raw_line_color_set,gx_context_raw_line_color_set>>
-* <<gx_context_string_get,gx_context_string_get>>
-* <<gx_context_string_get_ext,gx_context_string_get_ext>>
+* <<_gx_context_brush_default,gx_context_brush_default>>
+* <<_gx_context_brush_define,gx_context_brush_define>>
+* <<_gx_circular_gauge_draw,gx_context_brush_get>>
+* <<_gx_context_brush_set,gx_context_brush_set>>
+* <<_gx_context_brush_style_set,gx_context_brush_style_set>>
+* <<_gx_context_brush_pattern_set,gx_context_brush_pattern_set>>
+* <<_gx_context_brush_width_set,gx_context_brush_width_set>>
+* <<_gx_context_color_get,gx_context_color_get>>
+* <<_gx_context_fill_color_set,gx_context_fill_color_set>>
+* <<_gx_context_font_get,gx_context_font_get>>
+* <<_gx_context_font_set,gx_context_font_set>>
+* <<_gx_context_line_color_set,gx_context_line_color_set>>
+* <<_gx_context_pixelmap_get,gx_context_pixelmap_get>>
+* <<_gx_context_pixelmap_set,gx_context_pixelmap_set>>
+* <<_gx_context_raw_brush_define,gx_context_raw_brush_define>>
+* <<_gx_context_raw_fill_color_set,gx_context_raw_fill_color_set>>
+* <<_gx_context_raw_line_color_set,gx_context_raw_line_color_set>>
+* <<_gx_context_string_get,gx_context_string_get>>
+* <<_gx_context_string_get_ext,gx_context_string_get_ext>>
 
 == Display_Services
 
-* <<gx_display_active_language_set,gx_display_active_language_set>>
-* <<gx_display_color_set,gx_display_color_set>>
-* <<gx_display_color_table_set,gx_display_color_table_set>>
-* <<gx_display_create,gx_display_create>>
-* <<gx_display_delete,gx_display_delete>>
-* <<gx_display_font_table_set,gx_display_font_table_set>>
-* <<gx_display_language_direction_table_set,gx_display_language_direction_table_set>>
-* <<gx_display_language_table_get,gx_display_language_table_get>>
-* <<gx_display_language_table_get_ext,gx_display_language_table_get_ext>>
-* <<gx_display_language_table_set,gx_display_language_table_set>>
-* <<gx_display_language_table_set_ext,gx_display_language_table_set_ext>>
-* <<gx_display_pixelmap_table_set,gx_display_pixelmap_table_set>>
-* <<gx_display_string_get,gx_display_string_get>>
-* <<gx_display_string_get_ext,gx_display_string_get_ext>>
-* <<gx_display_string_table_get,gx_display_string_table_get>>
-* <<gx_display_string_table_get_ext,gx_display_string_table_get_ext>>
-* <<gx_display_theme_install,gx_display_theme_install>>
+* <<_gx_display_active_language_set,gx_display_active_language_set>>
+* <<_gx_display_color_set,gx_display_color_set>>
+* <<_gx_display_color_table_set,gx_display_color_table_set>>
+* <<_gx_display_create,gx_display_create>>
+* <<_gx_display_delete,gx_display_delete>>
+* <<_gx_display_font_table_set,gx_display_font_table_set>>
+* <<_gx_display_language_direction_table_set,gx_display_language_direction_table_set>>
+* <<_gx_display_language_table_get,gx_display_language_table_get>>
+* <<_gx_display_language_table_get_ext,gx_display_language_table_get_ext>>
+* <<_gx_display_language_table_set,gx_display_language_table_set>>
+* <<_gx_display_language_table_set_ext,gx_display_language_table_set_ext>>
+* <<_gx_display_pixelmap_table_set,gx_display_pixelmap_table_set>>
+* <<_gx_display_string_get,gx_display_string_get>>
+* <<_gx_display_string_get_ext,gx_display_string_get_ext>>
+* <<_gx_display_string_table_get,gx_display_string_table_get>>
+* <<_gx_display_string_table_get_ext,gx_display_string_table_get_ext>>
+* <<_gx_display_theme_install,gx_display_theme_install>>
 
 == Drop_List_Services
 
-* <<gx_drop_list_close,gx_drop_list_close>>
-* <<gx_drop_list_create,gx_drop_list_create>>
-* <<gx_drop_list_event_process,gx_drop_list_event_process>>
-* <<gx_drop_list_open,gx_drop_list_open>>
-* <<gx_drop_list_pixelmap_set,gx_drop_list_pixelmap_set>>
-* <<gx_drop_list_popup_get,gx_drop_list_popup_get>>
+* <<_gx_drop_list_close,gx_drop_list_close>>
+* <<_gx_drop_list_create,gx_drop_list_create>>
+* <<_gx_drop_list_event_process,gx_drop_list_event_process>>
+* <<_gx_drop_list_open,gx_drop_list_open>>
+* <<_gx_drop_list_pixelmap_set,gx_drop_list_pixelmap_set>>
+* <<_gx_drop_list_popup_get,gx_drop_list_popup_get>>
 
 == Generic_Scroll_Wheel_Services
 
-* <<gx_generic_scroll_wheel_children_position,gx_generic_scroll_wheel_children_position>>
-* <<gx_generic_scroll_wheel_create,gx_generic_scroll_wheel_create>>
-* <<gx_generic_scroll_wheel_draw,gx_generic_scroll_wheel_draw>>
-* <<gx_generic_scroll_wheel_event_process,gx_generic_scroll_wheel_event_process>>
-* <<gx_generic_scroll_wheel_row_height_set,gx_generic_scroll_wheel_row_height_set>>
-* <<gx_generic_scroll_wheel_total_rows_set,gx_generic_scroll_wheel_total_rows_set>>
+* <<_gx_generic_scroll_wheel_children_position,gx_generic_scroll_wheel_children_position>>
+* <<_gx_generic_scroll_wheel_create,gx_generic_scroll_wheel_create>>
+* <<_gx_generic_scroll_wheel_draw,gx_generic_scroll_wheel_draw>>
+* <<_gx_generic_scroll_wheel_event_process,gx_generic_scroll_wheel_event_process>>
+* <<_gx_generic_scroll_wheel_row_height_set,gx_generic_scroll_wheel_row_height_set>>
+* <<_gx_generic_scroll_wheel_total_rows_set,gx_generic_scroll_wheel_total_rows_set>>
 
 == Horizontal_List_Services
 
-* <<gx_horizontal_list_children_position,gx_horizontal_list_children_position>>
-* <<gx_horizontal_list_create,gx_horizontal_list_create>>
-* <<gx_horizontal_list_event_process,gx_horizontal_list_event_process>>
-* <<gx_horizontal_list_page_index_set,gx_horizontal_list_page_index_set>>
-* <<gx_horizontal_list_selected_index_get,gx_horizontal_list_selected_index_get>>
-* <<gx_horizontal_list_selected_widget_get,gx_horizontal_list_selected_widget_get>>
-* <<gx_horizontal_list_selected_set,gx_horizontal_list_selected_set>>
-* <<gx_horizontal_list_total_columns_set,gx_horizontal_list_total_columns_set>>
+* <<_gx_horizontal_list_children_position,gx_horizontal_list_children_position>>
+* <<_gx_horizontal_list_create,gx_horizontal_list_create>>
+* <<_gx_horizontal_list_event_process,gx_horizontal_list_event_process>>
+* <<_gx_horizontal_list_page_index_set,gx_horizontal_list_page_index_set>>
+* <<_gx_horizontal_list_selected_index_get,gx_horizontal_list_selected_index_get>>
+* <<_gx_horizontal_list_selected_widget_get,gx_horizontal_list_selected_widget_get>>
+* <<_gx_horizontal_list_selected_set,gx_horizontal_list_selected_set>>
+* <<_gx_horizontal_list_total_columns_set,gx_horizontal_list_total_columns_set>>
 
 == Horizontal_Scrollbar_Services
 
-* <<gx_horizontal_scrollbar_create,gx_horizontal_scrollbar_create>>
+* <<_gx_horizontal_scrollbar_create,gx_horizontal_scrollbar_create>>
 
 == Icon_Services
 
-* <<gx_icon_button_create,gx_icon_button_create>>
-* <<gx_icon_button_draw,gx_icon_button_draw>>
-* <<gx_icon_button_pixelmap_set,gx_icon_button_pixelmap_set>>
-* <<gx_icon_background_draw,gx_icon_background_draw>>
-* <<gx_icon_create,gx_icon_create>>
-* <<gx_icon_draw,gx_icon_draw>>
-* <<gx_icon_event_process,gx_icon_event_process>>
-* <<gx_icon_pixelmap_set,gx_icon_pixelmap_set>>
+* <<_gx_icon_button_create,gx_icon_button_create>>
+* <<_gx_icon_button_draw,gx_icon_button_draw>>
+* <<_gx_icon_button_pixelmap_set,gx_icon_button_pixelmap_set>>
+* <<_gx_icon_background_draw,gx_icon_background_draw>>
+* <<_gx_icon_create,gx_icon_create>>
+* <<_gx_icon_draw,gx_icon_draw>>
+* <<_gx_icon_event_process,gx_icon_event_process>>
+* <<_gx_icon_pixelmap_set,gx_icon_pixelmap_set>>
 
 == Image_Reader_Services
 
-* <<gx_image_reader_create,gx_image_reader_create>>
-* <<gx_image_reader_palette_set,gx_image_reader_palette_set>>
-* <<gx_image_reader_start,gx_image_reader_start>>
+* <<_gx_image_reader_create,gx_image_reader_create>>
+* <<_gx_image_reader_palette_set,gx_image_reader_palette_set>>
+* <<_gx_image_reader_start,gx_image_reader_start>>
 
 == Line_Chart_Services
 
-* <<gx_line_chart_axis_draw,gx_line_chart_axis_draw>>
-* <<gx_line_chart_create,gx_line_chart_create>>
-* <<gx_line_chart_data_draw,gx_line_chart_data_draw>>
-* <<gx_line_chart_draw,gx_line_chart_draw>>
-* <<gx_line_chart_update,gx_line_chart_update>>
-* <<gx_line_chart_y_scale_calculate,gx_line_chart_y_scale_calculate>>
+* <<_gx_line_chart_axis_draw,gx_line_chart_axis_draw>>
+* <<_gx_line_chart_create,gx_line_chart_create>>
+* <<_gx_line_chart_data_draw,gx_line_chart_data_draw>>
+* <<_gx_line_chart_draw,gx_line_chart_draw>>
+* <<_gx_line_chart_update,gx_line_chart_update>>
+* <<_gx_line_chart_y_scale_calculate,gx_line_chart_y_scale_calculate>>
 
 == Menu_Services
 
-* <<gx_menu_create,gx_menu_create>>
-* <<gx_menu_draw,gx_menu_draw>>
-* <<gx_menu_insert,gx_menu_insert>>
-* <<gx_menu_remove,gx_menu_remove>>
-* <<gx_menu_text_draw,gx_menu_text_draw>>
-* <<gx_menu_text_offset_set,gx_menu_text_offset_set>>
+* <<_gx_menu_create,gx_menu_create>>
+* <<_gx_menu_draw,gx_menu_draw>>
+* <<_gx_menu_insert,gx_menu_insert>>
+* <<_gx_menu_remove,gx_menu_remove>>
+* <<_gx_menu_text_draw,gx_menu_text_draw>>
+* <<_gx_menu_text_offset_set,gx_menu_text_offset_set>>
 
 == Multi_Line_Text_Button_Services
 
-* <<gx_multi_line_text_button_create,gx_multi_line_text_button_create>>
-* <<gx_multi_line_text_button_draw,gx_multi_line_text_button_draw>>
-* <<gx_multi_line_text_button_event_process,gx_multi_line_text_button_event_process>>
-* <<gx_multi_line_text_button_text_draw,gx_multi_line_text_button_text_draw>>
-* <<gx_multi_line_text_button_text_id_set,gx_multi_line_text_button_text_id_set>>
-* <<gx_multi_line_text_button_text_set,gx_multi_line_text_button_text_set>>
-* <<gx_multi_line_text_button_text_set_ext,gx_multi_line_text_button_text_set_ext>>
+* <<_gx_multi_line_text_button_create,gx_multi_line_text_button_create>>
+* <<_gx_multi_line_text_button_draw,gx_multi_line_text_button_draw>>
+* <<_gx_multi_line_text_button_event_process,gx_multi_line_text_button_event_process>>
+* <<_gx_multi_line_text_button_text_draw,gx_multi_line_text_button_text_draw>>
+* <<_gx_multi_line_text_button_text_id_set,gx_multi_line_text_button_text_id_set>>
+* <<_gx_multi_line_text_button_text_set,gx_multi_line_text_button_text_set>>
+* <<_gx_multi_line_text_button_text_set_ext,gx_multi_line_text_button_text_set_ext>>
 
 == Multi_Line_Text_Input_Services
 
-* <<gx_multi_line_text_input_backspace,gx_multi_line_text_input_backspace>>
-* <<gx_multi_line_text_input_buffer_clear,gx_multi_line_text_input_buffer_clear>>
-* <<gx_multi_line_text_input_buffer_get,gx_multi_line_text_input_buffer_get>>
-* <<gx_multi_line_text_input_char_insert,gx_multi_line_text_input_char_insert>>
-* <<gx_multi_line_text_input_create,gx_multi_line_text_input_create>>
-* <<gx_multi_line_text_input_cursor_pos_get,gx_multi_line_text_input_cursor_pos_get>>
-* <<gx_multi_line_text_input_delete,gx_multi_line_text_input_delete>>
-* <<gx_multi_line_text_input_down_arrow,gx_multi_line_text_input_down_arrow>>
-* <<gx_multi_line_text_input_end,gx_multi_line_text_input_end>>
-* <<gx_multi_line_text_input_event_process,gx_multi_line_text_input_event_process>>
-* <<gx_multi_line_text_input_fill_color_set,gx_multi_line_text_input_fill_color_set>>
-* <<gx_multi_line_text_input_home,gx_multi_line_text_input_home>>
-* <<gx_multi_line_text_input_left_arrow,gx_multi_line_text_input_left_arrow>>
-* <<gx_multi_line_text_input_right_arrow,gx_multi_line_text_input_right_arrow>>
-* <<gx_mutli_line_text_input_style_add,gx_mutli_line_text_input_style_add>>
-* <<gx_multi_line_text_input_style_remove,gx_multi_line_text_input_style_remove>>
-* <<gx_multi_line_text_input_style_set,gx_multi_line_text_input_style_set>>
-* <<gx_multi_line_text_input_text_color_set,gx_multi_line_text_input_text_color_set>>
-* <<gx_multi_line_text_input_text_select,gx_multi_line_text_input_text_select>>
-* <<gx_multi_line_text_input_text_set,gx_multi_line_text_input_text_set>>
-* <<gx_multi_line_text_input_up_arrow,gx_multi_line_text_input_up_arrow>>
+* <<_gx_multi_line_text_input_backspace,gx_multi_line_text_input_backspace>>
+* <<_gx_multi_line_text_input_buffer_clear,gx_multi_line_text_input_buffer_clear>>
+* <<_gx_multi_line_text_input_buffer_get,gx_multi_line_text_input_buffer_get>>
+* <<_gx_multi_line_text_input_char_insert,gx_multi_line_text_input_char_insert>>
+* <<_gx_multi_line_text_input_create,gx_multi_line_text_input_create>>
+* <<_gx_multi_line_text_input_cursor_pos_get,gx_multi_line_text_input_cursor_pos_get>>
+* <<_gx_multi_line_text_input_delete,gx_multi_line_text_input_delete>>
+* <<_gx_multi_line_text_input_down_arrow,gx_multi_line_text_input_down_arrow>>
+* <<_gx_multi_line_text_input_end,gx_multi_line_text_input_end>>
+* <<_gx_multi_line_text_input_event_process,gx_multi_line_text_input_event_process>>
+* <<_gx_multi_line_text_input_fill_color_set,gx_multi_line_text_input_fill_color_set>>
+* <<_gx_multi_line_text_input_home,gx_multi_line_text_input_home>>
+* <<_gx_multi_line_text_input_left_arrow,gx_multi_line_text_input_left_arrow>>
+* <<_gx_multi_line_text_input_right_arrow,gx_multi_line_text_input_right_arrow>>
+* <<_gx_multi_line_text_input_style_add,gx_multi_line_text_input_style_add>>
+* <<_gx_multi_line_text_input_style_remove,gx_multi_line_text_input_style_remove>>
+* <<_gx_multi_line_text_input_style_set,gx_multi_line_text_input_style_set>>
+* <<_gx_multi_line_text_input_text_color_set,gx_multi_line_text_input_text_color_set>>
+* <<_gx_multi_line_text_input_text_select,gx_multi_line_text_input_text_select>>
+* <<_gx_multi_line_text_input_text_set,gx_multi_line_text_input_text_set>>
+* <<_gx_multi_line_text_input_up_arrow,gx_multi_line_text_input_up_arrow>>
 
 == Multi_Line_Text_View_Services
 
-* <<gx_multi_line_text_view_create,gx_multi_line_text_view_create>>
-* <<gx_multi_line_text_view_draw,gx_multi_line_text_view_draw>>
-* <<gx_multi_line_text_view_event_process,gx_multi_line_text_view_event_process>>
-* <<gx_multi_line_text_view_font_set,gx_multi_line_text_view_font_set>>
-* <<gx_multi_line_text_view_line_space_set,gx_multi_line_text_view_line_space_set>>
-* <<gx_multi_line_text_view_scroll_info_get,gx_multi_line_text_view_scroll_info_get>>
-* <<gx_multi_line_text_view_text_color_set,gx_multi_line_text_view_text_color_set>>
-* <<gx_multi_line_text_view_text_id_set,gx_multi_line_text_view_text_id_set>>
-* <<gx_multi_line_text_view_text_set,gx_multi_line_text_view_text_set>>
-* <<gx_multi_line_text_view_whitespace_set,gx_multi_line_text_view_whitespace_set>>
+* <<_gx_multi_line_text_view_create,gx_multi_line_text_view_create>>
+* <<_gx_multi_line_text_view_draw,gx_multi_line_text_view_draw>>
+* <<_gx_multi_line_text_view_event_process,gx_multi_line_text_view_event_process>>
+* <<_gx_multi_line_text_view_font_set,gx_multi_line_text_view_font_set>>
+* <<_gx_multi_line_text_view_line_space_set,gx_multi_line_text_view_line_space_set>>
+* <<_gx_multi_line_text_view_scroll_info_get,gx_multi_line_text_view_scroll_info_get>>
+* <<_gx_multi_line_text_view_text_color_set,gx_multi_line_text_view_text_color_set>>
+* <<_gx_multi_line_text_view_text_id_set,gx_multi_line_text_view_text_id_set>>
+* <<_gx_multi_line_text_view_text_set,gx_multi_line_text_view_text_set>>
+* <<_gx_multi_line_text_view_whitespace_set,gx_multi_line_text_view_whitespace_set>>
 
 == Numeric_Pixelmap_Services
 
-* <<gx_numeric_pixelmap_prompt_create,gx_numeric_pixelmap_prompt_create>>
-* <<gx_numeric_pixelmap_prompt_format_function_set,gx_numeric_pixelmap_prompt_format_function_set>>
-* <<gx_numeric_pixelmap_prompt_value_set,gx_numeric_pixelmap_prompt_value_set>>
+* <<_gx_numeric_pixelmap_prompt_create,gx_numeric_pixelmap_prompt_create>>
+* <<_gx_numeric_pixelmap_prompt_format_function_set,gx_numeric_pixelmap_prompt_format_function_set>>
+* <<_gx_numeric_pixelmap_prompt_value_set,gx_numeric_pixelmap_prompt_value_set>>
 
 == Numeric_Prompt_Services
 
-* <<gx_numeric_prompt_create,gx_numeric_prompt_create>>
-* <<gx_numeric_format_function_set,gx_numeric_format_function_set>>
-* <<gx_numeric_prompt_value_set,gx_numeric_prompt_value_set>>
+* <<_gx_numeric_prompt_create,gx_numeric_prompt_create>>
+* <<_gx_numeric_prompt_format_function_set,gx_numeric_prompt_format_function_set>>
+* <<_gx_numeric_prompt_value_set,gx_numeric_prompt_value_set>>
 
 == Numeric_Scroll_Services
 
-* <<gx_numeric_scroll_wheel_create,gx_numeric_scroll_wheel_create>>
-* <<gx_numeric_scroll_wheel_range_set,gx_numeric_scroll_wheel_range_set>>
+* <<_gx_numeric_scroll_wheel_create,gx_numeric_scroll_wheel_create>>
+* <<_gx_numeric_scroll_wheel_range_set,gx_numeric_scroll_wheel_range_set>>
 
 == Pixelmap_Scroll_Services
 
-* <<gx_pixelmap_button_create,gx_pixelmap_button_create>>
-* <<gx_pixelmap_button_draw,gx_pixelmap_button_draw>>
-* <<gx_pixelmap_button_pxielmap_set,gx_pixelmap_button_pxielmap_set>>
-* <<gx_pixelmap_prompt_create,gx_pixelmap_prompt_create>>
-* <<gx_pixelmap_prompt_draw,gx_pixelmap_prompt_draw>>
-* <<gx_pixelmap_prompt_pixelmap_set,gx_pixelmap_prompt_pixelmap_set>>
-* <<gx_pixelmap_slider_create,gx_pixelmap_slider_create>>
-* <<gx_pixelmap_slider_draw,gx_pixelmap_slider_draw>>
-* <<gx_pixelmap_slider_event_process,gx_pixelmap_slider_event_process>>
-* <<gx_pixelmap_slider_pixelmap_set,gx_pixelmap_slider_pixelmap_set>>
+* <<_gx_pixelmap_button_create,gx_pixelmap_button_create>>
+* <<_gx_pixelmap_button_draw,gx_pixelmap_button_draw>>
+* <<_gx_pixelmap_button_pixelmap_set,gx_pixelmap_button_pixelmap_set>>
+* <<_gx_pixelmap_prompt_create,gx_pixelmap_prompt_create>>
+* <<_gx_pixelmap_prompt_draw,gx_pixelmap_prompt_draw>>
+* <<_gx_pixelmap_prompt_pixelmap_set,gx_pixelmap_prompt_pixelmap_set>>
+* <<_gx_pixelmap_slider_create,gx_pixelmap_slider_create>>
+* <<_gx_pixelmap_slider_draw,gx_pixelmap_slider_draw>>
+* <<_gx_pixelmap_slider_event_process,gx_pixelmap_slider_event_process>>
+* <<_gx_pixelmap_slider_pixelmap_set,gx_pixelmap_slider_pixelmap_set>>
 
 == Progress_Bar_Services
 
-* <<gx_progress_bar_background_draw,gx_progress_bar_background_draw>>
-* <<gx_progress_bar_create,gx_progress_bar_create>>
-* <<gx_progress_bar_draw,gx_progress_bar_draw>>
-* <<gx_progress_bar_event_process,gx_progress_bar_event_process>>
-* <<gx_progress_bar_font_set,gx_progress_bar_font_set>>
-* <<gx_progress_bar_info_set,gx_progress_bar_info_set>>
-* <<gx_progress_bar_pixelmap_set,gx_progress_bar_pixelmap_set>>
-* <<gx_progress_bar_range_set,gx_progress_bar_range_set>>
-* <<gx_progress_bar_text_color_set,gx_progress_bar_text_color_set>>
-* <<gx_progress_bar_value_set,gx_progress_bar_value_set>>
+* <<_gx_progress_bar_background_draw,gx_progress_bar_background_draw>>
+* <<_gx_progress_bar_create,gx_progress_bar_create>>
+* <<_gx_progress_bar_draw,gx_progress_bar_draw>>
+* <<_gx_progress_bar_event_process,gx_progress_bar_event_process>>
+* <<_gx_progress_bar_font_set,gx_progress_bar_font_set>>
+* <<_gx_progress_bar_info_set,gx_progress_bar_info_set>>
+* <<_gx_progress_bar_pixelmap_set,gx_progress_bar_pixelmap_set>>
+* <<_gx_progress_bar_range_set,gx_progress_bar_range_set>>
+* <<_gx_progress_bar_text_color_set,gx_progress_bar_text_color_set>>
+* <<_gx_progress_bar_value_set,gx_progress_bar_value_set>>
 
 == Prompt_Services
 
-* <<gx_prompt_create,gx_prompt_create>>
-* <<gx_prompt_draw,gx_prompt_draw>>
-* <<gx_prompt_event_process,gx_prompt_event_process>>
-* <<gx_prompt_font_set,gx_prompt_font_set>>
-* <<gx_prompt_text_color_set,gx_prompt_text_color_set>>
-* <<gx_prompt_text_get,gx_prompt_text_get>>
-* <<gx_prompt_text_id_set,gx_prompt_text_id_set>>
-* <<gx_prompt_text_set,gx_prompt_text_set>>
-* <<gx_prompt_text_set_ext,gx_prompt_text_set_ext>>
+* <<_gx_prompt_create,gx_prompt_create>>
+* <<_gx_prompt_draw,gx_prompt_draw>>
+* <<_gx_prompt_event_process,gx_prompt_event_process>>
+* <<_gx_prompt_font_set,gx_prompt_font_set>>
+* <<_gx_prompt_text_color_set,gx_prompt_text_color_set>>
+* <<_gx_prompt_text_get,gx_prompt_text_get>>
+* <<_gx_prompt_text_id_set,gx_prompt_text_id_set>>
+* <<_gx_prompt_text_set,gx_prompt_text_set>>
+* <<_gx_prompt_text_set_ext,gx_prompt_text_set_ext>>
 
 == Radial_Progress_Bar_Services
 
-* <<gx_radial_progress_bar_anchor_set,gx_radial_progress_bar_anchor_set>>
-* <<gx_radial_progress_bar_background_draw,gx_radial_progress_bar_background_draw>>
-* <<gx_radial_progress_bar_create,gx_radial_progress_bar_create>>
-* <<gx_radial_progress_bar_draw,gx_radial_progress_bar_draw>>
-* <<gx_radial_progress_bar_event_process,gx_radial_progress_bar_event_process>>
-* <<gx_radial_progress_bar_font_set,gx_radial_progress_bar_font_set>>
-* <<gx_radial_progress_bar_info_set,gx_radial_progress_bar_info_set>>
-* <<gx_radial_progress_bar_text_color_set,gx_radial_progress_bar_text_color_set>>
-* <<gx_radial_progress_bar_text_draw,gx_radial_progress_bar_text_draw>>
-* <<gx_radial_progress_bar_value_set,gx_radial_progress_bar_value_set>>
+* <<_gx_radial_progress_bar_anchor_set,gx_radial_progress_bar_anchor_set>>
+* <<_gx_radial_progress_bar_background_draw,gx_radial_progress_bar_background_draw>>
+* <<_gx_radial_progress_bar_create,gx_radial_progress_bar_create>>
+* <<_gx_radial_progress_bar_draw,gx_radial_progress_bar_draw>>
+* <<_gx_radial_progress_bar_event_process,gx_radial_progress_bar_event_process>>
+* <<_gx_radial_progress_bar_font_set,gx_radial_progress_bar_font_set>>
+* <<_gx_radial_progress_bar_info_set,gx_radial_progress_bar_info_set>>
+* <<_gx_radial_progress_bar_text_color_set,gx_radial_progress_bar_text_color_set>>
+* <<_gx_radial_progress_bar_text_draw,gx_radial_progress_bar_text_draw>>
+* <<_gx_radial_progress_bar_value_set,gx_radial_progress_bar_value_set>>
 
 == Radial_Button_Services
 
-* <<gx_radio_button_create,gx_radio_button_create>>
-* <<gx_radio_button_draw,gx_radio_button_draw>>
-* <<gx_radio_button_pixelmap_set,gx_radio_button_pixelmap_set>>
+* <<_gx_radio_button_create,gx_radio_button_create>>
+* <<_gx_radio_button_draw,gx_radio_button_draw>>
+* <<_gx_radio_button_pixelmap_set,gx_radio_button_pixelmap_set>>
 
 == Radial_Slider_Services
 
-* <<gx_radial_slider_anchor_angles_set,gx_radial_slider_anchor_angles_set>>
-* <<gx_radial_slider_angle_set,gx_radial_slider_angle_set>>
-* <<gx_radial_slider_animation_set,gx_radial_slider_animation_set>>
-* <<gx_radial_slider_animation_start,gx_radial_slider_animation_start>>
-* <<gx_radial_slider_create,gx_radial_slider_create>>
-* <<gx_radial_slider_draw,gx_radial_slider_draw>>
-* <<gx_radial_slider_event_process,gx_radial_slider_event_process>>
-* <<gx_radial_slider_info_get,gx_radial_slider_info_get>>
-* <<gx_radial_slider_info_set,gx_radial_slider_info_set>>
-* <<gx_radial_slider_pixelmap_set,gx_radial_slider_pixelmap_set>>
+* <<_gx_radial_slider_anchor_angles_set,gx_radial_slider_anchor_angles_set>>
+* <<_gx_radial_slider_angle_set,gx_radial_slider_angle_set>>
+* <<_gx_radial_slider_animation_set,gx_radial_slider_animation_set>>
+* <<_gx_radial_slider_animation_start,gx_radial_slider_animation_start>>
+* <<_gx_radial_slider_create,gx_radial_slider_create>>
+* <<_gx_radial_slider_draw,gx_radial_slider_draw>>
+* <<_gx_radial_slider_event_process,gx_radial_slider_event_process>>
+* <<_gx_radial_slider_info_get,gx_radial_slider_info_get>>
+* <<_gx_radial_slider_info_set,gx_radial_slider_info_set>>
+* <<_gx_radial_slider_pixelmap_set,gx_radial_slider_pixelmap_set>>
 
 == Rich_Text_Services
 
-* <<gx_rich_text_view_create,gx_rich_text_view_create>>
-* <<gx_rich_text_view_draw,gx_rich_text_view_draw>>
-* <<gx_rich_text_view_fonts_set,gx_rich_text_view_fonts_set>>
-* <<gx_rich_text_view_text_draw,gx_rich_text_view_text_draw>>
+* <<_gx_rich_text_view_create,gx_rich_text_view_create>>
+* <<_gx_rich_text_view_draw,gx_rich_text_view_draw>>
+* <<_gx_rich_text_view_fonts_set,gx_rich_text_view_fonts_set>>
+* <<_gx_rich_text_view_text_draw,gx_rich_text_view_text_draw>>
 
 == Screen_Stack_Services
 
-* <<gx_screen_stack_create,gx_screen_stack_create>>
-* <<gx_screen_stack_push,gx_screen_stack_push>>
-* <<gx_screen_stack_pop,gx_screen_stack_pop>>
-* <<gx_screen_stack_reset,gx_screen_stack_reset>>
+* <<_gx_screen_stack_create,gx_screen_stack_create>>
+* <<_gx_screen_stack_push,gx_screen_stack_push>>
+* <<_gx_screen_stack_pop,gx_screen_stack_pop>>
+* <<_gx_screen_stack_reset,gx_screen_stack_reset>>
 
 == Scroll_Services
 
-* <<gx_scroll_thumb_create,gx_scroll_thumb_create>>
-* <<gx_scroll_thumb_event_process,gx_scroll_thumb_event_process>>
-* <<gx_scroll_wheel_create,gx_scroll_wheel_create>>
-* <<gx_scroll_wheel_event_process,gx_scroll_wheel_event_process>>
-* <<gx_scroll_wheel_gradient_alpha_set,gx_scroll_wheel_gradient_alpha_set>>
-* <<gx_scroll_wheel_selected_background_set,gx_scroll_wheel_selected_background_set>>
-* <<gx_scroll_wheel_selected_get,gx_scroll_wheel_selected_get>>
-* <<gx_scroll_wheel_selected_set,gx_scroll_wheel_selected_set>>
-* <<gx_scroll_wheel_speed_set,gx_scroll_wheel_speed_set>>
-* <<gx_scroll_wheel_total_rows_set,gx_scroll_wheel_total_rows_set>>
-* <<gx_scrollbar_draw,gx_scrollbar_draw>>
-* <<gx_scrollbar_event_process,gx_scrollbar_event_process>>
-* <<gx_scrollbar_limit_check,gx_scrollbar_limit_check>>
-* <<gx_scrollbar_reset,gx_scrollbar_reset>>
-* <<gx_scrollbar_value_set,gx_scrollbar_value_set>>
+* <<_gx_scroll_thumb_create,gx_scroll_thumb_create>>
+* <<_gx_scroll_thumb_event_process,gx_scroll_thumb_event_process>>
+* <<_gx_scroll_wheel_create,gx_scroll_wheel_create>>
+* <<_gx_scroll_wheel_event_process,gx_scroll_wheel_event_process>>
+* <<_gx_scroll_wheel_gradient_alpha_set,gx_scroll_wheel_gradient_alpha_set>>
+* <<_gx_scroll_wheel_selected_background_set,gx_scroll_wheel_selected_background_set>>
+* <<_gx_scroll_wheel_selected_get,gx_scroll_wheel_selected_get>>
+* <<_gx_scroll_wheel_selected_set,gx_scroll_wheel_selected_set>>
+* <<_gx_scroll_wheel_speed_set,gx_scroll_wheel_speed_set>>
+* <<_gx_scroll_wheel_total_rows_set,gx_scroll_wheel_total_rows_set>>
+* <<_gx_scrollbar_draw,gx_scrollbar_draw>>
+* <<_gx_scrollbar_event_process,gx_scrollbar_event_process>>
+* <<_gx_scrollbar_limit_check,gx_scrollbar_limit_check>>
+* <<_gx_scrollbar_reset,gx_scrollbar_reset>>
+* <<_gx_scrollbar_value_set,gx_scrollbar_value_set>>
 
 == Single_Line_Text_Input_Services
 
-* <<gx_single_line_text_input_backspace,gx_single_line_text_input_backspace>>
-* <<gx_single_line_text_input_buffer_clear,gx_single_line_text_input_buffer_clear>>
-* <<gx_single_line_text_input_buffer_get,gx_single_line_text_input_buffer_get>>
-* <<gx_single_line_text_input_character_delete,gx_single_line_text_input_character_delete>>
-* <<gx_single_line_text_input_character_insert,gx_single_line_text_input_character_insert>>
-* <<gx_single_line_text_input_create,gx_single_line_text_input_create>>
-* <<gx_single_line_text_input_draw,gx_single_line_text_input_draw>>
-* <<gx_single_line_text_input_draw_position_get,gx_single_line_text_input_draw_position_get>>
-* <<gx_single_line_text_input_end,gx_single_line_text_input_end>>
-* <<gx_single_line_text_input_event_process,gx_single_line_text_input_event_process>>
-* <<gx_single_line_text_input_fill_color_set,gx_single_line_text_input_fill_color_set>>
-* <<gx_single_line_text_input_home,gx_single_line_text_input_home>>
-* <<gx_single_line_text_input_left_arrow,gx_single_line_text_input_left_arrow>>
-* <<gx_single_line_text_input_position_get,gx_single_line_text_input_position_get>>
-* <<gx_single_line_text_input_right_arrow,gx_single_line_text_input_right_arrow>>
-* <<gx_single_line_text_input_style_add,gx_single_line_text_input_style_add>>
-* <<gx_single_line_text_input_style_remove,gx_single_line_text_input_style_remove>>
-* <<gx_single_line_text_input_style_set,gx_single_line_text_input_style_set>>
-* <<gx_single_line_text_input_text_color_set,gx_single_line_text_input_text_color_set>>
-* <<gx_single_line_text_input_text_select,gx_single_line_text_input_text_select>>
-* <<gx_single_line_text_input_text_set,gx_single_line_text_input_text_set>>
-* <<gx_single_line_text_input_text_set_ext,gx_single_line_text_input_text_set_ext>>
+* <<_gx_single_line_text_input_backspace,gx_single_line_text_input_backspace>>
+* <<_gx_single_line_text_input_buffer_clear,gx_single_line_text_input_buffer_clear>>
+* <<_gx_single_line_text_input_buffer_get,gx_single_line_text_input_buffer_get>>
+* <<_gx_single_line_text_input_character_delete,gx_single_line_text_input_character_delete>>
+* <<_gx_single_line_text_input_character_insert,gx_single_line_text_input_character_insert>>
+* <<_gx_single_line_text_input_create,gx_single_line_text_input_create>>
+* <<_gx_single_line_text_input_draw,gx_single_line_text_input_draw>>
+* <<_gx_single_line_text_input_draw_position_get,gx_single_line_text_input_draw_position_get>>
+* <<_gx_single_line_text_input_end,gx_single_line_text_input_end>>
+* <<_gx_single_line_text_input_event_process,gx_single_line_text_input_event_process>>
+* <<_gx_single_line_text_input_fill_color_set,gx_single_line_text_input_fill_color_set>>
+* <<_gx_single_line_text_input_home,gx_single_line_text_input_home>>
+* <<_gx_single_line_text_input_left_arrow,gx_single_line_text_input_left_arrow>>
+* <<_gx_single_line_text_input_position_get,gx_single_line_text_input_position_get>>
+* <<_gx_single_line_text_input_right_arrow,gx_single_line_text_input_right_arrow>>
+* <<_gx_single_line_text_input_style_add,gx_single_line_text_input_style_add>>
+* <<_gx_single_line_text_input_style_remove,gx_single_line_text_input_style_remove>>
+* <<_gx_single_line_text_input_style_set,gx_single_line_text_input_style_set>>
+* <<_gx_single_line_text_input_text_color_set,gx_single_line_text_input_text_color_set>>
+* <<_gx_single_line_text_input_text_select,gx_single_line_text_input_text_select>>
+* <<_gx_single_line_text_input_text_set,gx_single_line_text_input_text_set>>
+* <<_gx_single_line_text_input_text_set_ext,gx_single_line_text_input_text_set_ext>>
 
 == Slider_Services
 
-* <<gx_slider_create,gx_slider_create>>
-* <<gx_slider_draw,gx_slider_draw>>
-* <<gx_slider_event_process,gx_slider_event_process>>
-* <<gx_slider_needle_draw,gx_slider_needle_draw>>
-* <<gx_slider_needle_position_get,gx_slider_needle_position_get>>
-* <<gx_slider_tickmarks_draw,gx_slider_tickmarks_draw>>
-* <<gx_slider_travel_get,gx_slider_travel_get>>
-* <<gx_slider_value_calculate,gx_slider_value_calculate>>
-* <<gx_slider_value_set,gx_slider_value_set>>
+* <<_gx_slider_create,gx_slider_create>>
+* <<_gx_slider_draw,gx_slider_draw>>
+* <<_gx_slider_event_process,gx_slider_event_process>>
+* <<_gx_slider_needle_draw,gx_slider_needle_draw>>
+* <<_gx_slider_needle_position_get,gx_slider_needle_position_get>>
+* <<_gx_slider_tickmarks_draw,gx_slider_tickmarks_draw>>
+* <<_gx_slider_travel_get,gx_slider_travel_get>>
+* <<_gx_slider_value_calculate,gx_slider_value_calculate>>
+* <<_gx_slider_value_set,gx_slider_value_set>>
 
 == Sprite_Services
 
-* <<gx_sprite_create,gx_sprite_create>>
-* <<gx_sprite_frame_list_set,gx_sprite_frame_list_set>>
-* <<gx_sprite_start,gx_sprite_start>>
-* <<gx_sprite_stop,gx_sprite_stop>>
+* <<_gx_sprite_create,gx_sprite_create>>
+* <<_gx_sprite_frame_list_set,gx_sprite_frame_list_set>>
+* <<_gx_sprite_start,gx_sprite_start>>
+* <<_gx_sprite_stop,gx_sprite_stop>>
 
 == String_Scroll_Wheel_Services
 
-* <<gx_string_scroll_wheel_create,gx_string_scroll_wheel_create>>
-* <<gx_string_scroll_wheel_create_ext,gx_string_scroll_wheel_create_ext>>
-* <<gx_string_scroll_wheel_event_process,gx_string_scroll_wheel_event_process>>
-* <<gx_string_scroll_wheel_string_id_list_set,gx_string_scroll_wheel_string_id_list_set>>
-* <<gx_string_scroll_wheel_string_list_set,gx_string_scroll_wheel_string_list_set>>
-* <<gx_string_scroll_wheel_string_list_set_ext,gx_string_scroll_wheel_string_list_set_ext>>
+* <<_gx_string_scroll_wheel_create,gx_string_scroll_wheel_create>>
+* <<_gx_string_scroll_wheel_create_ext,gx_string_scroll_wheel_create_ext>>
+* <<_gx_string_scroll_wheel_event_process,gx_string_scroll_wheel_event_process>>
+* <<_gx_string_scroll_wheel_string_id_list_set,gx_string_scroll_wheel_string_id_list_set>>
+* <<_gx_string_scroll_wheel_string_list_set,gx_string_scroll_wheel_string_list_set>>
+* <<_gx_string_scroll_wheel_string_list_set_ext,gx_string_scroll_wheel_string_list_set_ext>>
 
 == Studio_Services
 
-* <<gx_studio_widget_create,gx_studio_widget_create>>
-* <<gx_studio_named_widget_create,gx_studio_named_widget_create>>
-* <<gx_studio_display_configure,gx_studio_display_configure>>
+* <<_gx_studio_widget_create,gx_studio_widget_create>>
+* <<_gx_studio_named_widget_create,gx_studio_named_widget_create>>
+* <<_gx_studio_display_configure,gx_studio_display_configure>>
 
 == System_Services
 
-* <<gx_system_active_language_set,gx_system_active_language_set>>
-* <<gx_system_animation_get,gx_system_animation_get>>
-* <<gx_system_animation_free,gx_system_animation_free>>
-* <<gx_system_bidi_text_disable,gx_system_bidi_text_disable>>
-* <<gx_system_bidi_text_enable,gx_system_bidi_text_enable>>
-* <<gx_system_canvas_refresh,gx_system_canvas_refresh>>
-* <<gx_system_dirty_mark,gx_system_dirty_mark>>
-* <<gx_system_dirty_partial_add,gx_system_dirty_partial_add>>
-* <<gx_system_draw_context_get,gx_system_draw_context_get>>
-* <<gx_system_event_fold,gx_system_event_fold>>
-* <<gx_system_event_send,gx_system_event_send>>
-* <<gx_system_focus_claim,gx_system_focus_claim>>
-* <<gx_system_initialize,gx_system_initialize>>
-* <<gx_system_language_table_get,gx_system_language_table_get>>
-* <<gx_system_language_table_set,gx_system_language_table_set>>
-* <<gx_system_memory_allocator_set,gx_system_memory_allocator_set>>
-* <<gx_system_pen_configure,gx_system_pen_configure>>
-* <<gx_system_screen_stack_create,gx_system_screen_stack_create>>
-* <<gx_system_screen_stack_get,gx_system_screen_stack_get>>
-* <<gx_system_screen_stack_pop,gx_system_screen_stack_pop>>
-* <<gx_system_screen_stack_push,gx_system_screen_stack_push>>
-* <<gx_system_screen_stack_reset,gx_system_screen_stack_reset>>
-* <<gx_system_scroll_appearance_get,gx_system_scroll_appearance_get>>
-* <<gx_system_scroll_appearance_set,gx_system_scroll_appearance_set>>
-* <<gx_system_start,gx_system_start>>
-* <<gx_system_string_get,gx_system_string_get>>
-* <<gx_system_string_table_get,gx_system_string_table_get>>
-* <<gx_system_string_width_get,gx_system_string_width_get>>
-* <<gx_system_string_width_get_ext,gx_system_string_width_get_ext>>
-* <<gx_system_text_render_style_set,gx_system_text_render_style_set>>
-* <<gx_system_timer_start,gx_system_timer_start>>
-* <<gx_system_timer_stop,gx_system_timer_stop>>
-* <<gx_system_version_string_get,gx_system_version_string_get>>
-* <<gx_system_version_string_get_ext,gx_system_version_string_get_ext>>
-* <<gx_system_widget_find,gx_system_widget_find>>
+* <<_gx_system_active_language_set,gx_system_active_language_set>>
+* <<_gx_system_animation_get,gx_system_animation_get>>
+* <<_gx_system_animation_free,gx_system_animation_free>>
+* <<_gx_system_bidi_text_disable,gx_system_bidi_text_disable>>
+* <<_gx_system_bidi_text_enable,gx_system_bidi_text_enable>>
+* <<_gx_system_canvas_refresh,gx_system_canvas_refresh>>
+* <<_gx_system_dirty_mark,gx_system_dirty_mark>>
+* <<_gx_system_dirty_partial_add,gx_system_dirty_partial_add>>
+* <<_gx_system_draw_context_get,gx_system_draw_context_get>>
+* <<_gx_system_event_fold,gx_system_event_fold>>
+* <<_gx_system_event_send,gx_system_event_send>>
+* <<_gx_system_focus_claim,gx_system_focus_claim>>
+* <<_gx_system_initialize,gx_system_initialize>>
+* <<_gx_system_language_table_get,gx_system_language_table_get>>
+* <<_gx_system_language_table_set,gx_system_language_table_set>>
+* <<_gx_system_memory_allocator_set,gx_system_memory_allocator_set>>
+* <<_gx_system_pen_configure,gx_system_pen_configure>>
+* <<_gx_system_screen_stack_create,gx_system_screen_stack_create>>
+* <<_gx_system_screen_stack_get,gx_system_screen_stack_get>>
+* <<_gx_system_screen_stack_pop,gx_system_screen_stack_pop>>
+* <<_gx_system_screen_stack_push,gx_system_screen_stack_push>>
+* <<_gx_system_screen_stack_reset,gx_system_screen_stack_reset>>
+* <<_gx_system_scroll_appearance_get,gx_system_scroll_appearance_get>>
+* <<_gx_system_scroll_appearance_set,gx_system_scroll_appearance_set>>
+* <<_gx_system_start,gx_system_start>>
+* <<_gx_system_string_get,gx_system_string_get>>
+* <<_gx_system_string_table_get,gx_system_string_table_get>>
+* <<_gx_system_string_width_get,gx_system_string_width_get>>
+* <<_gx_system_string_width_get_ext,gx_system_string_width_get_ext>>
+* <<_gx_system_text_render_style_set,gx_system_text_render_style_set>>
+* <<_gx_system_timer_start,gx_system_timer_start>>
+* <<_gx_system_timer_stop,gx_system_timer_stop>>
+* <<_gx_system_version_string_get,gx_system_version_string_get>>
+* <<_gx_system_version_string_get_ext,gx_system_version_string_get_ext>>
+* <<_gx_system_widget_find,gx_system_widget_find>>
 
 == Text_Services
 
-* <<gx_text_button_create,gx_text_button_create>>
-* <<gx_text_button_draw,gx_text_button_draw>>
-* <<gx_text_button_event_process,gx_text_button_event_process>>
-* <<gx_text_button_color_set,gx_text_button_color_set>>
-* <<gx_text_button_font_set,gx_text_button_font_set>>
-* <<gx_text_button_text_get,gx_text_button_text_get>>
-* <<gx_text_button_text_get_ext,gx_text_button_text_get_ext>>
-* <<gx_text_button_text_id_set,gx_text_button_text_id_set>>
-* <<gx_text_button_text_set,gx_text_button_text_set>>
-* <<gx_text_button_text_set_ext,gx_text_button_text_set_ext>>
-* <<gx_text_input_cursor_blink_interval_set,gx_text_input_cursor_blink_interval_set>>
-* <<gx_text_input_cursor_height_set,gx_text_input_cursor_height_set>>
-* <<gx_text_input_cursor_width_set,gx_text_input_cursor_width_set>>
-* <<gx_text_scroll_wheel_callback_set,gx_text_scroll_wheel_callback_set>>
-* <<gx_text_scroll_wheel_callback_set_ext,gx_text_scroll_wheel_callback_set_ext>>
-* <<gx_text_scroll_wheel_create,gx_text_scroll_wheel_create>>
-* <<gx_text_scroll_wheel_draw,gx_text_scroll_wheel_draw>>
-* <<gx_text_scroll_wheel_event_process,gx_text_scroll_wheel_event_process>>
-* <<gx_text_scroll_wheel_font_set,gx_text_scroll_wheel_font_set>>
-* <<gx_text_scroll_wheel_text_color_set,gx_text_scroll_wheel_text_color_set>>
+* <<_gx_text_button_create,gx_text_button_create>>
+* <<_gx_text_button_draw,gx_text_button_draw>>
+* <<_gx_text_button_event_process,gx_text_button_event_process>>
+* <<_gx_text_button_text_color_set,gx_text_button_text_color_set>>
+* <<_gx_text_button_font_set,gx_text_button_font_set>>
+* <<_gx_text_button_text_get,gx_text_button_text_get>>
+* <<_gx_text_button_text_get_ext,gx_text_button_text_get_ext>>
+* <<_gx_text_button_text_id_set,gx_text_button_text_id_set>>
+* <<_gx_text_button_text_set,gx_text_button_text_set>>
+* <<_gx_text_button_text_set_ext,gx_text_button_text_set_ext>>
+* <<_gx_text_input_cursor_blink_interval_set,gx_text_input_cursor_blink_interval_set>>
+* <<_gx_text_input_cursor_height_set,gx_text_input_cursor_height_set>>
+* <<_gx_text_input_cursor_width_set,gx_text_input_cursor_width_set>>
+* <<_gx_text_scroll_wheel_callback_set,gx_text_scroll_wheel_callback_set>>
+* <<_gx_text_scroll_wheel_callback_set_ext,gx_text_scroll_wheel_callback_set_ext>>
+* <<_gx_text_scroll_wheel_create,gx_text_scroll_wheel_create>>
+* <<_gx_text_scroll_wheel_draw,gx_text_scroll_wheel_draw>>
+* <<_gx_text_scroll_wheel_event_process,gx_text_scroll_wheel_event_process>>
+* <<_gx_text_scroll_wheel_font_set,gx_text_scroll_wheel_font_set>>
+* <<_gx_text_scroll_wheel_text_color_set,gx_text_scroll_wheel_text_color_set>>
 
 == Tree_View_Services
 
-* <<gx_tree_view_create,gx_tree_view_create>>
-* <<gx_tree_view_draw,gx_tree_view_draw>>
-* <<gx_tree_view_event_process,gx_tree_view_event_process>>
-* <<gx_tree_view_indentation_set,gx_tree_view_indentation_set>>
-* <<gx_tree_view_position,gx_tree_view_position>>
-* <<gx_tree_view_root_line_color_set,gx_tree_view_root_line_color_set>>
-* <<gx_tree_view_root_pixelmap_set,gx_tree_view_root_pixelmap_set>>
-* <<gx_tree_view_selected_get,gx_tree_view_selected_get>>
-* <<gx_tree_view_selected_set,gx_tree_view_selected_set>>
+* <<_gx_tree_view_create,gx_tree_view_create>>
+* <<_gx_tree_view_draw,gx_tree_view_draw>>
+* <<_gx_tree_view_event_process,gx_tree_view_event_process>>
+* <<_gx_tree_view_indentation_set,gx_tree_view_indentation_set>>
+* <<_gx_tree_view_position,gx_tree_view_position>>
+* <<_gx_tree_view_root_line_color_set,gx_tree_view_root_line_color_set>>
+* <<_gx_tree_view_root_pixelmap_set,gx_tree_view_root_pixelmap_set>>
+* <<_gx_tree_view_selected_get,gx_tree_view_selected_get>>
+* <<_gx_tree_view_selected_set,gx_tree_view_selected_set>>
 
 == Utility_Services
 
-* <<gx_utility_canvas_to_bmp,gx_utility_canvas_to_bmp>>
-* <<gx_utility_circle_point_get,gx_utility_circle_point_get>>
-* <<gx_utility_gradient_create,gx_utility_gradient_create>>
-* <<gx_utility_gradient_delete,gx_utility_gradient_delete>>
-* <<gx_utility_ltoa,gx_utility_ltoa>>
-* <<gx_utility_math_acos,gx_utility_math_acos>>
-* <<gx_utility_math_asin,gx_utility_math_asin>>
-* <<gx_utility_math_cos,gx_utility_math_cos>>
-* <<gx_utility_math_sin,gx_utility_math_sin>>
-* <<gx_utility_math_sqrt,gx_utility_math_sqrt>>
-* <<gx_utility_bidi_paragraph_reorder,gx_utility_bidi_paragraph_reorder>>
-* <<gx_utility_bidi_paragraph_reorder_ext,gx_utility_bidi_paragraph_reorder_ext>>
-* <<gx_utility_bidi_resolved_text_info_delete,gx_utility_bidi_resolved_text_info_delete>>
-* <<gx_utility_pixelmap_resize,gx_utility_pixelmap_resize>>
-* <<gx_utility_pixelmap_rotate,gx_utility_pixelmap_rotate>>
-* <<gx_utility_pixelmap_simple_rotate,gx_utility_pixelmap_simple_rotate>>
-* <<gx_utility_rectangle_center,gx_utility_rectangle_center>>
-* <<gx_utility_rectangle_center_find,gx_utility_rectangle_center_find>>
-* <<gx_utility_rectangle_combine,gx_utility_rectangle_combine>>
-* <<gx_utility_rectangle_compare,gx_utility_rectangle_compare>>
-* <<gx_utility_rectangle_define,gx_utility_rectangle_define>>
-* <<gx_utility_rectangle_overlap_detect,gx_utility_rectangle_overlap_detect>>
-* <<gx_utility_rectangle_point_detect,gx_utility_rectangle_point_detect>>
-* <<gx_utility_rectangle_resize,gx_utility_rectangle_resize>>
-* <<gx_utility_rectangle_shift,gx_utility_rectangle_shift>>
-* <<gx_utility_string_to_alphamap,gx_utility_string_to_alphamap>>
-* <<gx_utility_string_to_alphamap_ext,gx_utility_string_to_alphamap_ext>>
+* <<_gx_utility_canvas_to_bmp,gx_utility_canvas_to_bmp>>
+* <<_gx_utility_circle_point_get,gx_utility_circle_point_get>>
+* <<_gx_utility_gradient_create,gx_utility_gradient_create>>
+* <<_gx_utility_gradient_delete,gx_utility_gradient_delete>>
+* <<_gx_utility_ltoa,gx_utility_ltoa>>
+* <<_gx_utility_math_acos,gx_utility_math_acos>>
+* <<_gx_utility_math_asin,gx_utility_math_asin>>
+* <<_gx_utility_math_cos,gx_utility_math_cos>>
+* <<_gx_utility_math_sin,gx_utility_math_sin>>
+* <<_gx_utility_math_sqrt,gx_utility_math_sqrt>>
+* <<_gx_utility_bidi_paragraph_reorder,gx_utility_bidi_paragraph_reorder>>
+* <<_gx_utility_bidi_paragraph_reorder_ext,gx_utility_bidi_paragraph_reorder_ext>>
+* <<_gx_utility_bidi_resolved_text_info_delete,gx_utility_bidi_resolved_text_info_delete>>
+* <<_gx_utility_pixelmap_resize,gx_utility_pixelmap_resize>>
+* <<_gx_utility_pixelmap_rotate,gx_utility_pixelmap_rotate>>
+* <<_gx_utility_pixelmap_simple_rotate,gx_utility_pixelmap_simple_rotate>>
+* <<_gx_utility_rectangle_center,gx_utility_rectangle_center>>
+* <<_gx_utility_rectangle_center_find,gx_utility_rectangle_center_find>>
+* <<_gx_utility_rectangle_combine,gx_utility_rectangle_combine>>
+* <<_gx_utility_rectangle_compare,gx_utility_rectangle_compare>>
+* <<_gx_utility_rectangle_define,gx_utility_rectangle_define>>
+* <<_gx_utility_rectangle_overlap_detect,gx_utility_rectangle_overlap_detect>>
+* <<_gx_utility_rectangle_point_detect,gx_utility_rectangle_point_detect>>
+* <<_gx_utility_rectangle_resize,gx_utility_rectangle_resize>>
+* <<_gx_utility_rectangle_shift,gx_utility_rectangle_shift>>
+* <<_gx_utility_string_to_alphamap,gx_utility_string_to_alphamap>>
+* <<_gx_utility_string_to_alphamap_ext,gx_utility_string_to_alphamap_ext>>
 
 == Vertical_List_Services
 
-* <<gx_vertical_list_children_position,gx_vertical_list_children_position>>
-* <<gx_vertical_list_create,gx_vertical_list_create>>
-* <<gx_vertical_list_event_process,gx_vertical_list_event_process>>
-* <<gx_vertical_list_page_index_set,gx_vertical_list_page_index_set>>
-* <<gx_vertical_list_selected_index_get,gx_vertical_list_selected_index_get>>
-* <<gx_vertical_list_selecgted_widget_get,gx_vertical_list_selecgted_widget_get>>
-* <<gx_vertical_list_selected_widget_get,gx_vertical_list_selected_widget_get>>
-* <<gx_vertical_list_selected_set,gx_vertical_list_selected_set>>
-* <<gx_vertical_list_total_rows_set,gx_vertical_list_total_rows_set>>
+* <<_gx_vertical_list_children_position,gx_vertical_list_children_position>>
+* <<_gx_vertical_list_create,gx_vertical_list_create>>
+* <<_gx_vertical_list_event_process,gx_vertical_list_event_process>>
+* <<_gx_vertical_list_page_index_set,gx_vertical_list_page_index_set>>
+* <<_gx_vertical_list_selected_index_get,gx_vertical_list_selected_index_get>>
+* <<_gx_vertical_list_selected_widget_get,gx_vertical_list_selected_widget_get>>
+* <<_gx_vertical_list_selected_widget_get,gx_vertical_list_selected_widget_get>>
+* <<_gx_vertical_list_selected_set,gx_vertical_list_selected_set>>
+* <<_gx_vertical_list_total_rows_set,gx_vertical_list_total_rows_set>>
 
 == Widget_Services
 
-* <<gx_widget_allocate,gx_widget_allocate>>
-* <<gx_widget_attach,gx_widget_attach>>
-* <<gx_widget_back_move,gx_widget_back_move>>
-* <<gx_widget_block_move,gx_widget_block_move>>
-* <<gx_widget_border_draw,gx_widget_border_draw>>
-* <<gx_widget_border_style_set,gx_widget_border_style_set>>
-* <<gx_widget_border_width_get,gx_widget_border_width_get>>
-* <<gx_widget_canvas_get,gx_widget_canvas_get>>
-* <<gx_widget_child_detect,gx_widget_child_detect>>
-* <<gx_widget_children_draw,gx_widget_children_draw>>
-* <<gx_widget_client_get,gx_widget_client_get>>
-* <<gx_widget_create,gx_widget_create>>
-* <<gx_widget_color_get,gx_widget_color_get>>
-* <<gx_widget_created_test,gx_widget_created_test>>
-* <<gx_widget_delete,gx_widget_delete>>
-* <<gx_widget_detach,gx_widget_detach>>
-* <<gx_widget_draw,gx_widget_draw>>
-* <<gx_widget_draw_set,gx_widget_draw_set>>
-* <<gx_widget_event_generate,gx_widget_event_generate>>
-* <<gx_widget_event_process,gx_widget_event_process>>
-* <<gx_widget_event_process_set,gx_widget_event_process_set>>
-* <<gx_widget_event_to_parent,gx_widget_event_to_parent>>
-* <<gx_widget_fill_color_set,gx_widget_fill_color_set>>
-* <<gx_widget_find,gx_widget_find>>
-* <<gx_widget_first_child_get,gx_widget_first_child_get>>
-* <<gx_widget_focus_next,gx_widget_focus_next>>
-* <<gx_widget_focus_previous,gx_widget_focus_previous>>
-* <<gx_widget_font_get,gx_widget_font_get>>
-* <<gx_widget_free,gx_widget_free>>
-* <<gx_widget_front_move,gx_widget_front_move>>
-* <<gx_widget_height_get,gx_widget_height_get>>
-* <<gx_widget_hide,gx_widget_hide>>
-* <<gx_widget_last_child_get,gx_widget_last_child_get>>
-* <<gx_widget_next_sibling_get,gx_widget_next_sibling_get>>
-* <<gx_widget_parent_get,gx_widget_parent_get>>
-* <<gx_widget_pixelmap_get,gx_widget_pixelmap_get>>
-* <<gx_widget_previous_sibling_get,gx_widget_previous_sibling_get>>
-* <<gx_widget_resize,gx_widget_resize>>
-* <<gx_widget_shift,gx_widget_shift>>
-* <<gx_widget_show,gx_widget_show>>
-* <<gx_widget_status_add,gx_widget_status_add>>
-* <<gx_widget_status_get,gx_widget_status_get>>
-* <<gx_widget_status_remove,gx_widget_status_remove>>
-* <<gx_widget_status_test,gx_widget_status_test>>
-* <<gx_widget_string_get,gx_widget_string_get>>
-* <<gx_widget_string_get_ext,gx_widget_string_get_ext>>
-* <<gx_widget_style_add,gx_widget_style_add>>
-* <<gx_widget_style_get,gx_widget_style_get>>
-* <<gx_widget_style_remove,gx_widget_style_remove>>
-* <<gx_widget_style_set,gx_widget_style_set>>
-* <<gx_widget_text_blend,gx_widget_text_blend>>
-* <<gx_widget_text_blend_ext,gx_widget_text_blend_ext>>
-* <<gx_widget_text_draw,gx_widget_text_draw>>
-* <<gx_widget_text_draw_ext,gx_widget_text_draw_ext>>
-* <<gx_widget_text_id_draw,gx_widget_text_id_draw>>
-* <<gx_widget_top_visible_child_find,gx_widget_top_visible_child_find>>
-* <<gx_widget_type_find,gx_widget_type_find>>
-* <<gx_widget_width_get,gx_widget_width_get>>
+* <<_gx_widget_allocate,gx_widget_allocate>>
+* <<_gx_widget_attach,gx_widget_attach>>
+* <<_gx_widget_back_move,gx_widget_back_move>>
+* <<_gx_widget_block_move,gx_widget_block_move>>
+* <<_gx_widget_border_draw,gx_widget_border_draw>>
+* <<_gx_widget_border_style_set,gx_widget_border_style_set>>
+* <<_gx_widget_border_width_get,gx_widget_border_width_get>>
+* <<_gx_widget_canvas_get,gx_widget_canvas_get>>
+* <<_gx_widget_child_detect,gx_widget_child_detect>>
+* <<_gx_widget_children_draw,gx_widget_children_draw>>
+* <<_gx_widget_client_get,gx_widget_client_get>>
+* <<_gx_widget_create,gx_widget_create>>
+* <<_gx_widget_color_get,gx_widget_color_get>>
+* <<_gx_widget_created_test,gx_widget_created_test>>
+* <<_gx_widget_delete,gx_widget_delete>>
+* <<_gx_widget_detach,gx_widget_detach>>
+* <<_gx_widget_draw,gx_widget_draw>>
+* <<_gx_widget_draw_set,gx_widget_draw_set>>
+* <<_gx_widget_event_generate,gx_widget_event_generate>>
+* <<_gx_widget_event_process,gx_widget_event_process>>
+* <<_gx_widget_event_process_set,gx_widget_event_process_set>>
+* <<_gx_widget_event_to_parent,gx_widget_event_to_parent>>
+* <<_gx_widget_fill_color_set,gx_widget_fill_color_set>>
+* <<_gx_widget_find,gx_widget_find>>
+* <<_gx_widget_first_child_get,gx_widget_first_child_get>>
+* <<_gx_widget_focus_next,gx_widget_focus_next>>
+* <<_gx_widget_focus_previous,gx_widget_focus_previous>>
+* <<_gx_widget_font_get,gx_widget_font_get>>
+* <<_gx_widget_free,gx_widget_free>>
+* <<_gx_widget_front_move,gx_widget_front_move>>
+* <<_gx_widget_height_get,gx_widget_height_get>>
+* <<_gx_widget_hide,gx_widget_hide>>
+* <<_gx_widget_last_child_get,gx_widget_last_child_get>>
+* <<_gx_widget_next_sibling_get,gx_widget_next_sibling_get>>
+* <<_gx_widget_parent_get,gx_widget_parent_get>>
+* <<_gx_widget_pixelmap_get,gx_widget_pixelmap_get>>
+* <<_gx_widget_previous_sibling_get,gx_widget_previous_sibling_get>>
+* <<_gx_widget_resize,gx_widget_resize>>
+* <<_gx_widget_shift,gx_widget_shift>>
+* <<_gx_widget_show,gx_widget_show>>
+* <<_gx_widget_status_add,gx_widget_status_add>>
+* <<_gx_widget_status_get,gx_widget_status_get>>
+* <<_gx_widget_status_remove,gx_widget_status_remove>>
+* <<_gx_widget_status_test,gx_widget_status_test>>
+* <<_gx_widget_string_get,gx_widget_string_get>>
+* <<_gx_widget_string_get_ext,gx_widget_string_get_ext>>
+* <<_gx_widget_style_add,gx_widget_style_add>>
+* <<_gx_widget_style_get,gx_widget_style_get>>
+* <<_gx_widget_style_remove,gx_widget_style_remove>>
+* <<_gx_widget_style_set,gx_widget_style_set>>
+* <<_gx_widget_text_blend,gx_widget_text_blend>>
+* <<_gx_widget_text_blend_ext,gx_widget_text_blend_ext>>
+* <<_gx_widget_text_draw,gx_widget_text_draw>>
+* <<_gx_widget_text_draw_ext,gx_widget_text_draw_ext>>
+* <<_gx_widget_text_id_draw,gx_widget_text_id_draw>>
+* <<_gx_widget_top_visible_child_find,gx_widget_top_visible_child_find>>
+* <<_gx_widget_type_find,gx_widget_type_find>>
+* <<_gx_widget_width_get,gx_widget_width_get>>
 
 == Window_Services
 
-* <<gx_window_background_draw,gx_window_background_draw>>
-* <<gx_window_client_height_get,gx_window_client_height_get>>
-* <<gx_window_client_scroll,gx_window_client_scroll>>
-* <<gx_window_client_width_get,gx_window_client_width_get>>
-* <<gx_window_close,gx_window_close>>
-* <<gx_window_create,gx_window_create>>
-* <<gx_window_draw,gx_window_draw>>
-* <<gx_window_event_process,gx_window_event_process>>
-* <<gx_window_execute,gx_window_execute>>
-* <<gx_window_root_create,gx_window_root_create>>
-* <<gx_window_root_delete,gx_window_root_delete>>
-* <<gx_window_root_event_process,gx_window_root_event_process>>
-* <<gx_window_root_find,gx_window_root_find>>
-* <<gx_window_scroll_info_get,gx_window_scroll_info_get>>
-* <<gx_window_scrollbar_find,gx_window_scrollbar_find>>
-* <<gx_window_wallpaper_get,gx_window_wallpaper_get>>
-* <<gx_window_wallpaper_set,gx_window_wallpaper_set>>
+* <<_gx_window_background_draw,gx_window_background_draw>>
+* <<_gx_window_client_height_get,gx_window_client_height_get>>
+* <<_gx_window_client_scroll,gx_window_client_scroll>>
+* <<_gx_window_client_width_get,gx_window_client_width_get>>
+* <<_gx_window_close,gx_window_close>>
+* <<_gx_window_create,gx_window_create>>
+* <<_gx_window_draw,gx_window_draw>>
+* <<_gx_window_event_process,gx_window_event_process>>
+* <<_gx_window_execute,gx_window_execute>>
+* <<_gx_window_root_create,gx_window_root_create>>
+* <<_gx_window_root_delete,gx_window_root_delete>>
+* <<_gx_window_root_event_process,gx_window_root_event_process>>
+* <<_gx_window_root_find,gx_window_root_find>>
+* <<_gx_window_scroll_info_get,gx_window_scroll_info_get>>
+* <<_gx_window_scrollbar_find,gx_window_scrollbar_find>>
+* <<_gx_window_wallpaper_get,gx_window_wallpaper_get>>
+* <<_gx_window_wallpaper_set,gx_window_wallpaper_set>>
 
 == gx_accordion_menu_create
 
@@ -1091,15 +1091,15 @@ status = gx_animation_delete(GX_NULL, parent);
 
 ----
 
-### See Also
+=== See Also
 
-- [Guix Animation Services](#Animation_Services)
+* <<_animation_services,Guix Animation Services>>
 
-## gx_animation_drag_disable
+== gx_animation_drag_disable
 
 Disable the screen drag animation hook
 
-### Prototype
+=== Prototype
 
 [,C]
 ----
@@ -6736,7 +6736,7 @@ status = gx_drop_list_pixelmap_set(&mylist,
 === See Also:
 
 * <<Drop_List_Services,Guix Drop List Services>>
-+
+
 == gx_drop_list_popup_get
 
 Retrieve pointer to popup vertical list
@@ -11187,7 +11187,7 @@ Override format function of numeric prompt
 
 [,C]
 ----
-UINT gx_numeric_format_function_set(
+UINT gx_numeric_prompt_format_function_set(
     GX_NUMERIC_PROMPT *prompt,
     VOID (*format_func)(GX_NUMERIC_PROMPT *, INT));
 ----
@@ -28200,4 +28200,3 @@ status = gx_window_wallpaper_set(&my_window,
 === See Also
 
 * <<Window_Services,Guix Window Services>>
-

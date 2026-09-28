@@ -141,12 +141,12 @@ UINT nx_rtsp_server_describe_callback_set(
 
 === Description
 
-This service sets callback function for DESCRIBE request. This callback function is called when an RTSP client sends a DESCRIBE request to the server. <<nx_rtsp_server_sdp_set,nx_rtsp_server_sdp_set>> should be called in the callback function to set the SDP information for the DESCRIBE response.
+This service sets callback function for DESCRIBE request. This callback function is called when an RTSP client sends a DESCRIBE request to the server. <<_nx_rtsp_server_sdp_set,nx_rtsp_server_sdp_set>> should be called in the callback function to set the SDP information for the DESCRIBE response.
 
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to DESCRIBE request callback function. If the URI is valid and the SDP string is set successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to DESCRIBE request callback function. If the URI is valid and the SDP string is set successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to the URI of DESCRIBE request.
  ** _uri_length_: Length of the URI of DESCRIBE request.
@@ -275,12 +275,12 @@ UINT nx_rtsp_server_pause_callback_set(
 
 === Description
 
-This service sets callback function for PAUSE request. This callback function is called when an RTSP client sends a PAUSE request to the server. <<nx_rtsp_server_range_npt_set,nx_rtsp_server_range_npt_set>> can be called in the callback function to set the NPT range for the PAUSE response.
+This service sets callback function for PAUSE request. This callback function is called when an RTSP client sends a PAUSE request to the server. <<_nx_rtsp_server_range_npt_set,nx_rtsp_server_range_npt_set>> can be called in the callback function to set the NPT range for the PAUSE response.
 
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to PAUSE request callback function. If the URI is valid and the stream delivery can be paused, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to PAUSE request callback function. If the URI is valid and the stream delivery can be paused, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to the URI of PAUSE request.
  ** _uri_length_: Length of the URI of PAUSE request.
@@ -327,12 +327,12 @@ UINT nx_rtsp_server_play_callback_set(
 
 === Description
 
-This service sets callback function for PLAY request. This callback function is called when an RTSP client sends a PLAY request to the server. <<nx_rtsp_server_range_npt_set,nx_rtsp_server_range_npt_set>> can be called in the callback function to set the NPT range for the PLAY response. <<nx_rtsp_server_rtp_info_set,nx_rtsp_server_rtp_info_set>> must be called in the callback function to set the RTP-Info header for the PLAY response.
+This service sets callback function for PLAY request. This callback function is called when an RTSP client sends a PLAY request to the server. <<_nx_rtsp_server_range_npt_set,nx_rtsp_server_range_npt_set>> can be called in the callback function to set the NPT range for the PLAY response. <<_nx_rtsp_server_rtp_info_set,nx_rtsp_server_rtp_info_set>> must be called in the callback function to set the RTP-Info header for the PLAY response.
 
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to PLAY request callback function. If the URI is valid and the stream delivery can be started, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to PLAY request callback function. If the URI is valid and the stream delivery can be started, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to the URI of PLAY request.
  ** _uri_length_: Length of the URI of PLAY request.
@@ -525,7 +525,7 @@ This service sets callback function for SETUP request. This callback function is
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to SETUP request callback function. If the URI is valid and the transport information can be resolved and set successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to SETUP request callback function. If the URI is valid and the transport information can be resolved and set successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to URI of SETUP request.
  ** _uri_length_: The length of URI of SETUP request.
@@ -576,7 +576,7 @@ This service sets callback function for SET_PARAMETER request. This callback fun
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to SET_PARAMETER request callback function. If the URI is valid and the parameters can be updated successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to SET_PARAMETER request callback function. If the URI is valid and the parameters can be updated successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to URI of SET_PARAMETER request.
  ** _uri_length_: The length of URI of SET_PARAMETER request.
@@ -708,7 +708,7 @@ This service sets callback function for TEARDOWN request. This callback function
 === Input Parameters
 
 * _rtsp_server_ptr_: Pointer to RTSP server.
-* _callback_: Pointer to TEARDOWN request callback function. If the URI is valid and the transport session can be closed successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
+* _callback_: Pointer to TEARDOWN request callback function. If the URI is valid and the transport session can be closed successfully, this function should return *NX_SUCCESS*. Otherwise, this function should return another status. In addition, <<_nx_rtsp_server_error_response_send,nx_rtsp_server_error_response_send>> can be called to send the specified error status code. The parameters of this callback function are:
  ** _rtsp_client_ptr_: Pointer to RTSP client.
  ** _uri_: Pointer to URI of TEARDOWN request.
  ** _uri_length_: The length of URI of TEARDOWN request.

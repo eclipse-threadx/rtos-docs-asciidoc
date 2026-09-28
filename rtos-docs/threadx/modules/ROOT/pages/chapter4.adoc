@@ -25,115 +25,115 @@ The Threadx API functions available to the application are as follows.
 
 == Block_Pool_Services
 
-* <<tx_block_allocate,tx_block_allocate>>
-* <<tx_block_pool_create,tx_block_pool_create>>
-* <<tx_block_pool_delete,tx_block_pool_delete>>
-* <<tx_block_pool_info_get,tx_block_pool_info_get>>
-* <<tx_block_pool_performance_info_get,tx_block_pool_performance_info_get>>
-* <<tx_block_pool_performance_system_info_get,tx_block_pool_performance_system_info_get>>
-* <<tx_block_pool_prioritize,tx_block_pool_prioritize>>
-* <<tx_block_release,tx_block_release>>
+* <<_tx_block_allocate,tx_block_allocate>>
+* <<_tx_block_pool_create,tx_block_pool_create>>
+* <<_tx_block_pool_delete,tx_block_pool_delete>>
+* <<_tx_block_pool_info_get,tx_block_pool_info_get>>
+* <<_tx_block_pool_performance_info_get,tx_block_pool_performance_info_get>>
+* <<_tx_block_pool_performance_system_info_get,tx_block_pool_performance_system_info_get>>
+* <<_tx_block_pool_prioritize,tx_block_pool_prioritize>>
+* <<_tx_block_release,tx_block_release>>
 
 == Byte_Pool_Services
 
-* <<tx_byte_allocate,tx_byte_allocate>>
-* <<tx_byte_pool_create,tx_byte_pool_create>>
-* <<tx_byte_pool_delete,tx_byte_pool_delete>>
-* <<tx_byte_pool_info_get,tx_byte_pool_info_get>>
-* <<tx_byte_pool_performance_info_get,tx_byte_pool_performance_info_get>>
-* <<tx_byte_pool_performance_system_info_get,tx_byte_pool_performance_system_info_get>>
-* <<tx_byte_pool_prioritize,tx_byte_pool_prioritize>>
-* <<tx_byte_release,tx_byte_release>>
+* <<_tx_byte_allocate,tx_byte_allocate>>
+* <<_tx_byte_pool_create,tx_byte_pool_create>>
+* <<_tx_byte_pool_delete,tx_byte_pool_delete>>
+* <<_tx_byte_pool_info_get,tx_byte_pool_info_get>>
+* <<_tx_byte_pool_performance_info_get,tx_byte_pool_performance_info_get>>
+* <<_tx_byte_pool_performance_system_info_get,tx_byte_pool_performance_system_info_get>>
+* <<_tx_byte_pool_prioritize,tx_byte_pool_prioritize>>
+* <<_tx_byte_release,tx_byte_release>>
 
 == Event_Flags_Services
 
-* <<tx_event_flags_create,tx_event_flags_create>>
-* <<tx_event_flags_delete,tx_event_flags_delete>>
-* <<tx_event_flags_get,tx_event_flags_get>>
-* <<tx_event_flags_info_get,tx_event_flags_info_get>>
-* <<tx_event_flags_performance_info_get,tx_event_flags_performance_info_get>>
-* <<tx_event_flags_performance_system_info_get,tx_event_flags_performance_system_info_get>>
-* <<tx_event_flags_set,tx_event_flags_set>>
-* <<tx_event_flags_set_notify,tx_event_flags_set_notify>>
+* <<_tx_event_flags_create,tx_event_flags_create>>
+* <<_tx_event_flags_delete,tx_event_flags_delete>>
+* <<_tx_event_flags_get,tx_event_flags_get>>
+* <<_tx_event_flags_info_get,tx_event_flags_info_get>>
+* <<_tx_event_flags_performance_info_get,tx_event_flags_performance_info_get>>
+* <<_tx_event_flags_performance_system_info_get,tx_event_flags_performance_system_info_get>>
+* <<_tx_event_flags_set,tx_event_flags_set>>
+* <<_tx_event_flags_set_notify,tx_event_flags_set_notify>>
 
 == Interrupt_Services
 
-* <<tx_interrupt_control,tx_interrupt_control>>
+* <<_tx_interrupt_control,tx_interrupt_control>>
 
 == Mutex_Services
 
-* <<tx_mutex_create,tx_mutex_create>>
-* <<tx_mutex_delete,tx_mutex_delete>>
-* <<tx_mutex_get,tx_mutex_get>>
-* <<tx_mutex_info_get,tx_mutex_info_get>>
-* <<tx_mutex_performance_info_get,tx_mutex_performance_info_get>>
-* <<tx_mutex_performance_system_info_get,tx_mutex_performance_system_info_get>>
-* <<tx_mutex_prioritize,tx_mutex_prioritize>>
-* <<tx_mutex_put,tx_mutex_put>>
+* <<_tx_mutex_create,tx_mutex_create>>
+* <<_tx_mutex_delete,tx_mutex_delete>>
+* <<_tx_mutex_get,tx_mutex_get>>
+* <<_tx_mutex_info_get,tx_mutex_info_get>>
+* <<_tx_mutex_performance_info_get,tx_mutex_performance_info_get>>
+* <<_tx_mutex_performance_system_info_get,tx_mutex_performance_system_info_get>>
+* <<_tx_mutex_prioritize,tx_mutex_prioritize>>
+* <<_tx_mutex_put,tx_mutex_put>>
 
 == Queue_Services
 
-* <<tx_queue_create,tx_queue_create>>
-* <<tx_queue_delete,tx_queue_delete>>
-* <<tx_queue_flush,tx_queue_flush>>
-* <<tx_queue_front_send,tx_queue_front_send>>
-* <<tx_queue_info_get,tx_queue_info_get>>
-* <<tx_queue_performance_info_get,tx_queue_performance_info_get>>
-* <<tx_queue_performance_system_info_get,tx_queue_performance_system_info_get>>
-* <<tx_queue_prioritize,tx_queue_prioritize>>
-* <<tx_queue_receive,tx_queue_receive>>
-* <<tx_queue_send,tx_queue_send>>
-* <<tx_queue_send_notify,tx_queue_send_notify>>
+* <<_tx_queue_create,tx_queue_create>>
+* <<_tx_queue_delete,tx_queue_delete>>
+* <<_tx_queue_flush,tx_queue_flush>>
+* <<_tx_queue_front_send,tx_queue_front_send>>
+* <<_tx_queue_info_get,tx_queue_info_get>>
+* <<_tx_queue_performance_info_get,tx_queue_performance_info_get>>
+* <<_tx_queue_performance_system_info_get,tx_queue_performance_system_info_get>>
+* <<_tx_queue_prioritize,tx_queue_prioritize>>
+* <<_tx_queue_receive,tx_queue_receive>>
+* <<_tx_queue_send,tx_queue_send>>
+* <<_tx_queue_send_notify,tx_queue_send_notify>>
 
 == Semaphore_Services
 
-* <<tx_semaphore_ceiling_put,tx_semaphore_ceiling_put>>
-* <<tx_semaphore_create,tx_semaphore_create>>
-* <<tx_semaphore_delete,tx_semaphore_delete>>
-* <<tx_semaphore_get,tx_semaphore_get>>
-* <<tx_semaphore_info_get,tx_semaphore_info_get>>
-* <<tx_semaphore_performance_info_get,tx_semaphore_performance_info_get>>
-* <<tx_semaphore_performance_system_info_get,tx_semaphore_performance_system_info_get>>
-* <<tx_semaphore_prioritize,tx_semaphore_prioritize>>
-* <<tx_semaphore_put,tx_semaphore_put>>
-* <<tx_semaphore_put_notify,tx_semaphore_put_notify>>
+* <<_tx_semaphore_ceiling_put,tx_semaphore_ceiling_put>>
+* <<_tx_semaphore_create,tx_semaphore_create>>
+* <<_tx_semaphore_delete,tx_semaphore_delete>>
+* <<_tx_semaphore_get,tx_semaphore_get>>
+* <<_tx_semaphore_info_get,tx_semaphore_info_get>>
+* <<_tx_semaphore_performance_info_get,tx_semaphore_performance_info_get>>
+* <<_tx_semaphore_performance_system_info_get,tx_semaphore_performance_system_info_get>>
+* <<_tx_semaphore_prioritize,tx_semaphore_prioritize>>
+* <<_tx_semaphore_put,tx_semaphore_put>>
+* <<_tx_semaphore_put_notify,tx_semaphore_put_notify>>
 
 == Thread_Services
 
-* <<tx_thread_create,tx_thread_create>>
-* <<tx_thread_delete,tx_thread_delete>>
-* <<tx_thread_entry_exit_notify,tx_thread_entry_exit_notify>>
-* <<tx_thread_identify,tx_thread_identify>>
-* <<tx_thread_info_get,tx_thread_info_get>>
-* <<tx_thread_performance_info_get,tx_thread_performance_info_get>>
-* <<tx_thread_performance_system_info_get,tx_thread_performance_system_info_get>>
-* <<tx_thread_preemption_change,tx_thread_preemption_change>>
-* <<tx_thread_priority_change,tx_thread_priority_change>>
-* <<tx_thread_relinquish,tx_thread_relinquish>>
-* <<tx_thread_reset,tx_thread_reset>>
-* <<tx_thread_resume,tx_thread_resume>>
-* <<tx_thread_sleep,tx_thread_sleep>>
-* <<tx_thread_stack_error_notify,tx_thread_stack_error_notify>>
-* <<tx_thread_suspend,tx_thread_suspend>>
-* <<tx_thread_terminate,tx_thread_terminate>>
-* <<tx_thread_time_slice_change,tx_thread_time_slice_change>>
-* <<tx_thread_wait_abort,tx_thread_wait_abort>>
+* <<_tx_thread_create,tx_thread_create>>
+* <<_tx_thread_delete,tx_thread_delete>>
+* <<_tx_thread_entry_exit_notify,tx_thread_entry_exit_notify>>
+* <<_tx_thread_identify,tx_thread_identify>>
+* <<_tx_thread_info_get,tx_thread_info_get>>
+* <<_tx_thread_performance_info_get,tx_thread_performance_info_get>>
+* <<_tx_thread_performance_system_info_get,tx_thread_performance_system_info_get>>
+* <<_tx_thread_preemption_change,tx_thread_preemption_change>>
+* <<_tx_thread_priority_change,tx_thread_priority_change>>
+* <<_tx_thread_relinquish,tx_thread_relinquish>>
+* <<_tx_thread_reset,tx_thread_reset>>
+* <<_tx_thread_resume,tx_thread_resume>>
+* <<_tx_thread_sleep,tx_thread_sleep>>
+* <<_tx_thread_stack_error_notify,tx_thread_stack_error_notify>>
+* <<_tx_thread_suspend,tx_thread_suspend>>
+* <<_tx_thread_terminate,tx_thread_terminate>>
+* <<_tx_thread_time_slice_change,tx_thread_time_slice_change>>
+* <<_tx_thread_wait_abort,tx_thread_wait_abort>>
 
 == Time_Services
 
-* <<tx_time_get,tx_time_get>>
-* <<tx_time_set,tx_time_set>>
+* <<_tx_time_get,tx_time_get>>
+* <<_tx_time_set,tx_time_set>>
 
 == Timer_Services
 
-* <<tx_timer_activate,tx_timer_activate>>
-* <<tx_timer_change,tx_timer_change>>
-* <<tx_timer_create,tx_timer_create>>
-* <<tx_timer_deactivate,tx_timer_deactivate>>
-* <<tx_timer_delete,tx_timer_delete>>
-* <<tx_timer_info_get,tx_timer_info_get>>
-* <<tx_timer_performance_info_get,tx_timer_performance_info_get>>
-* <<tx_timer_performance_system_info_get,tx_timer_performance_system_info_get>>
+* <<_tx_timer_activate,tx_timer_activate>>
+* <<_tx_timer_change,tx_timer_change>>
+* <<_tx_timer_create,tx_timer_create>>
+* <<_tx_timer_deactivate,tx_timer_deactivate>>
+* <<_tx_timer_delete,tx_timer_delete>>
+* <<_tx_timer_info_get,tx_timer_info_get>>
+* <<_tx_timer_performance_info_get,tx_timer_performance_info_get>>
+* <<_tx_timer_performance_system_info_get,tx_timer_performance_system_info_get>>
 
 == tx_block_allocate
 
