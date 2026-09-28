@@ -17,8 +17,8 @@
 = Appendix B - ThreadX Constants
 :description: Explore the ThreadX Constants.
 
-* <<alphabetic-listings,*Alphabetic Listings*>>
-* <<listing-by-value,*Listing by Value*>>
+* <<_alphabetic_listings,*Alphabetic Listings*>>
+* <<_listing_by_value,*Listing by Value*>>
 
 == Alphabetic Listings
 

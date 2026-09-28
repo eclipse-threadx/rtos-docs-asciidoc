@@ -26,11 +26,11 @@ There are several additional API functions available to a module, as follows:
 
 == Threadx_Module_APIs
 
-* <<txm_module_application_request,txm_module_application_request>>
-* <<txm_module_object_allocate,txm_module_object_allocate>>
-* <<txm_module_object_deallocate,txm_module_object_deallocate>>
-* <<txm_module_object_pointer_get,txm_module_object_pointer_get>>
-* <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>
+* <<_txm_module_application_request,txm_module_application_request>>
+* <<_txm_module_object_allocate,txm_module_object_allocate>>
+* <<_txm_module_object_deallocate,txm_module_object_deallocate>>
+* <<_txm_module_object_pointer_get,txm_module_object_pointer_get>>
+* <<_txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>
 
 == Return values
 
@@ -210,11 +210,11 @@ Module threads
 
 Find system object and retrieve object pointer
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>> instead, passing the actual length of the name buffer.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>> instead, passing the actual length of the name buffer.
 
 This function passes `UINT_MAX` as the name-buffer length to the underlying search. If the `name` pointer addresses a buffer shorter than the object name being compared, the comparison loop reads past the end of the buffer, which is undefined behavior.
 
-Because no length is passed, the Module Manager cannot establish how much of the buffer it is allowed to read, and a module loaded with *TXM_MODULE_MEMORY_PROTECTION* is therefore refused this service with *TXM_MODULE_INVALID_MEMORY*. Such a module must use <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>. Modules loaded without memory protection are unaffected.
+Because no length is passed, the Module Manager cannot establish how much of the buffer it is allowed to read, and a module loaded with *TXM_MODULE_MEMORY_PROTECTION* is therefore refused this service with *TXM_MODULE_INVALID_MEMORY*. Such a module must use <<_txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>. Modules loaded without memory protection are unaffected.
 
 === Prototype
 
@@ -229,7 +229,7 @@ UINT txm_module_object_pointer_get(
 
 *_Deprecated — see above._* This service retrieves the object pointer of a particular type with a particular name. If the object is not found, an error is returned. Otherwise, if the object is found, the address of that object is placed in "object_ptr."
 
-The pointer this service returns grants use of the object, not authority to destroy it. See <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>.
+The pointer this service returns grants use of the object, not authority to destroy it. See <<_txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>.
 
 === Input parameters
 

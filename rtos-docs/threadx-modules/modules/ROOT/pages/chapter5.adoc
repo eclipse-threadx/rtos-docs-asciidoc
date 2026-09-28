@@ -45,7 +45,7 @@ There are several additional APIs available to the resident portion of the appli
 
 Module's code and data are at absolute (fixed) addresses.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> instead, passing the address of the module's data area.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> instead, passing the address of the module's data area.
 
 === Reason for deprecation
 
@@ -69,7 +69,7 @@ UINT txm_module_manager_absolute_load(
 
 *_Deprecated — see above._* This service initializes the module contained in the specified location and prepares it for execution. There is no code or data relocation, thus position-independence is not necessary.
 
-This service calls <<txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> with an unknown data area location. The module instance's data start address, data end address, data size, and module data base address are left empty, and modules requesting memory protection are rejected.
+This service calls <<_txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> with an unknown data area location. The module instance's data start address, data end address, data size, and module data base address are left empty, and modules requesting memory protection are rejected.
 
 === Input parameters
 
@@ -138,7 +138,7 @@ UINT txm_module_manager_absolute_load_extended(
 
 This service initializes the module contained in the specified location and prepares it for execution. There is no code or data relocation, thus position-independence is not necessary.
 
-Unlike <<txm_module_manager_absolute_load,txm_module_manager_absolute_load>>, this service also receives the address of the module's data area. That address is the RAM segment start address defined in the module's linker script. It cannot be derived by the Module Manager, because the module preamble carries the data size but not the data address.
+Unlike <<_txm_module_manager_absolute_load,txm_module_manager_absolute_load>>, this service also receives the address of the module's data area. That address is the RAM segment start address defined in the module's linker script. It cannot be derived by the Module Manager, because the module preamble carries the data size but not the data address.
 
 Supplying the data area address allows the Module Manager to describe the module's data area in the module instance. This is required for memory protection, for the object memory checks performed by the kernel dispatch layer, and for the cleanup performed when the module is stopped.
 
