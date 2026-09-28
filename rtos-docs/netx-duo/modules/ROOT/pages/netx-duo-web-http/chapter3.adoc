@@ -2871,6 +2871,70 @@ UINT my_request_notify(NX_WEB_HTTP_SERVER *server_ptr, UINT request_type,
 }
 ----
 
+== nx_web_http_server_event_stream_start
+
+Start a Server-Sent Events response from a GET request callback.
+
+=== Prototype
+
+[,C]
+----
+UINT nx_web_http_server_event_stream_start(
+    NX_WEB_HTTP_SERVER *server_ptr,
+    NX_TCP_SESSION **session_pptr);
+----
+
+=== Description
+
+This service sends a `200 OK` response with `Content-Type: text/event-stream`, `Cache-Control: no-cache`, and `Connection: keep-alive`. It omits `Content-Length` so the response can carry events of unknown total size. The client request must permit a persistent connection. The service keeps only the selected session open while idle; other HTTP sessions retain their normal timeout. The callback should return `NX_WEB_HTTP_CALLBACK_COMPLETED` after a successful call.
+
+The returned session pointer identifies the stream for `nx_web_http_server_event_stream_send`. The application must stop using it when the client disconnects. This service is unavailable when `NX_WEB_HTTP_KEEPALIVE_DISABLE` is defined.
+
+=== Input Parameters
+
+* _server_ptr_: Pointer to the HTTP server control block.
+* _session_pptr_: Receives the TCP session pointer on success.
+
+=== Return Values
+
+* *NX_SUCCESS*: The response header was sent and the stream is open.
+* *NX_PTR_ERROR*: An input pointer or server control block is invalid.
+* *NX_WEB_HTTP_ERROR*: The current request is not a persistent GET, or keep-alive is disabled.
+* Other NetX Duo status codes: Packet allocation or sending failed.
+
+== nx_web_http_server_event_stream_send
+
+Send event data on an open Server-Sent Events response.
+
+=== Prototype
+
+[,C]
+----
+UINT nx_web_http_server_event_stream_send(
+    NX_WEB_HTTP_SERVER *server_ptr,
+    NX_TCP_SESSION *session_ptr,
+    VOID *data_ptr,
+    ULONG data_length);
+----
+
+=== Description
+
+This service sends the supplied bytes on the selected HTTP or HTTPS stream, including from an application thread after the request callback returns. The application formats the event payload according to the Server-Sent Events format, such as `data: ready\n\n`. The service allocates and releases its own packet. It does not change the session timeout or use the server's current request pointer. A failed send means the application should stop using the session pointer.
+
+=== Input Parameters
+
+* _server_ptr_: Pointer to the HTTP server control block.
+* _session_ptr_: Session returned by `nx_web_http_server_event_stream_start`.
+* _data_ptr_: Event bytes to send.
+* _data_length_: Number of event bytes; must be greater than zero.
+
+=== Return Values
+
+* *NX_SUCCESS*: The event data was sent.
+* *NX_PTR_ERROR*: An input pointer, server control block, or session pointer is invalid.
+* *NX_WEB_HTTP_ERROR*: The session is not an open event stream or the length is zero.
+* Other NetX Duo status codes: Packet allocation or sending failed.
+
 == nx_web_http_server_callback_generate_response_header
 
 Create a response header in a callback function
