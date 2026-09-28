@@ -33,9 +33,18 @@ jobs:
           ref: 'main'
           path: 'rtos-docs-html'
           token: ${{ secrets.DOCS_PUBLISH_TOKEN }}
-      - name: Checkout new branch for pages
+      - name: Checkout branch for pages
         working-directory: 'rtos-docs-html'
-        run: git checkout -B ${{ github.ref_name }}
+        env:
+          PAGE_BRANCH: ${{ github.ref_name }}
+        run: |
+          branch_tip=$(git ls-remote --heads origin "refs/heads/$PAGE_BRANCH")
+          if [ -n "$branch_tip" ]; then
+            git fetch --no-tags origin "refs/heads/$PAGE_BRANCH"
+            git checkout -B "$PAGE_BRANCH" FETCH_HEAD
+          else
+            git checkout -B "$PAGE_BRANCH"
+          fi
       - name: Install Node.js
         uses: actions/setup-node@v5
         with:
