@@ -21,11 +21,11 @@ There are several additional API functions available to a module, as follows:
 
 == Threadx_Module_APIs
 
-* <<txm_module_application_request,txm_module_application_request>>
-* <<txm_module_object_allocate,txm_module_object_allocate>>
-* <<txm_module_object_deallocate,txm_module_object_deallocate>>
-* <<txm_module_object_pointer_get,txm_module_object_pointer_get>>
-* <<txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>
+* <<_txm_module_application_request,txm_module_application_request>>
+* <<_txm_module_object_allocate,txm_module_object_allocate>>
+* <<_txm_module_object_deallocate,txm_module_object_deallocate>>
+* <<_txm_module_object_pointer_get,txm_module_object_pointer_get>>
+* <<_txm_module_object_pointer_get_extended,txm_module_object_pointer_get_extended>>
 
 == Return values
 
