@@ -19,6 +19,10 @@
 
 The LevelX NAND API functions available to the application are as follows.
 
+Each logical NAND page contains one hardware page of data. LevelX maps the logical page number to a physical block and page for wear leveling; the application does not pass a physical page number to these services. A FileX sector may be smaller than a NAND page, so a FileX media driver must translate between the two sizes.
+
+The `lx_nand_flash_sector_*` and `lx_nand_flash_sectors_*` names remain compatible aliases for the corresponding `page` and `pages` services. Both spellings use the same entry points and data format.
+
 Under the "Allowed From" heading, "Initialization" means from *_tx_application_define_* onward. It does not extend to code that runs before *_tx_kernel_enter_*, such as a C++ static constructor or preliminary processing in _main_. See "Calling ThreadX Services During Initialization" in xref:threadx:ROOT:chapter3.adoc[Chapter 3 of the ThreadX User Guide].
 
 == NAND_Services
@@ -28,9 +32,12 @@ Under the "Allowed From" heading, "Initialization" means from *_tx_application_d
 * <<_lx_nand_flash_open,lx_nand_flash_open>>
 * <<_lx_nand_flash_page_ecc_check,lx_nand_flash_page_ecc_check>>
 * <<_lx_nand_flash_page_ecc_compute,lx_nand_flash_page_ecc_compute>>
-* <<_lx_nand_flash_sectors_read,lx_nand_flash_sectors_read>>
-* <<_lx_nand_flash_sectors_release,lx_nand_flash_sectors_release>>
-* <<_lx_nand_flash_sectors_write,lx_nand_flash_sectors_write>>
+* <<lx_nand_flash_page_read,lx_nand_flash_page_read>>
+* <<lx_nand_flash_page_release,lx_nand_flash_page_release>>
+* <<lx_nand_flash_page_write,lx_nand_flash_page_write>>
+* <<lx_nand_flash_pages_read,lx_nand_flash_pages_read>>
+* <<lx_nand_flash_pages_release,lx_nand_flash_pages_release>>
+* <<lx_nand_flash_pages_write,lx_nand_flash_pages_write>>
 
 == lx_nand_flash_close
 
@@ -312,9 +319,9 @@ status = lx_nand_flash_open(&my_nand_flash,"my nand flash",
 * lx_nand_flash_initialize
 * lx_nand_flash_page_ecc_check
 * lx_nand_flash_page_ecc_compute
-* lx_nand_flash_sectors_read
-* lx_nand_flash_sectors_release
-* lx_nand_flash_sectors_write
+* lx_nand_flash_pages_read
+* lx_nand_flash_pages_release
+* lx_nand_flash_pages_write
 
 == lx_nand_flash_page_ecc_check
 
@@ -455,34 +462,34 @@ status = lx_nand_flash_partial_defragment(&my_nand_flash, 1);
 
 * <<NAND_Services,levelx NAND Services>>
 
-== lx_nand_flash_sector_read
+== lx_nand_flash_page_read
 
-Read NAND flash sector
+Read NAND flash page
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sector_read(
+UINT lx_nand_flash_page_read(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector,
+    ULONG logical_page,
     VOID *buffer);
 ----
 
 === Description
 
-This service reads the logical sector from the NAND flash instance and if successful returns the contents in the supplied buffer. Note that NAND sector size is always the page size of the underlying NAND hardware.
+This service reads a logical page from the NAND flash instance into the supplied buffer. The data size is `lx_nand_flash_bytes_per_page`.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to read.
-* _buffer_: Pointer to destination for contents of the logical sector. Note that the buffer is assumed to be the size of the NAND flash page size and aligned for ULONG access.
+* _logical_page_: Logical page to read.
+* _buffer_: Destination buffer of at least `lx_nand_flash_bytes_per_page` bytes, aligned for `ULONG` access.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_ERROR*: (0x01) Error reading NAND flash sector.
+* *LX_ERROR*: (0x01) Error reading NAND flash page.
 
 === Allowed From
 
@@ -492,46 +499,46 @@ Threads
 
 [,c]
 ----
-/* Read logical sector 20 of the NAND flash instance "my_nand_flash" and place contents in "buffer". */
-status = lx_nand_flash_sector_read(&my_nand_flash, 20, buffer);
+/* Read logical page 20 of the NAND flash instance "my_nand_flash" and place contents in "buffer". */
+status = lx_nand_flash_page_read(&my_nand_flash, 20, buffer);
 
-/* If status is LX_SUCCESS, "buffer" contains the contents of logical sector 20. */
+/* If status is LX_SUCCESS, "buffer" contains the contents of logical page 20. */
 ----
 
 === See Also
 
 * <<NAND_Services,levelx NAND Services>>
 
-== lx_nand_flash_sectors_read
+== lx_nand_flash_pages_read
 
-Read multiple NAND flash sectors
+Read multiple NAND flash pages
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sectors_read(
+UINT lx_nand_flash_pages_read(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector,
+    ULONG logical_page,
     VOID *buffer,
-    ULONG sector_count);
+    ULONG page_count);
 ----
 
 === Description
 
-This service reads the specified number of logical sectors from the NAND flash instance and if successful returns the contents in the supplied buffer. Note that NAND sector size is always the page size of the underlying NAND hardware.
+This service reads the specified number of logical pages from the NAND flash instance into the supplied buffer. Each page contains `lx_nand_flash_bytes_per_page` bytes.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to read.
-* _buffer_: Pointer to destination for contents of the logical sector. Note that the logical sector size is the same as NAND flash page size and the buffer is assumed to be large enough to hold all the sectors to read and aligned for ULONG access.
-* _sector_count_: Number of logical sectors to read.
+* _logical_page_: First logical page to read.
+* _buffer_: Destination buffer of at least `page_count * nand_flash->lx_nand_flash_bytes_per_page` bytes, aligned for `ULONG` access.
+* _page_count_: Number of logical pages to read.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_ERROR*: (0x01) Error reading NAND flash sector.
+* *LX_ERROR*: (0x01) Error reading NAND flash page.
 
 === Allowed From
 
@@ -541,38 +548,38 @@ Threads
 
 [,c]
 ----
-/* Read 10 logical sectors starting at logical sector 20 of the NAND flash instance "my_nand_flash" and place contents in "buffer". */
-status = lx_nand_flash_sectors_read(&my_nand_flash, 20, buffer, 10);
+/* Read 10 logical pages starting at logical page 20 of the NAND flash instance "my_nand_flash" and place contents in "buffer". */
+status = lx_nand_flash_pages_read(&my_nand_flash, 20, buffer, 10);
 
-/* If status is LX_SUCCESS, "buffer" contains the contents of logical sectors 20 through 29. */
+/* If status is LX_SUCCESS, "buffer" contains the contents of logical pages 20 through 29. */
 ----
 
-== lx_nand_flash_sector_release
+== lx_nand_flash_page_release
 
-Release NAND flash sector
+Release NAND flash page
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sector_release(
+UINT lx_nand_flash_page_release(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector);
+    ULONG logical_page);
 ----
 
 === Description
 
-This service releases the logical sector mapping in the NAND flash instance. Releasing a logical sector when not used makes the LevelX wear leveling more efficient.
+This service releases the logical page mapping in the NAND flash instance. Releasing a logical page when not used makes the LevelX wear leveling more efficient.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to release.
+* _logical_page_: Logical page to release.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_ERROR*: (0x01) Error NAND flash sector write.
+* *LX_ERROR*: (0x01) Error releasing the NAND flash page.
 
 === Allowed From
 
@@ -582,44 +589,44 @@ Threads
 
 [,c]
 ----
-/* Release logical sector 20 of the NAND flash instance "my_nand_flash". */
-status = lx_nand_flash_sector_release(&my_nand_flash, 20);
+/* Release logical page 20 of the NAND flash instance "my_nand_flash". */
+status = lx_nand_flash_page_release(&my_nand_flash, 20);
 
-/* If status is LX_SUCCESS, logical sector 20 has been released. */
+/* If status is LX_SUCCESS, logical page 20 has been released. */
 ----
 
 === See Also
 
 * <<NAND_Services,levelx NAND Services>>
 
-== lx_nand_flash_sectors_release
+== lx_nand_flash_pages_release
 
-Release multiple NAND flash sectors
+Release multiple NAND flash pages
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sectors_release(
+UINT lx_nand_flash_pages_release(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector,
-    ULONG sector_count);
+    ULONG logical_page,
+    ULONG page_count);
 ----
 
 === Description
 
-This service releases the specified number of logical sectors in the NAND flash instance. Releasing a logical sector when not used makes the LevelX wear leveling more efficient.
+This service releases the specified number of logical pages in the NAND flash instance. Releasing a logical page when not used makes the LevelX wear leveling more efficient.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to release.
-* _sector_count_: Number of logical sectors to release.
+* _logical_page_: First logical page to release.
+* _page_count_: Number of logical pages to release.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_ERROR*: (0x01) Error NAND flash sector write.
+* *LX_ERROR*: (0x01) Error releasing a NAND flash page.
 
 === Allowed From
 
@@ -629,45 +636,45 @@ Threads
 
 [,c]
 ----
-/* Release 10 logical sectors starting at logical sector 20 of the NAND flash instance "my_nand_flash". */
-status = lx_nand_flash_sectors_release(&my_nand_flash, 20, 10);
+/* Release 10 logical pages starting at logical page 20 of the NAND flash instance "my_nand_flash". */
+status = lx_nand_flash_pages_release(&my_nand_flash, 20, 10);
 
-/* If status is LX_SUCCESS, logical sectors 20 through 29 have been released. */
+/* If status is LX_SUCCESS, logical pages 20 through 29 have been released. */
 ----
 
 === See Also
 
 * <<NAND_Services,levelx NAND Services>>
 
-== lx_nand_flash_sector_write
+== lx_nand_flash_page_write
 
-Write NAND flash sector
+Write NAND flash page
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sector_write(
+UINT lx_nand_flash_page_write(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector,
+    ULONG logical_page,
     VOID *buffer);
 ----
 
 === Description
 
-This service writes the specified logical sector in the NAND flash instance.
+This service writes the specified logical page in the NAND flash instance.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to write.
-* _buffer_: Pointer to the contents of the logical sector. Note that the buffer is assumed to be the size of the NAND flash page size and aligned for ULONG access.
+* _logical_page_: Logical page to write.
+* _buffer_: Source buffer of at least `lx_nand_flash_bytes_per_page` bytes, aligned for `ULONG` access.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_NO_SECTORS*: (0x02) No more free sectors are available to perform the write.
-* *LX_ERROR*: (0x01) Error writing NAND flash sector.
+* *LX_NO_SECTORS*: (0x02) No more free pages are available to perform the write.
+* *LX_ERROR*: (0x01) Error writing NAND flash page.
 
 === Allowed From
 
@@ -677,47 +684,47 @@ Threads
 
 [,c]
 ----
-/* Write logical sector 20 of the NAND flash instance "my_nand_flash" with the contents pointed to by "buffer". */
-status = lx_nand_flash_sector_write(&my_nand_flash, 20, buffer);
+/* Write logical page 20 of the NAND flash instance "my_nand_flash" with the contents pointed to by "buffer". */
+status = lx_nand_flash_page_write(&my_nand_flash, 20, buffer);
 
-/* If status is LX_SUCCESS, logical sector 20 has been written with the contents of "buffer". */
+/* If status is LX_SUCCESS, logical page 20 has been written with the contents of "buffer". */
 ----
 
 === See Also
 
 * <<NAND_Services,levelx NAND Services>>
 
-== lx_nand_flash_sectors_write
+== lx_nand_flash_pages_write
 
-Write multiple NAND flash sectors
+Write multiple NAND flash pages
 
 === Prototype
 
 [,c]
 ----
-UINT lx_nand_flash_sectors_write(
+UINT lx_nand_flash_pages_write(
     LX_NAND_FLASH *nand_flash,
-    ULONG logical_sector,
+    ULONG logical_page,
     VOID *buffer,
-    ULONG sector_count);
+    ULONG page_count);
 ----
 
 === Description
 
-This service writes the specified number of logical sectors in the NAND flash instance.
+This service writes the specified number of logical pages in the NAND flash instance.
 
 === Input Parameters
 
 * _nand_flash_: NAND flash instance pointer.
-* _logical_sector_: Logical sector to write.
-* _buffer_: Pointer to the contents of the logical sector. Note that the logical sector size is the same as NAND flash page size and the buffer is assumed to be large enough to hold all the sectors to write and aligned for ULONG access.
-* _sector_count_: Number of logical sectors to write.
+* _logical_page_: First logical page to write.
+* _buffer_: Source buffer of at least `page_count * nand_flash->lx_nand_flash_bytes_per_page` bytes, aligned for `ULONG` access.
+* _page_count_: Number of logical pages to write.
 
 === Return Values
 
 * *LX_SUCCESS*: (0x00) Successful request.
-* *LX_NO_SECTORS*: (0x02) No more free sectors are available to perform the write.
-* *LX_ERROR*: (0x01) Error writing NAND flash sector.
+* *LX_NO_SECTORS*: (0x02) No more free pages are available to perform the write.
+* *LX_ERROR*: (0x01) Error writing NAND flash page.
 
 === Allowed From
 
@@ -727,10 +734,10 @@ Threads
 
 [,c]
 ----
-/* Write 10 logical sectors starting at logical sector 20 of the NAND flash instance "my_nand_flash" with the contents pointed to by "buffer". */
-status = lx_nand_flash_sectors_write(&my_nand_flash, 20, buffer, 10);
+/* Write 10 logical pages starting at logical page 20 of the NAND flash instance "my_nand_flash" with the contents pointed to by "buffer". */
+status = lx_nand_flash_pages_write(&my_nand_flash, 20, buffer, 10);
 
-/* If status is LX_SUCCESS, logical sectors 20 through 29 have been written with the contents of "buffer". */
+/* If status is LX_SUCCESS, logical pages 20 through 29 have been written with the contents of "buffer". */
 ----
 
 === See Also
