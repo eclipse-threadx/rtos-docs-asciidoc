@@ -101,6 +101,17 @@ LevelX Utilizes 4 of the spare bytes of each NAND page for keeping track of the 
 
 LevelX utilizes a few NAND blocks for the metadata. The metadata blocks are used to store the mapping information between the logical block and the physical block and other tables used to keep track of the blocks and pages.
 
+Each LevelX NAND block must have enough pages for a complete metadata snapshot, one block-link page, and one later metadata update. The snapshot contains a device-information page, an erase-count table with one byte per block, and mapping and status tables with one `USHORT` per block each. Each table occupies at least one page. With `B` LevelX blocks and `P` bytes per page, the minimum is:
+
+[,text]
+----
+snapshot_pages = 1 + ceil(max(P, B * sizeof(UCHAR)) / P)
+                   + 2 * ceil(max(P, B * sizeof(USHORT)) / P)
+snapshot_pages + 2 <= pages_per_block
+----
+
+NAND format and open return `LX_NOT_SUPPORTED` before LevelX reads, writes, or erases flash if this limit is exceeded. For example, 4096 blocks with 8 pages of 256 bytes need an 81-page snapshot and cannot be used directly. A driver can instead group four physical erase blocks into one LevelX block: 1024 virtual blocks with 32 pages of 256 bytes need a 21-page snapshot. Such a driver must map every virtual page and apply erase, erase verification, and block-status operations to all physical blocks in each group.
+
 == NAND Bad Block Support
 
 NAND memory is also more likely to have bad blocks than NOR memory. This is largely because NAND manufacturers can increase yield by allowing bad blocks and requiring software to work-around such bad blocks. LevelX handles NAND bad block management by simply mapping around bad blocks.
