@@ -193,6 +193,7 @@ This service erase the NAND flash and formats the NAND flash instance with the s
 * *LX_SUCCESS*: (0x00) Successful request.
 * *LX_ERROR*: (0x01) Error formatting NAND flash instance.
 * *LX_NO_BLOCKS*: (0x0B) Not enough blocks to format NAND flash instance.
+* *LX_NOT_SUPPORTED*: (0x0C) The NAND geometry cannot hold a complete metadata snapshot and its required following pages in one block.
 
 === Allowed From
 
@@ -290,6 +291,7 @@ This service opens a NAND flash instance with the specified NAND flash control b
 * *LX_SUCCESS*: (0x00) Successful request.
 * *LX_ERROR*: (0x01) Error opening NAND flash instance.
 * *LX_NO_MEMORY*: (0x08) Driver did not provide buffer for reading one page into RAM.
+* *LX_NOT_SUPPORTED*: (0x0C) The NAND geometry cannot hold a complete metadata snapshot and its required following pages in one block.
 
 === Allowed From
 
