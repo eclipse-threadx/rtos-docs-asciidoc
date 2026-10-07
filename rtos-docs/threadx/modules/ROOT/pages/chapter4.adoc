@@ -3645,6 +3645,8 @@ UINT tx_thread_create(
 
 This service creates an application thread that starts execution at the specified task entry function. The stack, priority, preemption-threshold, and time-slice are among the attributes specified by the input parameters. In addition, the initial execution state of the thread is also specified.
 
+When *TX_ENABLE_STACK_CHECKING* is enabled, ThreadX aligns the usable stack start and reserves space for stack-checking patterns within the supplied memory area. These adjustments preserve the full address of _stack_start_, including when *TX_MISRA_ENABLE* is also enabled. Pass the stack address directly as a pointer; do not narrow it through an integer cast.
+
 === Parameters
 
 * _thread_ptr_: Pointer to a thread control block.
