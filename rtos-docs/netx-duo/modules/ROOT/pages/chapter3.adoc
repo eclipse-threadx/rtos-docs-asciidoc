@@ -1044,10 +1044,10 @@ image::user-guide/image18.png[Diagram of the IPv6 header format.]
 | 4-bit field for IP version. For IPv6 networks, the value in this field must be 6; For IPv4 networks it must be 4.
 
 | Traffic Class
-| 8-bit field that stores the traffic class information. This field is not used by NetX Duo.
+| 8-bit field that stores the traffic class information. Raw IPv6 sends use the low eight bits of the `tos` argument; other NetX Duo send paths currently set this field to zero.
 
 | Flow Label
-| 20-bit field to uniquely identify the flow, if any, that a packet is associated with. A value of zero indicates the packet does not belong to a particular flow. This field replaces the __TOS__field in IPv4.
+| 20-bit field to uniquely identify the flow, if any, that a packet is associated with. A value of zero indicates the packet does not belong to a particular flow. NetX Duo currently sets this field to zero.
 
 | Payload Length
 | 16-bit field indicating the amount of data in bytes of the IPv6 packet following the IPv6 base header. This includes all encapsulated protocol header and data.
