@@ -226,7 +226,7 @@ On networks where there is more than one DHCP Server, the DHCP Client accepts th
 
 == ARP Probes
 
-The DHCP Client can be configured to send one or more ARP probes after IP address assignment from the DHCP Server to verify the IP address is not already in use. The ARP probe step is recommended by RFC 2131 and is particularly important in environments with more than one DHCP Server. If the host application enables the NX_DHCP_CLIENT_SEND_ARP_PROBE option (see *Configuration Options* in Chapter Two for additional ARP probe options), the DHCP Client will send a 'self addressed' ARP probe and wait for the specified time for a response. If none is received, the DHCP Client advances to the Bound state. If a response is received, the DHCP Client assumes the address is already in use. It automatically sends a DECLINE message to the Server, and reinitializes the Client to restart the DHCP probes again from the INIT state. This restarts the DHCP state machine and the Client sends another DISCOVER message to the Server.
+The DHCP Client can send ARP probes after receiving a DHCP address to check whether another host already uses it. This is recommended by RFC 2131 and is particularly useful when multiple DHCP servers are present. With *NX_DHCP_CLIENT_SEND_ARP_PROBE* enabled, the client waits before its first probe, sends the configured number of probes, then continues to check for conflicts for *NX_DHCP_ARP_ANNOUNCE_WAIT* after the final probe. It enters the Bound state only when that wait expires without a conflict. If a conflict is detected, the client sends a DECLINE message to the server and restarts from the INIT state.
 
 == BOOTP Protocol
 
@@ -423,10 +423,11 @@ User configurable DHCP options in _nxd_dhcp_client.h_ allow the host application
 * *NX_DHCP_CLIENT_RESTORE_STATE*: If defined, this enables the DHCP Client to save its current DHCP Client license 'state' including time remaining on the lease, and restore this state between DHCP Client application reboots. The default value is disabled.
 * *NX_DHCP_CLIENT_USER_CREATE_PACKET_POOL*: If set, the DHCP Client will not create its own packet pool. The host application must use the _nx_dhcp_packet_pool_set_ service to set the DHCP Client packet pool. The default value is disabled.
 * *NX_DHCP_CLIENT_SEND_ARP_PROBE*: Defined, this enables the DHCP Client to send an ARP probe after IP address assignment to verify the assigned DHCP address is not owned by another host. By default, this option is disabled.
-* *NX_DHCP_ARP_PROBE_WAIT*: Defines the length of time the DHCP Client waits for a response after sending an ARP probe. The default value is one second (1 * NX_IP_PERIODIC_RATE)
+* *NX_DHCP_ARP_PROBE_WAIT*: Defines the maximum random delay before the first ARP probe. The default value is one second (1 * NX_IP_PERIODIC_RATE).
 * *NX_DHCP_ARP_PROBE_MIN*: Defines the minimum variation in the interval between sending ARP probes. The value is defaulted to 1 second.
 * *NX_DHCP_ARP_PROBE_MAX*: Defines the maximum variation in the interval between sending ARP probes. The value is defaulted to 2 seconds.
 * *NX_DHCP_ARP_PROBE_NUM*: Defines the number of ARP probes sent for determining if the IP address assigned by the DHCP server is already in use. The value is defaulted to 3 probes.
+* *NX_DHCP_ARP_ANNOUNCE_WAIT*: Defines the wait after the final ARP probe before the client uses the address. The default is two seconds (2 * NX_IP_PERIODIC_RATE), as specified by RFC 5227. The value must be greater than zero.
 * *NX_DHCP_RESTART_WAIT*: Defines the length of time the DHCP Client waits to restart DHCP if the IP address assigned to the DHCP Client is already in use. The value is defaulted to 10 seconds.
 * *NX_DHCP_CLIENT_MAX_RECORDS*: Specifies the maximum number of interface records to save to the DHCP Client instance. A DHCP Client interface record is a record of the DHCP Client running on a specific interface. The default value is set as physical interfaces count(NX_MAX_PHYSICAL_INTERFACES).
 * *NX_DHCP_CLIENT_SEND_MAX_DHCP_MESSAGE_OPTION*: Defined, this enables the DHCP Client to send maximum DHCP message size option. By default, this option is disabled.
