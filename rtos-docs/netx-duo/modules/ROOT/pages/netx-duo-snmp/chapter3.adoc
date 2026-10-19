@@ -1617,7 +1617,7 @@ This service sends an SNMPv3 trap to the SNMP Manager at the specified IPv4 addr
 
 === Allowed From
 
-Initialization, Threads
+Threads
 
 === Example
 
