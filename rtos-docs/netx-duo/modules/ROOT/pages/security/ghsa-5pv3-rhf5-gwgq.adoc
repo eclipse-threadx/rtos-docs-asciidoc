@@ -91,6 +91,6 @@ Building without `NX_SECURE_TLS_ENABLE_TLS_1_3` avoids the HelloRetryRequest pat
 
 === Credits
 
-Reported by @wsparks-vc. Fixed by Frédéric Desbiens.
+Found by SecMate automated analysis (https://secmate.dev/). Reported by VulnCheck. Fixed by Frédéric Desbiens.
 
 The fix and regression test were produced with AI assistance under human review, in accordance with the Eclipse Foundation's Generative AI Usage Guidelines.
