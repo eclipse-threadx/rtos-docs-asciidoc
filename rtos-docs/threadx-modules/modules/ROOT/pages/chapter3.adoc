@@ -220,9 +220,12 @@ The resident portion of the application is responsible for calling the Module Ma
 
 The Module Manager can load modules dynamically into the module memory from binary module files or from a module code section that is already present in the resident code area. In addition, the module manager can execute code in place, that is, only the module data is allocated in the module memory and the code execution is done in place. The following Module Manager load API functions are available.
 
+* *_txm_module_manager_absolute_load_ext_*
 * *_txm_module_manager_file_load_*
-* *_txm_module_manager_in_place_load_*
-* *_txm_module_manager_memory_load_*
+* *_txm_module_manager_in_place_load_ext_*
+* *_txm_module_manager_memory_load_ext_*
+
+The *_txm_module_manager_absolute_load_*, *_txm_module_manager_absolute_load_extended_*, *_txm_module_manager_in_place_load_* and *_txm_module_manager_memory_load_* functions are deprecated. They do not receive the length of the module image, so they cannot check the module preamble against it.
 
 The memory protected version of the Module Manager also makes sure that the module is loaded with the proper alignment and the memory management registers are set up properly for each module. When memory protection is enabled via the module preamble options, module memory access is restricted to the module code and data areas.
 
