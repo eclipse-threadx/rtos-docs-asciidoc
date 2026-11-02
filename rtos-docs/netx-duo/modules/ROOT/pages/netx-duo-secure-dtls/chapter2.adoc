@@ -543,7 +543,10 @@ Following is a list of all options, where each is described in detail:
 | Defined, this option gives the size in bytes of the per-session EMSA-PSS working area used when checking an RSA-PSS CertificateVerify signature in TLS 1.3. The default of 600 covers a 4096-bit modulus with SHA-512. It has no effect unless TLS 1.3 is enabled.
 
 | *NX_SECURE_DTLS_COOKIE_LENGTH*
-| Defined, this option gives the maximum length of DTLS cookie.
+| Defined, this option gives the length in bytes of the cookies a DTLS server issues. It must be between 17 and 255; the default value is 32.
+
+| *NX_SECURE_DTLS_COOKIE_SECRET_LIFETIME*
+| Defined, this option gives, in seconds, how long a DTLS server keys its HelloVerifyRequest cookies with one secret before replacing it. A cookie stays valid until the secret after the one it was issued under is also replaced. The default value is 300. The secrets are drawn from NX_RAND unless the application supplies one with nx_secure_dtls_server_cookie_secret_set, so define NX_RAND as a cryptographic random number generator or supply a secret.
 
 | *NX_SECURE_DTLS_MAXIMUM_RETRANSMIT_RETRIES*
 | Defined, this option gives the maximum retransmit retries for DTLS handshake packet.
