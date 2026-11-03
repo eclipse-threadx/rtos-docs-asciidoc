@@ -23,16 +23,19 @@
 
 There are several additional APIs available to the resident portion of the application, as follows.
 
-* *_txm_module_manager_absolute_load_* - _Module's code and data are at absolute (fixed) addresses_
-* *_txm_module_manager_absolute_load_extended_* - _Module's code and data are at absolute (fixed) addresses, data address supplied by the caller_
+* *_txm_module_manager_absolute_load_* - _Module's code and data are at absolute (fixed) addresses (deprecated)_
+* *_txm_module_manager_absolute_load_ext_* - _Module's code and data are at absolute (fixed) addresses, image length and data address supplied by the caller_
+* *_txm_module_manager_absolute_load_extended_* - _Module's code and data are at absolute (fixed) addresses, data address supplied by the caller (deprecated)_
 * *_txm_module_manager_external_memory_enable_* - _Enable module access to a shared memory space_
 * *_txm_module_manager_file_load_* - _Load module from file via FileX_
-* *_txm_module_manager_in_place_load_* - _Load module data, execute in place_
+* *_txm_module_manager_in_place_load_* - _Load module data, execute in place (deprecated)_
+* *_txm_module_manager_in_place_load_ext_* - _Load module data, execute in place, image length supplied by the caller_
 * *_txm_module_manager_initialize_* - _Initialize the module manager_
 * *_txm_module_manager_mm_initialize_* - _Initialize the memory management hardware_
 * *_txm_module_manager_maximum_module_priority_set_* - _Set the maximum thread priority allowed in a module_
 * *_txm_module_manager_memory_fault_notify_* - _Register an application callback on memory fault_
-* *_txm_module_manager_memory_load_* - _Load the module from memory_
+* *_txm_module_manager_memory_load_* - _Load the module from memory (deprecated)_
+* *_txm_module_manager_memory_load_ext_* - _Load the module from memory, image length supplied by the caller_
 * *_txm_module_manager_object_pool_create_* - _Create an object pool for modules_
 * *_txm_module_manager_properties_get_* - _Get module properties_
 * *_txm_module_manager_start_* - _Start execution of the specified module_
@@ -45,7 +48,7 @@ There are several additional APIs available to the resident portion of the appli
 
 Module's code and data are at absolute (fixed) addresses.
 
-WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> instead, passing the address of the module's data area.
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_absolute_load_ext,txm_module_manager_absolute_load_ext>> instead, passing the length of the module image and the address of the module's data area.
 
 === Reason for deprecation
 
@@ -123,6 +126,8 @@ status = txm_module_manager_start(&my_module);
 
 Module's code and data are at absolute (fixed) addresses, data address supplied by the caller.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_absolute_load_ext,txm_module_manager_absolute_load_ext>> instead, which takes the same parameters plus the length of the module image. This service cannot check the code size in the module preamble against the image, because it does not receive the image's length.
+
 === Prototype
 
 [,c]
@@ -195,6 +200,86 @@ status = txm_module_manager_start(&my_module);
 * txm_module_manager_file_load
 * txm_module_manager_in_place_load
 * txm_module_manager_memory_load
+* txm_module_manager_unload
+
+'''
+
+== txm_module_manager_absolute_load_ext
+
+Module's code and data are at absolute (fixed) addresses, image length and data address supplied by the caller.
+
+=== Prototype
+
+[,c]
+----
+UINT txm_module_manager_absolute_load_ext(
+    TXM_MODULE_INSTANCE *module_instance,
+    CHAR *module_name,
+    VOID *module_location,
+    ULONG module_size,
+    VOID *module_data_location);
+----
+
+=== Description
+
+This service initializes the module contained in the specified location and prepares it for execution, as <<_txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>> does. There is no code or data relocation, thus position-independence is not necessary. It replaces both <<_txm_module_manager_absolute_load,txm_module_manager_absolute_load>> and <<_txm_module_manager_absolute_load_extended,txm_module_manager_absolute_load_extended>>.
+
+The *module_size* parameter is the length in bytes of the module image at *module_location*, preamble first. Before reading anything else from the image, the service refuses an image shorter than the module preamble, or one whose preamble declares a code size larger than the image, with *TXM_MODULE_INVALID*. Pass the length of the image as it was received or stored, not a value read from its preamble.
+
+The *module_data_location* address is the RAM segment start address defined in the module's linker script. Supplying it allows the Module Manager to describe the module's data area in the module instance, which memory protection, the object memory checks of the kernel dispatch layer, and the cleanup performed when the module is stopped all require. Pass `TX_NULL` only when the data area address is genuinely unknown; a module that then requests memory protection is rejected with *TXM_MODULE_INVALID_PROPERTIES*. The address must satisfy the port's data alignment requirement, otherwise *TXM_MODULE_ALIGNMENT_ERROR* is returned.
+
+=== Input parameters
+
+* *module_instance* Pointer to the instance of the module.
+* *module_name* Name of the module.
+* *module_location* Pointer to module's code area, preamble first.
+* *module_size* Length of the module image in bytes.
+* *module_data_location* Pointer to module's data area, or `TX_NULL` when it is not known.
+
+=== Return values
+
+* *TX_SUCCESS* (0x00) Successful module load.
+* *TX_CALLER_ERROR* (0x13) Invalid caller.
+* *TX_NOT_AVAILABLE* (0x1D) Manager not initialized.
+* *TX_NO_MEMORY* (0x10) Not enough memory to load module.
+* *TX_PTR_ERROR* (0x03) Invalid pointer, module instance, or module preamble.
+* *TXM_MODULE_ALIGNMENT_ERROR* (0xF0) Invalid alignment.
+* *TXM_MODULE_ALREADY_LOADED* (0xF1) Module already loaded.
+* *TXM_MODULE_INVALID* (0xF2) Invalid module preamble, or an image shorter than its preamble or than the code size the preamble declares.
+* *TXM_MODULE_INVALID_PROPERTIES* (0xF3) Incompatible properties.
+
+=== Allowed from
+
+Initialization and threads
+
+=== Example
+
+[,c]
+----
+TXM_MODULE_INSTANCE my_module;
+
+/* Initialize the module manager. */
+status = txm_module_manager_initialize((VOID*)0x64010000,0x10000);
+
+/* Load the 0x8000-byte module image that has its code area at address
+   0x080F0000 and its data area at address 0x08110000, as defined in the
+   module's linker script. */
+status = txm_module_manager_absolute_load_ext(&my_module, "my module",
+                                              (VOID *) 0x080F0000, 0x8000,
+                                              (VOID *) 0x08110000);
+
+/* Start the module. */
+if (status == TX_SUCCESS)
+{
+    status = txm_module_manager_start(&my_module);
+}
+----
+
+=== See also
+
+* txm_module_manager_file_load
+* txm_module_manager_in_place_load_ext
+* txm_module_manager_memory_load_ext
 * txm_module_manager_unload
 
 '''
@@ -340,6 +425,8 @@ status = txm_module_manager_start(&my_module);
 
 Load module data only, execute module in existing location.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_in_place_load_ext,txm_module_manager_in_place_load_ext>> instead, passing the length of the module image. This service cannot check the code size in the module preamble against the image, because it does not receive the image's length.
+
 === Prototype
 
 [,c]
@@ -397,6 +484,79 @@ txm_module_manager_start(&my_module);
 * txm_module_manager_absolute_load
 * txm_module_manager_file_load
 * txm_module_manager_memory_load
+* txm_module_manager_unload
+
+'''
+
+== txm_module_manager_in_place_load_ext
+
+Load module data only, execute module in existing location, image length supplied by the caller.
+
+=== Prototype
+
+[,c]
+----
+UINT txm_module_manager_in_place_load_ext(
+    TXM_MODULE_INSTANCE *module_instance,
+    CHAR *module_name,
+    VOID *module_location,
+    ULONG module_size);
+----
+
+=== Description
+
+This service loads the module's data area only into the module memory area and prepares it for execution, as <<_txm_module_manager_in_place_load,txm_module_manager_in_place_load>> does. Module code execution will be in-place, that is, from the address offset specified by the module preamble at the supplied location.
+
+The *module_size* parameter is the length in bytes of the module image at *module_location*, preamble first. Before reading anything else from the image, the service refuses an image shorter than the module preamble, or one whose preamble declares a code size larger than the image, with *TXM_MODULE_INVALID*. Pass the length of the image as it was received or stored, not a value read from its preamble.
+
+=== Input parameters
+
+* *module_instance* Pointer to the instance of the module.
+* *module_name* Name of the module.
+* *module_location* Pointer to module's code area, preamble first.
+* *module_size* Length of the module image in bytes.
+
+=== Return values
+
+* *TX_SUCCESS* (0x00) Successful module load.
+* *TX_CALLER_ERROR* (0x13) Invalid caller.
+* *TX_NOT_AVAILABLE* (0x1D) Manager not initialized.
+* *TX_NO_MEMORY* (0x10) Not enough memory to load module.
+* *TX_PTR_ERROR* (0x03) Invalid pointer, module instance, or module preamble.
+* *TXM_MODULE_ALIGNMENT_ERROR* (0xF0) Invalid alignment.
+* *TXM_MODULE_ALREADY_LOADED* (0xF1) Module already loaded.
+* *TXM_MODULE_INVALID* (0xF2) Invalid module preamble, or an image shorter than its preamble or than the code size the preamble declares.
+* *TXM_MODULE_INVALID_PROPERTIES* (0xF3) Incompatible properties.
+
+=== Allowed from
+
+Initialization and threads
+
+=== Example
+
+[,c]
+----
+TXM_MODULE_INSTANCE my_module;
+
+/* Initialize the module manager with 64KB of RAM starting at address 0x64010000. */
+txm_module_manager_initialize((VOID *) 0x64010000, 0x10000);
+
+/* Load the 0x8000-byte module image that has its code area at address 0x080F0000. */
+status = txm_module_manager_in_place_load_ext(&my_module, "my module",
+                                              (VOID *) 0x080F0000, 0x8000);
+
+/* Start the module. */
+if (status == TX_SUCCESS)
+{
+    txm_module_manager_start(&my_module);
+}
+----
+
+=== See also
+
+* txm_module_manager_absolute_load_ext
+* txm_module_manager_file_load
+* txm_module_manager_memory_load_ext
 * txm_module_manager_unload
 
 '''
@@ -581,6 +741,8 @@ txm_module_manager_memory_fault_notify(my_memory_fault_handler);
 
 Load module from memory.
 
+WARNING: *_This service is deprecated. Do not use it in new code._* Use <<_txm_module_manager_memory_load_ext,txm_module_manager_memory_load_ext>> instead, passing the length of the module image. This service cannot check the code size in the module preamble against the image, because it does not receive the image's length, so its copy of the module's code can read past the image.
+
 === Prototype
 
 [,c]
@@ -634,6 +796,74 @@ txm_module_manager_initialize((VOID *) 0x64010000, 0x10000);
 
 * txm_module_manager_file_load
 * txm_module_manager_in_place_load
+* txm_module_manager_unload
+
+'''
+
+== txm_module_manager_memory_load_ext
+
+Load module from memory, image length supplied by the caller.
+
+=== Prototype
+
+[,c]
+----
+UINT txm_module_manager_memory_load_ext(
+    TXM_MODULE_INSTANCE *module_instance,
+    CHAR *module_name,
+    VOID *module_location,
+    ULONG module_size);
+----
+
+=== Description
+
+This service loads the module's code and data area into the module memory area set up by *_txm_module_manager_initialize_* and prepares it for execution, as <<_txm_module_manager_memory_load,txm_module_manager_memory_load>> does.
+
+The *module_size* parameter is the length in bytes of the module image at *module_location*, preamble first. Before reading anything else from the image, the service refuses an image shorter than the module preamble, or one whose preamble declares a code size larger than the image, with *TXM_MODULE_INVALID*. Pass the length of the image as it was received or stored, not a value read from its preamble.
+Because the check precedes the copy, the copy of the module's code never reads past the image.
+
+=== Input parameters
+
+* *module_instance* Pointer to the instance of the module.
+* *module_name* Name of the module.
+* *module_location* Pointer to module's code area, preamble first.
+* *module_size* Length of the module image in bytes.
+
+=== Return values
+
+* *TX_SUCCESS* (0x00) Successful module load.
+* *TX_CALLER_ERROR* (0x13) Invalid caller.
+* *TX_NOT_AVAILABLE* (0x1D) Manager not initialized.
+* *TX_NO_MEMORY* (0x10) Not enough memory to load module.
+* *TX_PTR_ERROR* (0x03) Invalid pointer, module instance, or module preamble.
+* *TXM_MODULE_ALIGNMENT_ERROR* (0xF0) Invalid alignment.
+* *TXM_MODULE_ALREADY_LOADED* (0xF1) Module already loaded.
+* *TXM_MODULE_INVALID* (0xF2) Invalid module preamble, or an image shorter than its preamble or than the code size the preamble declares.
+* *TXM_MODULE_INVALID_PROPERTIES* (0xF3) Incompatible properties.
+
+=== Allowed from
+
+Initialization and threads
+
+=== Example
+
+[,c]
+----
+TXM_MODULE_INSTANCE     my_module;
+
+/* Initialize the module manager with 64KB of RAM starting at address 0x64010000. */
+txm_module_manager_initialize((VOID *) 0x64010000, 0x10000);
+
+/* Load the 0x8000-byte module image stored at address 0x080F0000. */
+status = txm_module_manager_memory_load_ext(&my_module, "my module",
+                                            (VOID *) 0x080F0000, 0x8000);
+----
+
+=== See also
+
+* txm_module_manager_absolute_load_ext
+* txm_module_manager_file_load
+* txm_module_manager_in_place_load_ext
 * txm_module_manager_unload
 
 '''
