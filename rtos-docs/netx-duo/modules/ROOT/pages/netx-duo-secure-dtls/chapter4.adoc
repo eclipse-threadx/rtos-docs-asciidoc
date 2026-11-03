@@ -298,6 +298,64 @@ status =  nx_secure_dtls_psk_add(&dtls_session, psk,
 
 * nx_secure_dtls_server_psk_add, nx_secure_dtls_client_session_create
 
+== nx_secure_dtls_server_cookie_secret_set
+
+Set the secret used to key DTLS server cookies
+
+=== Prototype
+
+[,C]
+----
+UINT  nx_secure_dtls_server_cookie_secret_set(
+    NX_SECURE_DTLS_SERVER *server_ptr,
+    const UCHAR *secret,
+    UINT secret_length);
+----
+
+=== Description
+
+This service sets the secret from which a DTLS server derives the keys of its HelloVerifyRequest cookies. Without it, the server draws those keys from *NX_RAND*, so an application whose *NX_RAND* is not a cryptographic random number generator, such as the default `rand()`, should supply a secret from a true random source or a key store.
+
+The server answers the first ClientHello from an unknown address and port with a HelloVerifyRequest whose cookie is an HMAC over the client's address and ports and its ClientHello, computed with the crypto table's handshake hash (SHA-256 when DTLS 1.2 is enabled). It allocates a session only for a ClientHello that returns a valid cookie. The server replaces its cookie key every *NX_SECURE_DTLS_COOKIE_SECRET_LIFETIME* seconds; with a secret set, each key is derived from the secret and a counter.
+
+The secret is copied into the server control block, so the buffer may be reused after the call. Cookies issued before the call no longer verify; clients that present one receive a new HelloVerifyRequest. A _secret_length_ of zero discards the secret and returns the server to *NX_RAND*.
+
+=== Parameters
+
+* _server_ptr_: Pointer to a previously created DTLS Server instance.
+* _secret_: Pointer to the secret. May be NX_NULL when _secret_length_ is zero.
+* _secret_length_: Length of the secret in bytes: zero, or from 16 to *NX_SECURE_DTLS_COOKIE_SECRET_SIZE* (32).
+
+=== Return Values
+
+* *NX_SUCCESS* (0x00) Successful setting of the secret.
+* NX_PTR_ERROR (0x07) Invalid DTLS server pointer, or NX_NULL secret with a non-zero length.
+* NX_INVALID_PARAMETERS (0x4D) Secret shorter than 16 bytes.
+* *NX_INVALID_PARAMETERS* (0x4D) Secret longer than *NX_SECURE_DTLS_COOKIE_SECRET_SIZE*.
+* *NX_NOT_SUPPORTED* (0x4B) DTLS is not enabled.
+
+=== Allowed From
+
+Threads
+
+=== Example
+
+[,C]
+----
+/* 32-byte secret obtained from a true random source or a key store.  */
+UCHAR cookie_secret[32];
+
+/* Key the DTLS server's cookies with the secret.  */
+status =  nx_secure_dtls_server_cookie_secret_set(&dtls_server, cookie_secret,
+                                                  sizeof(cookie_secret));
+
+/* If status is NX_SUCCESS the secret was set.  */
+----
+
+=== See Also
+
+* nx_secure_dtls_server_create, nx_secure_dtls_server_start
+
 == nx_secure_dtls_server_create
 
 Create a NetX Duo Secure DTLS Server
@@ -336,7 +394,7 @@ To calculate the necessary metadata size, the API nx_secure_tls_metadata_size_ca
 
 The packet_reassembly_buffer parameter is used by DTLS to reassemble UDP datagrams into a complete DTLS record for the purposes of decryption and should be large enough to accommodate the largest expected DTLS record (16KB is the DTLS maximum record size but many applications don't send that much data in a single record).
 
-The connect_notify callback routine is invoked whenever a new DTLS client connects to the server. It is up to the application to then start the DTLS session using the service _nx_secure_dtls_server_session_start_. While the session may be started in the callback itself, it is recommended that the callback only be used to notify the application thread (or dedicated DTLS thread created by the application) of the connection as the callback is invoked by the IP thread which is used to process all lower-level network processing (e.g. UDP). This can be as simple as saving the DTLS session parameter (provided as a parameter to the callback) and invoking nx_secure_dtls_server_session_start in the other thread. The connect_notify callback should generally return NX_SUCCESS.
+The connect_notify callback routine is invoked whenever a new DTLS client connects to the server, once the client has returned a valid HelloVerifyRequest cookie; no session is allocated, and the callback is not invoked, for a client that has not. It is up to the application to then start the DTLS session using the service _nx_secure_dtls_server_session_start_. While the session may be started in the callback itself, it is recommended that the callback only be used to notify the application thread (or dedicated DTLS thread created by the application) of the connection as the callback is invoked by the IP thread which is used to process all lower-level network processing (e.g. UDP). This can be as simple as saving the DTLS session parameter (provided as a parameter to the callback) and invoking nx_secure_dtls_server_session_start in the other thread. The connect_notify callback should generally return NX_SUCCESS.
 
 The receive_notify callback routine is invoked whenever a DTLS record is received that matches an existing established DTLS session (the remote host IP address and port are used to identify an existing session). This represents the "application data" that is encrypted and sent over DTLS. The application must call the service _nx_secure_dtls_session_receive_ on the provided DTLS session to retrieve the received data. As with the connect_receive callback, it is recommended that the session be passed to another thread to handle the message processing as the callback is invoked from the IP thread. The receive_notify callback should generally return NX_SUCCESS.
 
@@ -353,7 +411,7 @@ The receive_notify callback routine is invoked whenever a DTLS record is receive
 * _crypto_metadata_size_: Size of metadata buffer.
 * _packet_reassembly_buffer_: Buffer used by DTLS to reassemble UDP data into DTLS records for decryption.
 * _packet_reassembly_buffer_size_: Size of reassembly buffer. Generally should be greater than 16KB but may be smaller depending on application.
-* _connect_notify_: Callback routine invoked whenever a remote DTLS Client attempts to connect to this DTLS server.
+* _connect_notify_: Callback routine invoked whenever a remote DTLS Client that has returned a valid cookie connects to this DTLS server.
 * _receive_notify_: Callback invoked whenever application data is received over an existing DTLS session.
 
 === Return Values
