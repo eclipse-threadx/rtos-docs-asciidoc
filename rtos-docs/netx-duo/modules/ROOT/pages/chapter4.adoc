@@ -10471,8 +10471,8 @@ WARNING: _Unless an error is returned, the application should not release the pa
 * _packet_ptr_: Pointer to packet to transmit
 * _destination_ip_: Pointer to destination address
 * _protocol_: Packet protocol stored to the IP header
-* _ttl_: Value for TTL or hop limit
-* _tos_: Value for TOS or traffic class and flow label
+* _ttl_: IPv4 TTL or IPv6 hop limit. For IPv6, zero uses the IP instance's default hop limit; otherwise the low eight bits are used.
+* _tos_: IPv4 TOS or the low eight bits of the IPv6 Traffic Class. NetX Duo sets the IPv6 Flow Label to zero.
 
 === Return Value
 
@@ -10571,8 +10571,8 @@ WARNING: _Unless an error is returned, the application should not release the pa
 * _destination_ip_: Destination IP address
 * _address_index_: Index to the IPv4 or IPv6 addresses to use as source address.
 * _protocol_: Value for the protocol field
-* _ttl_: Value for ttl or hop limit
-* _tos_: Value for tos or traffic class and flow label
+* _ttl_: IPv4 TTL or IPv6 hop limit. For IPv6, zero uses the IP instance's default hop limit; otherwise the low eight bits are used.
+* _tos_: IPv4 TOS or the low eight bits of the IPv6 Traffic Class. NetX Duo sets the IPv6 Flow Label to zero.
 
 === Return Values
 
