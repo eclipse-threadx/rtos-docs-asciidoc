@@ -9,6 +9,14 @@ The table below lists published security advisories for ThreadX, newest first. C
 [cols="1,1,1,3,1", options="header", role="datatable"]
 |===
 | Published | GHSA ID | CVE ID | Summary | Severity
+| 2026‑11‑01 | xref:security/ghsa-xr9m-8j99-rw4m.adoc[GHSA‑xr9m‑8j99‑rw4m] | CVE‑2026‑102710 | Module Manager passes an unvalidated `tx_trace_buffer_full_notify` callback to the kernel, which invokes it in privileged context | High
+| 2026‑11‑01 | xref:security/ghsa-q2rc-f35r-2hw6.adoc[GHSA‑q2rc‑f35r‑2hw6] | CVE‑2026‑115231 | User-mode module can post forged callback requests to another module's callback queue, running its code with that module's privilege | High
+| 2026‑11‑01 | xref:security/ghsa-ffg5-m7vh-vwrp.adoc[GHSA‑ffg5‑m7vh‑vwrp] | CVE‑2026‑102709 | Unchecked pointer vulnerabilities in ThreadX TrustZone-M entry functions | High
+| 2026‑11‑01 | xref:security/ghsa-f53h-37j4-mqxx.adoc[GHSA‑f53h‑37j4‑mqxx] | CVE‑2026‑102711 | Out-of-bounds Read and Unverified Entry Pointers in the ThreadX Module Loader | Medium
+| 2026‑11‑01 | xref:security/ghsa-c38r-v552-gh5g.adoc[GHSA‑c38r‑v552‑gh5g] | CVE‑2026‑115653 | Cortex-M module ports save a preempted user-mode module thread's registers through its unchecked stack pointer in privileged mode | High
+| 2026‑11‑01 | xref:security/ghsa-8pgj-qvjv-j4fq.adoc[GHSA‑8pgj‑qvjv‑j4fq] | CVE‑2026‑113421 | ThreadX Modules invokes trace-full callbacks after module unload | High
+| 2026‑11‑01 | xref:security/ghsa-67ww-q8x2-g487.adoc[GHSA‑67ww‑q8x2‑g487] | CVE‑2026‑118052 | Module Manager loaders leave the manager mutex held when a module preamble's sizes overflow, blocking every later module operation | Medium
+| 2026‑11‑01 | xref:security/ghsa-5q6x-rxf3-5q5f.adoc[GHSA‑5q6x‑rxf3‑5q5f] | CVE‑2026‑115654 | User-mode module can suspend, terminate, re-prioritise and abort the waits of threads it does not own | Medium
 | 2026‑10‑02 | xref:security/ghsa-rrjj-jwcw-hvf8.adoc[GHSA‑rrjj‑jwcw‑hvf8] | CVE‑2026‑102757 | Module Manager accepts unauthenticated kernel object pointers, allowing module-to-kernel privilege escalation | High
 | 2026‑10‑02 | xref:security/ghsa-rrg6-24r9-wqpm.adoc[GHSA‑rrg6‑24r9‑wqpm] | CVE‑2026‑95111 | Module queue front-send validates a word count as a byte count | Medium
 | 2026‑10‑02 | xref:security/ghsa-fvp6-37q5-c648.adoc[GHSA‑fvp6‑37q5‑c648] | CVE‑2026‑95109 | Cortex-A7 module data validation checks only the first address of a caller-supplied range | High

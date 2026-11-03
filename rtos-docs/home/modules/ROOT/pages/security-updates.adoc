@@ -42,6 +42,209 @@ For all security vulnerabilities, you can find the published list on the corresp
 | Release Date | CVE | Severity | Eclipse ThreadX Component | Affected Versions | Patched Versions
 
 // <<< BEGIN auto-generated rows (update-security-updates-page.py) >>>
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-118052[CVE‑2026‑118052]
+| Medium
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115654[CVE‑2026‑115654]
+| Medium
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115653[CVE‑2026‑115653]
+| High
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115403[CVE‑2026‑115403]
+| High
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115231[CVE‑2026‑115231]
+| High
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115215[CVE‑2026‑115215]
+| High
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-114408[CVE‑2026‑114408]
+| High
+| NetX Duo
+| >= 6.4.5.202504, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-113421[CVE‑2026‑113421]
+| High
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102728[CVE‑2026‑102728]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102727[CVE‑2026‑102727]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102726[CVE‑2026‑102726]
+| High
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102725[CVE‑2026‑102725]
+| High
+| NetX Duo
+| >= 6.4.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102724[CVE‑2026‑102724]
+| High
+| NetX Duo
+| >= 6.4.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102723[CVE‑2026‑102723]
+| High
+| NetX Duo
+| >= 6.4.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102722[CVE‑2026‑102722]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102721[CVE‑2026‑102721]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102720[CVE‑2026‑102720]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102719[CVE‑2026‑102719]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603a
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102711[CVE‑2026‑102711]
+| Medium
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102710[CVE‑2026‑102710]
+| High
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑11‑01
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102709[CVE‑2026‑102709]
+| High
+| ThreadX
+| >= 6.0.1, <= 6.5.2.202603
+| 6.5.2.202603b
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-106465[CVE‑2026‑106465]
+| Medium
+| NetX Duo
+| >= 6.0, <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-106464[CVE‑2026‑106464]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102718[CVE‑2026‑102718]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102716[CVE‑2026‑102716]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102715[CVE‑2026‑102715]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102714[CVE‑2026‑102714]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102713[CVE‑2026‑102713]
+| High
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
+| 2026‑10‑13
+| https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-102712[CVE‑2026‑102712]
+| Medium
+| NetX Duo
+| <= 6.5.2.202603
+| 6.5.2.202603a
+
 | 2026‑10‑02
 | https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-96582[CVE‑2026‑96582]
 | Medium
